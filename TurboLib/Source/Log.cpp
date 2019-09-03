@@ -19,23 +19,29 @@ int TLogStartupW(
 	const wchar_t * logFileName,
 	const int toDebugView)
 {
+	int ret = T_FALSE;
+
 	if (!gLog.mLogFile && !gLog.mMutex && logFileName)
 	{
 		gLog.mMutex = TMutexCreate();
 		if (gLog.mMutex)
 		{
-			gLog.mLogFile = TFileOpenW(logFileName, T_FALSE, T_TRUE);
-			if (gLog.mLogFile)
+			TMutexLock(gLog.mMutex);
 			{
-				TStringCopyW(gLog.mLogFileName, logFileName, 0);
-				gLog.mToDebugView = toDebugView;
+				gLog.mLogFile = TFileOpenW(logFileName, T_FALSE, T_TRUE);
+				if (gLog.mLogFile)
+				{
+					TStringCopyW(gLog.mLogFileName, logFileName, 0);
+					gLog.mToDebugView = toDebugView;
 
-				return T_TRUE;
+					ret = T_TRUE;
+				}
 			}
+			TMutexUnlock(gLog.mMutex);
 		}
 	}
 
-	return T_FALSE;
+	return ret;
 }
 
 int TLogStartupA(
@@ -62,11 +68,15 @@ int TLogStartupA(
 
 void TLogShutdown(void)
 {
-	if (gLog.mLogFile)
+	TMutexLock(gLog.mMutex);
 	{
-		TFileClose(gLog.mLogFile);
-		gLog.mLogFile = 0;
+		if (gLog.mLogFile)
+		{
+			TFileClose(gLog.mLogFile);
+			gLog.mLogFile = 0;
+		}
 	}
+	TMutexUnlock(gLog.mMutex);
 
 	if (gLog.mMutex)
 	{

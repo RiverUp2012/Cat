@@ -99,6 +99,9 @@
     <ClInclude Include="CCatApp.h" />
     <ClInclude Include="Common\CMemoryReader.h" />
     <ClInclude Include="Common\CMemoryWriter.h" />
+    <ClInclude Include="GDIPlus\CGDIPStartup.h" />
+    <ClInclude Include="ProcessCleanup\CProcessCleanup.h" />
+    <ClInclude Include="ProcessCleanup\CProcessCleanupConfigFile.h" />
     <ClInclude Include="RemoteControl\CRemoteControlClient.h" />
     <ClInclude Include="RemoteControl\CRemoteControlServer.h" />
     <ClInclude Include="RemoteControl\RemoteControlCommon.h" />
@@ -111,6 +114,9 @@
     <ClCompile Include="CMainDlg.cpp" />
     <ClCompile Include="Common\CMemoryReader.cpp" />
     <ClCompile Include="Common\CMemoryWriter.cpp" />
+    <ClCompile Include="GDIPlus\CGDIPStartup.cpp" />
+    <ClCompile Include="ProcessCleanup\CProcessCleanup.cpp" />
+    <ClCompile Include="ProcessCleanup\CProcessCleanupConfigFile.cpp" />
     <ClCompile Include="RemoteControl\CRemoteControlClient.cpp" />
     <ClCompile Include="RemoteControl\CRemoteControlServer.cpp" />
     <ClCompile Include="RemoteControl\RemoteControlCommon.cpp" />
@@ -127,6 +133,9 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\Cat.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="History.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

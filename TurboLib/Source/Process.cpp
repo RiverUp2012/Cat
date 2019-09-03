@@ -168,3 +168,24 @@ int TProcessQueryImageNameByProcessIdW(
 
 	return ret;
 }
+
+int TProcessTerminate(
+	const unsigned int processId)
+{
+	int ret = T_FALSE;
+	HANDLE processHandle = 0;
+
+	processHandle = OpenProcess(PROCESS_TERMINATE, FALSE, processId);
+	if (processHandle)
+	{
+		if (TerminateProcess(processHandle, 0))
+		{
+			ret = T_TRUE;
+		}
+
+		CloseHandle(processHandle);
+		processHandle = 0;
+	}
+
+	return ret;
+}

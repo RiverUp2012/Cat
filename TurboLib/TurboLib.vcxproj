@@ -54,6 +54,7 @@
     <ClCompile Include="Source\Memory.cpp" />
     <ClCompile Include="Source\Net.cpp" />
     <ClCompile Include="Source\Page.cpp" />
+    <ClCompile Include="Source\Path.cpp" />
     <ClCompile Include="Source\ShareMemory.cpp" />
     <ClCompile Include="Source\Module.cpp" />
     <ClCompile Include="Source\Mutex.cpp" />
@@ -65,6 +66,9 @@
     <ClCompile Include="Source\Thread.cpp" />
     <ClCompile Include="Source\WaveReader.cpp" />
     <ClCompile Include="Source\Window.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="History.txt" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{FC720D12-CDE3-4E5C-A46C-70A507108142}</ProjectGuid>

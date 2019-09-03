@@ -69,7 +69,7 @@ T_OBJECT TEventCreateA(
 	return 0;
 }
 
-T_OBJECT TEventOpen(
+T_OBJECT TEventOpenW(
 	const wchar_t * eventName)
 {
 	HANDLE eventHandle = 0;
@@ -77,6 +77,32 @@ T_OBJECT TEventOpen(
 	if (eventName)
 	{
 		eventHandle = OpenEventW(EVENT_ALL_ACCESS, FALSE, eventName);
+		if (eventHandle)
+		{
+			T_EVENT * eventImpl = (T_EVENT *)TFindUnuseEvent();
+			if (eventImpl)
+			{
+				eventImpl->mEventHandle = eventHandle;
+
+				return (T_OBJECT)eventImpl;
+			}
+
+			CloseHandle(eventHandle);
+			eventHandle = 0;
+		}
+	}
+
+	return 0;
+}
+
+T_OBJECT TEventOpenA(
+	const char * eventName)
+{
+	HANDLE eventHandle = 0;
+
+	if (eventName)
+	{
+		eventHandle = OpenEventA(EVENT_ALL_ACCESS, FALSE, eventName);
 		if (eventHandle)
 		{
 			T_EVENT * eventImpl = (T_EVENT *)TFindUnuseEvent();

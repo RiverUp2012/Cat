@@ -1,0 +1,16 @@
+
+----------------------------------------------------------------------------
+	TurboLib History
+----------------------------------------------------------------------------
+
+* 2019-09-02
+
+	* 新增 TProcessTerminate() 函数，用于结束指定进程
+	* 新增 TArrayFreeAllData() 函数，用于清空指定数组中的所有数据
+	* 新增 TArrayFindEmpty() 函数，用于从指定数组中查找内容为空的数据
+	* 新增 TPathExtractFileNameWithExtW() 函数，用于从文件路径中抽取文件名
+	* 新增 Path.cpp 文件，用于存放文件路径相关接口的实现代码
+	* 新增 TOSInfoGetAppBarEdge() 函数，用于获取任务栏在屏幕中的停靠位置
+	* 新增 TOSInfoGetAppBarRect() 函数，用于获取任务栏在屏幕中的矩形区域
+	* 新增 TOSInfoGetDesktopSize() 函数，用于获取桌面大小
+	* 新增 TEventOpenA() 函数，用于打开事件

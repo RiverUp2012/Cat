@@ -19,7 +19,7 @@ void CMemoryReader::bind(void * buffer, const int bufferSize)
 	mPointer = 0;
 }
 
-void CMemoryReader::read(void * value, const int valueSize)
+bool CMemoryReader::read(void * value, const int valueSize)
 {
 	if (mBuffer &&
 		mBufferSize > 0 &&
@@ -29,5 +29,14 @@ void CMemoryReader::read(void * value, const int valueSize)
 	{
 		memcpy(value, &(mBuffer[mPointer]), valueSize);
 		mPointer += valueSize;
+
+		return true;
 	}
+
+	return false;
+}
+
+int CMemoryReader::getPointer(void) const
+{
+	return mPointer;
 }

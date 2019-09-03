@@ -338,13 +338,15 @@ extern int TListAddDataToHead(
 //
 // 数组回调函数
 //
-typedef int(*TArrayCallbackProc)(
+typedef int (* TArrayCallbackProc)(
 	T_OBJECT array,
 	void * data,
 	void * userData);
 
 //
 // 创建数组
+//
+// capacity 数组容量
 //
 extern T_OBJECT TArrayCreate(
 	const int capacity);
@@ -382,7 +384,7 @@ extern void * TArrayGetAt(
 //
 // 将数据放入到数组的指定下标处
 //
-extern int TArrayPutAt(
+extern int TArraySetAt(
 	T_OBJECT array,
 	const int index,
 	void * data);
@@ -419,6 +421,30 @@ extern void TArraySetGrowUnits(
 //
 extern int TArrayGetGrowUnits(
 	T_OBJECT array);
+
+//
+// 释放数组中的每个数据
+//
+// array 数组对象
+// byCapacity 为真表示按 capacity 清空数组，为假表示按 items 清空数组
+// 
+// 此时，数组中的每个数据，必须是可以使用 TFree() 函数释放的
+//
+extern void TArrayFreeAllData(
+	T_OBJECT array,
+	const int byCapacity);
+
+//
+// 查找数组中是否存在数据为空的索引号
+//
+// array 数组对象
+// byCapacity 为真表示按 capacity 查找，为假表示按 items 查找
+//
+// 若找到，返回下标值，若没找到，返回 -1
+//
+extern int TArrayFindEmpty(
+	T_OBJECT array,
+	const int byCapacity);
 
 //---------------------------------------------------------------
 // color
@@ -835,8 +861,10 @@ extern T_OBJECT TEventCreateA(
 //
 // 打开事件
 //
-extern T_OBJECT TEventOpen(
+extern T_OBJECT TEventOpenW(
 	const wchar_t * eventName);
+extern T_OBJECT TEventOpenA(
+	const char * eventName);
 
 //
 // 销毁事件
@@ -1090,6 +1118,23 @@ enum
 };
 
 //
+// 任务栏停靠在屏幕中的位置
+//
+enum
+{
+	//
+	T_APPBAR_EDGE_FIRST,
+	// 停靠在屏幕顶部
+	T_APPBAR_EDGE_TOP,
+	// 停靠在屏幕底部
+	T_APPBAR_EDGE_BOTTOM,
+	// 停靠在屏幕左侧
+	T_APPBAR_EDGE_LEFT,
+	// 停靠在屏幕右侧
+	T_APPBAR_EDGE_RIGHT,
+};
+
+//
 // 查询操作系统版本
 //
 extern int TOSInfoQueryVersion(
@@ -1116,19 +1161,41 @@ extern int TOSInfoIsOSx64(
 //
 // 开启或关闭操作系统中的指定功能
 //
-extern int TOSSettingTurn(
+extern int TOSInfoSettingTurn(
 	const int settingType,
 	const int onOrOff);
 
 //
 // 获取当前登录用户名称
 //
-extern int TOSGetUserNameW(
+extern int TOSInfoGetUserNameW(
 	wchar_t * userName,
 	const int userNameSize);
-extern int TOSGetUserNameA(
+extern int TOSInfoGetUserNameA(
 	char * userName,
 	const int userNameSize);
+
+//
+// 获取任务栏在屏幕中的停靠位置
+//
+extern int TOSInfoGetAppBarEdge(
+	int * appBarEdge);
+
+//
+// 获取任务栏在屏幕中的矩形区域
+//
+extern int TOSInfoGetAppBarRect(
+	int * appBarLeft,
+	int * appBarTop,
+	int * appBarWidth,
+	int * appBarHeight);
+
+//
+// 获取桌面大小
+//
+extern int TOSInfoGetDesktopSize(
+	int * desktopWidth,
+	int * desktopHeight);
 
 //---------------------------------------------------------------
 // hardware
@@ -1188,6 +1255,12 @@ extern int TProcessQueryImageNameByProcessIdW(
 	const unsigned int processId,
 	wchar_t * imageName,
 	const int imageNameSize);
+
+//
+// 终止指定进程
+//
+extern int TProcessTerminate(
+	const unsigned int processId);
 
 //---------------------------------------------------------------
 // share memory
@@ -1637,5 +1710,24 @@ extern int TNetSockRecvDataV2(
 	T_OBJECT sock,
 	void * data,
 	const int bytesToRecv);
+
+//---------------------------------------------------------------
+// path
+// 文件路径相关接口
+//---------------------------------------------------------------
+
+//
+// 从路径中抽取出包含扩展名的文件名
+//
+// path 要抽取文件名的文件路径
+// fileNameWithExt 用于保存抽取出来的文件名
+// fileNameWithExtSize fileNameWithExt 参数的容量
+//
+// 返回真表示成功，返回假表示失败
+//
+extern int TPathExtractFileNameWithExtW(
+	const wchar_t * path,
+	wchar_t * fileNameWithExt,
+	const int fileNameWithExtSize);
 
 #endif // TURBOLIB_H

@@ -299,7 +299,7 @@ int TOSInfoIsOSx64(
 	return T_FALSE;
 }
 
-int TOSSettingTurn(
+int TOSInfoSettingTurn(
 	const int settingType,
 	const int onOrOff)
 {
@@ -324,7 +324,7 @@ int TOSSettingTurn(
 	return ret;
 }
 
-int TOSGetUserNameW(
+int TOSInfoGetUserNameW(
 	wchar_t * userName,
 	const int userNameSize)
 {
@@ -341,7 +341,7 @@ int TOSGetUserNameW(
 	return T_FALSE;
 }
 
-int TOSGetUserNameA(
+int TOSInfoGetUserNameA(
 	char * userName,
 	const int userNameSize)
 {
@@ -353,6 +353,104 @@ int TOSGetUserNameA(
 		{
 			return T_TRUE;
 		}
+	}
+
+	return T_FALSE;
+}
+
+int TOSInfoGetAppBarEdge(
+	int * appBarEdge)
+{
+	APPBARDATA appBarData = { 0 };
+
+	if (appBarEdge)
+	{
+		appBarData.cbSize = sizeof(appBarData);
+
+		if (SHAppBarMessage(ABM_GETTASKBARPOS, &appBarData))
+		{
+			if (ABE_TOP == appBarData.uEdge)
+			{
+				*appBarEdge = T_APPBAR_EDGE_TOP;
+			}
+			else if (ABE_BOTTOM == appBarData.uEdge)
+			{
+				*appBarEdge = T_APPBAR_EDGE_BOTTOM;
+			}
+			else if (ABE_LEFT == appBarData.uEdge)
+			{
+				*appBarEdge = T_APPBAR_EDGE_LEFT;
+			}
+			else if (ABE_RIGHT == appBarData.uEdge)
+			{
+				*appBarEdge = T_APPBAR_EDGE_RIGHT;
+			}
+
+			return T_TRUE;
+		}
+	}
+
+	return T_FALSE;
+}
+
+int TOSInfoGetAppBarRect(
+	int * appBarLeft,
+	int * appBarTop,
+	int * appBarWidth,
+	int * appBarHeight)
+{
+	APPBARDATA appBarData = { 0 };
+
+	if (appBarLeft || appBarTop || appBarWidth || appBarHeight)
+	{
+		appBarData.cbSize = sizeof(appBarData);
+
+		if (SHAppBarMessage(ABM_GETTASKBARPOS, &appBarData))
+		{
+			if (appBarLeft)
+			{
+				*appBarLeft = appBarData.rc.left;
+			}
+
+			if (appBarTop)
+			{
+				*appBarTop = appBarData.rc.top;
+			}
+
+			if (appBarWidth)
+			{
+				*appBarWidth = appBarData.rc.right - appBarData.rc.left;
+			}
+
+			if (appBarHeight)
+			{
+				*appBarHeight = appBarData.rc.bottom - appBarData.rc.top;
+			}
+
+			return T_TRUE;
+		}
+	}
+
+	return T_FALSE;
+}
+
+int TOSInfoGetDesktopSize(
+	int * desktopWidth,
+	int * desktopHeight)
+{
+	if (desktopWidth || desktopHeight)
+	{
+		if (desktopWidth)
+		{
+			*desktopWidth = GetSystemMetrics(SM_CXSCREEN);
+		}
+
+		if (desktopHeight)
+		{
+			*desktopHeight = GetSystemMetrics(SM_CYSCREEN);
+		}
+
+		return T_TRUE;
 	}
 
 	return T_FALSE;

@@ -21,17 +21,33 @@ public:
 	//
 	// 向内存块写入数据
 	//
-	void write(const void * value, const int valueSize);
+	bool write(const void * value, const int valueSize);
 
+	//
+	// 向内存块写入数据
+	//
+	// 该方法是一个模板方法，用于让编译器自动推测要写入的数据的大小，对于类型明确的数据
+	// 编译器会自动为我们推测出数据大小，比如：
+	//
+	// CMemoryWriter memWriter;
+	// int value = 0;
+	//
+	// memWriter.write(&value); // 编译器自动识别出 value 为 int 类型，并且其数据大小为 sizeof(int)
+	//
 	template <typename _U>
-	void write(_U * value)
+	bool write(_U * value)
 	{
-		write(value, sizeof(_U));
+		return write(value, sizeof(_U));
 	}
+
+	//
+	// 获取写入指针
+	//
+	int getPointer(void) const;
 
 private:
 
 	unsigned char * mBuffer = 0;
 	int mBufferSize = 0;
-	int mPointer = 0;
+	int mPointer = 0; // 写入指针，指向内存块中下一次的操作位置
 };

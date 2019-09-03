@@ -19,6 +19,12 @@
     <Filter Include="RemoteControl">
       <UniqueIdentifier>{109fed87-5a7b-4743-aac2-41eadac1d66d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ProcessCleanup">
+      <UniqueIdentifier>{a474ca45-3c65-405b-a853-ec88c08b0432}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GDIPlus">
+      <UniqueIdentifier>{7bb9fc0f-d743-4cfc-8a66-f13b3901b6d2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -48,6 +54,15 @@
     <ClInclude Include="Common\CMemoryWriter.h">
       <Filter>Common</Filter>
     </ClInclude>
+    <ClInclude Include="ProcessCleanup\CProcessCleanup.h">
+      <Filter>ProcessCleanup</Filter>
+    </ClInclude>
+    <ClInclude Include="ProcessCleanup\CProcessCleanupConfigFile.h">
+      <Filter>ProcessCleanup</Filter>
+    </ClInclude>
+    <ClInclude Include="GDIPlus\CGDIPStartup.h">
+      <Filter>GDIPlus</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -74,6 +89,15 @@
     <ClCompile Include="Common\CMemoryWriter.cpp">
       <Filter>Common</Filter>
     </ClCompile>
+    <ClCompile Include="ProcessCleanup\CProcessCleanup.cpp">
+      <Filter>ProcessCleanup</Filter>
+    </ClCompile>
+    <ClCompile Include="ProcessCleanup\CProcessCleanupConfigFile.cpp">
+      <Filter>ProcessCleanup</Filter>
+    </ClCompile>
+    <ClCompile Include="GDIPlus\CGDIPStartup.cpp">
+      <Filter>GDIPlus</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Cat.rc">
@@ -89,5 +113,8 @@
     <Image Include="res\Cat.ico">
       <Filter>Resource</Filter>
     </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="History.txt" />
   </ItemGroup>
 </Project>

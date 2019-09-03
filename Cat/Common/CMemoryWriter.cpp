@@ -19,7 +19,7 @@ void CMemoryWriter::bind(void * buffer, const int bufferSize)
 	mPointer = 0;
 }
 
-void CMemoryWriter::write(const void * value, const int valueSize)
+bool CMemoryWriter::write(const void * value, const int valueSize)
 {
 	if (mBuffer &&
 		mBufferSize > 0 &&
@@ -29,5 +29,14 @@ void CMemoryWriter::write(const void * value, const int valueSize)
 	{
 		memcpy(&(mBuffer[mPointer]), value, valueSize);
 		mPointer += valueSize;
+
+		return true;
 	}
+
+	return false;
+}
+
+int CMemoryWriter::getPointer(void) const
+{
+	return mPointer;
 }

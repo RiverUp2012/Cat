@@ -30,3 +30,15 @@
 *.exe
 *.out
 *.app
+*.opensdf
+*.sdf
+*.suo
+*.log
+*.res
+*.lastbuildstate
+*.tlog
+*.idb
+*.pdb
+*.ilk
+*.aps
+*.aps

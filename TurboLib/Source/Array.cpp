@@ -155,7 +155,7 @@ void * TArrayGetAt(
 	return 0;
 }
 
-int TArrayPutAt(
+int TArraySetAt(
 	T_OBJECT array,
 	const int index,
 	void * data)
@@ -222,4 +222,48 @@ int TArrayGetGrowUnits(
 	T_ARRAY * arrayImpl = (T_ARRAY *)array;
 
 	return arrayImpl ? arrayImpl->mGrowUnits : 0;
+}
+
+void TArrayFreeAllData(
+	T_OBJECT array,
+	const int byCapacity)
+{
+	int forSteps = 0;
+
+	if (array)
+	{
+		forSteps = byCapacity ? TArrayGetCapacity(array) : TArrayGetAddedItems(array);
+		for (int i = 0; i < forSteps; ++i)
+		{
+			void * data = TArrayGetAt(array, i);
+			if (data)
+			{
+				TFree(data);
+				data = 0;
+
+				TArraySetAt(array, i, 0);
+			}
+		}
+	}
+}
+
+int TArrayFindEmpty(
+	T_OBJECT array,
+	const int byCapacity)
+{
+	int forSteps = 0;
+
+	if (array)
+	{
+		forSteps = byCapacity ? TArrayGetCapacity(array) : TArrayGetAddedItems(array);
+		for (int i = 0; i < forSteps; ++i)
+		{
+			if (!TArrayGetAt(array, i))
+			{
+				return i;
+			}
+		}
+	}
+
+	return -1;
 }

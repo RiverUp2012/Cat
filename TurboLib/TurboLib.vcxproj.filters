@@ -143,5 +143,11 @@
     <ClCompile Include="Source\Window.cpp">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Path.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="History.txt" />
   </ItemGroup>
 </Project>
