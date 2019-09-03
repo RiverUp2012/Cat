@@ -330,6 +330,13 @@ extern int TListAddDataToHead(
 	T_OBJECT list,
 	void * data);
 
+//
+// 判断链表中是否包含指定数据
+//
+extern int TListIsContainData(
+	T_OBJECT list,
+	const void * data);
+
 //---------------------------------------------------------------
 // array
 // 自增长数组相关接口

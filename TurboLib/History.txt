@@ -14,3 +14,4 @@
 	* 新增 TOSInfoGetAppBarRect() 函数，用于获取任务栏在屏幕中的矩形区域
 	* 新增 TOSInfoGetDesktopSize() 函数，用于获取桌面大小
 	* 新增 TEventOpenA() 函数，用于打开事件
+	* 新增 TListIsContainData() 函数，用于判断链表中是否包含指定数据

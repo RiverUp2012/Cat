@@ -8,9 +8,11 @@
 #	define new DEBUG_NEW
 #endif
 
+// 应用程序实例名称
 #define INSTANCE_EVENT_NAME (L"CatInstanceEvent")
 
 static CCatApp gApp;
+// 应用程序实例事件，用于防止多重实例启动
 static T_OBJECT gInstanceEvent = 0;
 
 BOOL CCatApp::InitInstance()

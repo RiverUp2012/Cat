@@ -147,3 +147,25 @@ int TListAddDataToHead(
 
 	return T_FALSE;
 }
+
+int TListIsContainData(
+	T_OBJECT list,
+	const void * data)
+{
+	T_LIST * listImpl = (T_LIST *)list;
+	if (listImpl)
+	{
+		T_LIST_NODE * node = listImpl->mHeadNode;
+		while (node)
+		{
+			if (data == node->mData)
+			{
+				return T_TRUE;
+			}
+
+			node = node->mNext;
+		}
+	}
+
+	return T_FALSE;
+}
