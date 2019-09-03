@@ -55,6 +55,11 @@ T_OBJECT TThreadCreateW(
 			threadImpl->mThreadProc = threadProc;
 			threadImpl->mUserData = userData;
 
+			if (threadName)
+			{
+				TStringCopyW(threadImpl->mThreadName, threadName, 0);
+			}
+
 			threadImpl->mThreadHandle = CreateThread(
 				0,
 				0,
@@ -64,20 +69,39 @@ T_OBJECT TThreadCreateW(
 				&threadImpl->mThreadId);
 			if (threadImpl->mThreadHandle)
 			{
-				if (threadName)
-				{
-					TStringCopyW(threadImpl->mThreadName, threadName, 0);
-				}
-
 				return (T_OBJECT)threadImpl;
 			}
 
-			threadImpl->mThreadProc = 0;
-			threadImpl->mUserData = 0;
+			TMemset(threadImpl, sizeof(T_THREAD), 0);
 		}
 	}
 
 	return 0;
+}
+
+T_OBJECT TThreadCreateA(
+	TThreadProc threadProc,
+	void * userData,
+	const int runNow,
+	const char * threadName)
+{
+	T_OBJECT thread = 0;
+	wchar_t * threadNameW = 0;
+
+	if (threadName)
+	{
+		threadNameW = TStringA2W(threadName);
+	}
+
+	thread = TThreadCreateW(threadProc, userData, runNow, threadNameW);
+
+	if (threadNameW)
+	{
+		TFree(threadNameW);
+		threadNameW = 0;
+	}
+
+	return thread;
 }
 
 void TThreadDestroy(

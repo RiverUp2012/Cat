@@ -752,6 +752,11 @@ extern T_OBJECT TThreadCreateW(
 	void * userData,
 	const int runNow,
 	const wchar_t * threadName);
+extern T_OBJECT TThreadCreateA(
+	TThreadProc threadProc,
+	void * userData,
+	const int runNow,
+	const char * threadName);
 
 //
 // Ïú»ÙÏß³Ì
