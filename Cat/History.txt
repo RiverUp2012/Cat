@@ -15,3 +15,10 @@
 	* 新增 GDIPlus 目录，用于存放 GDI+ 相关源代码文件
 	* 新增 CGDIPStartup 类，用于启动和关闭 GDI+ 库
 	* 增加防止多重实例启动的代码
+
+* 2019-09-12
+
+	* 移除 GDIPlus 目录及其内容
+	* 移除对 TurboLib 库的引用
+	* 新增对 WinLib 库的引用
+	* 移除 RemoteControl 模块的实现代码，将来基于 WinLib 重写实现代码

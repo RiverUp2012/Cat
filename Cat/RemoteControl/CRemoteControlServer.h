@@ -4,8 +4,7 @@
 //
 // 远程控制系统，服务端
 //
-class CRemoteControlServer
-{
+class CRemoteControlServer {
 public:
 
 	//

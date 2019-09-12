@@ -28,28 +28,33 @@
 #include <afxcontrolbars.h>
 
 //-------------------------------------------------------------------------------
-// TurboLib 实用函数库相关配置
+// STL 相关配置
 //-------------------------------------------------------------------------------
 
-#include "../TurboLib/TurboLib.h"
-
-#if defined WIN64 || defined _WIN64
-#	if defined DEBUG || defined _DEBUG
-#		pragma comment(lib, "../x64/Debug/TurboLib.lib")
-#	else
-#		pragma comment(lib, "../x64/Release/TurboLib.lib")
-#	endif
-#else
-#	if defined DEBUG || defined _DEBUG
-#		pragma comment(lib, "../Debug/TurboLib.lib")
-#	else
-#		pragma comment(lib, "../Release/TurboLib.lib")
-#	endif
-#endif
+#include <vector>
 
 //-------------------------------------------------------------------------------
 // GDI+ 相关配置
 //-------------------------------------------------------------------------------
 
-#include <gdiplus.h>
 #pragma comment(lib, "gdiplus.lib")
+
+//-------------------------------------------------------------------------------
+// WinLib 相关配置
+//-------------------------------------------------------------------------------
+
+#include "../WinLib/Include/WinLib.h"
+
+#if defined WIN64 || defined _WIN64
+#	if defined DEBUG || defined _DEBUG
+#		pragma comment(lib, "../x64/Debug/WinLib.lib")
+#	else
+#		pragma comment(lib, "../x64/Release/WinLib.lib")
+#	endif
+#else
+#	if defined DEBUG || defined _DEBUG
+#		pragma comment(lib, "../Debug/WinLib.lib")
+#	else
+#		pragma comment(lib, "../Release/WinLib.lib")
+#	endif
+#endif

@@ -8,8 +8,7 @@
 // 一个定时器线程，定时查询系统中是否存在这些需要清理的进程
 // 如果有，将其清理掉
 //
-class CProcessCleanup
-{
+class CProcessCleanup {
 public:
 
 	//
