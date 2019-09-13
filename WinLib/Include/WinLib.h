@@ -287,4 +287,11 @@ namespace wl {
 		ULONG_PTR mToken = 0;
 	};
 
+	class InputHandler {
+	public:
+		virtual bool onMouseMove(const int mouseX, const int mouseY) { return true; }
+		virtual bool onKeyUp(const int keyCode) { return true; }
+		virtual bool onKeyDown(const int keyCode) { return true; }
+	};
+
 } // namespace wl
