@@ -8,8 +8,8 @@
 #endif
 
 static CCatApp gApp;
-static wl::SingleAppInstance gSingleAppInstance;
-static wl::GDIPStartup gGDIPStartup;
+static wlSingleAppInstance gSingleAppInstance;
+static wlGDIPStartup gGDIPStartup;
 
 BOOL CCatApp::InitInstance() {
 	// 防止多重实例启动

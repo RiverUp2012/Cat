@@ -1,0 +1,126 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Include\SurgeGameEnginePrivate.h" />
+    <ClInclude Include="Include\WinLibPrivate.h" />
+    <ClInclude Include="SurgeGameEngine.h" />
+    <ClInclude Include="SurgeGameEngineTemplate.h" />
+    <ClInclude Include="WinLib.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="SurgeGameEngineSource\sgeBatchPrimitive.cpp" />
+    <ClCompile Include="SurgeGameEngineSource\sgeBatchSprite.cpp" />
+    <ClCompile Include="SurgeGameEngineSource\sgeEngine.cpp" />
+    <ClCompile Include="SurgeGameEngineSource\sgeFile.cpp" />
+    <ClCompile Include="SurgeGameEngineSource\sgeFont.cpp" />
+    <ClCompile Include="SurgeGameEngineSource\sgeGameState.cpp" />
+    <ClCompile Include="SurgeGameEngineSource\sgeGlobalData.cpp" />
+    <ClCompile Include="SurgeGameEngineSource\sgeInputHandler.cpp" />
+    <ClCompile Include="SurgeGameEngineSource\sgeModule.cpp" />
+    <ClCompile Include="SurgeGameEngineSource\sgeNonCopyable.cpp" />
+    <ClCompile Include="SurgeGameEngineSource\sgePaintObject.cpp" />
+    <ClCompile Include="SurgeGameEngineSource\sgePerformanceCounter.cpp" />
+    <ClCompile Include="SurgeGameEngineSource\sgeRefCounter.cpp" />
+    <ClCompile Include="SurgeGameEngineSource\sgeSound.cpp" />
+    <ClCompile Include="SurgeGameEngineSource\sgeSoundDevice.cpp" />
+    <ClCompile Include="SurgeGameEngineSource\sgeSprite.cpp" />
+    <ClCompile Include="SurgeGameEngineSource\sgeStringTool.cpp" />
+    <ClCompile Include="SurgeGameEngineSource\sgeTexture.cpp" />
+    <ClCompile Include="SurgeGameEngineSource\sgeVertexBuffer.cpp" />
+    <ClCompile Include="SurgeGameEngineSource\sgeVideoDevice.cpp" />
+    <ClCompile Include="SurgeGameEngineSource\sgeWaveReader.cpp" />
+    <ClCompile Include="SurgeGameEngineSource\sgeWindow.cpp" />
+    <ClCompile Include="WinLibSource\wlEvent.cpp" />
+    <ClCompile Include="WinLibSource\wlFileHelper.cpp" />
+    <ClCompile Include="WinLibSource\wlGDIBitmap.cpp" />
+    <ClCompile Include="WinLibSource\wlGDIDC.cpp" />
+    <ClCompile Include="WinLibSource\wlGDIPImage.cpp" />
+    <ClCompile Include="WinLibSource\wlGDIPStartup.cpp" />
+    <ClCompile Include="WinLibSource\wlGDIPWindow.cpp" />
+    <ClCompile Include="WinLibSource\wlLog.cpp" />
+    <ClCompile Include="WinLibSource\wlModule.cpp" />
+    <ClCompile Include="WinLibSource\wlMutex.cpp" />
+    <ClCompile Include="WinLibSource\wlNonCopyable.cpp" />
+    <ClCompile Include="WinLibSource\wlPathHelper.cpp" />
+    <ClCompile Include="WinLibSource\wlProcess.cpp" />
+    <ClCompile Include="WinLibSource\wlProcessEnumCallbackWarpper.cpp" />
+    <ClCompile Include="WinLibSource\wlProcessHelper.cpp" />
+    <ClCompile Include="WinLibSource\wlSingleAppInstance.cpp" />
+    <ClCompile Include="WinLibSource\wlStringHelper.cpp" />
+    <ClCompile Include="WinLibSource\wlThread.cpp" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{A354D5D4-9E3E-4298-B312-2025895806E4}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>WorkSpace</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup />
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

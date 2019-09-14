@@ -4,7 +4,7 @@
 //
 // 主对话框类
 //
-class CMainDlg : public CDialogEx, public wl::GDIPWindow
+class CMainDlg : public CDialogEx, public wlGDIPWindow
 {
 public:
 
@@ -13,7 +13,7 @@ public:
 protected:
 
 	HICON m_hIcon = 0;
-	wl::GDIPImage mImgBK;
+	wlGDIPImage mImgBK;
 
 	virtual BOOL OnInitDialog();
 	DECLARE_MESSAGE_MAP()

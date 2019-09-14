@@ -15,24 +15,24 @@
     <ClInclude Include="Include\WinLibPrivate.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Source\GDIBitmap.cpp" />
-    <ClCompile Include="Source\GDIDC.cpp" />
-    <ClCompile Include="Source\Event.cpp" />
-    <ClCompile Include="Source\FileHelper.cpp" />
-    <ClCompile Include="Source\GDIPImage.cpp" />
-    <ClCompile Include="Source\GDIPStartup.cpp" />
-    <ClCompile Include="Source\GDIPWindow.cpp" />
-    <ClCompile Include="Source\Log.cpp" />
-    <ClCompile Include="Source\Module.cpp" />
-    <ClCompile Include="Source\Mutex.cpp" />
-    <ClCompile Include="Source\NonCopyable.cpp" />
-    <ClCompile Include="Source\PathHelper.cpp" />
-    <ClCompile Include="Source\Process.cpp" />
-    <ClCompile Include="Source\ProcessEnumCallbackWarpper.cpp" />
-    <ClCompile Include="Source\ProcessHelper.cpp" />
-    <ClCompile Include="Source\SingleAppInstance.cpp" />
-    <ClCompile Include="Source\StringHelper.cpp" />
-    <ClCompile Include="Source\Thread.cpp" />
+    <ClCompile Include="Source\wlGDIBitmap.cpp" />
+    <ClCompile Include="Source\wlGDIDC.cpp" />
+    <ClCompile Include="Source\wlEvent.cpp" />
+    <ClCompile Include="Source\wlFileHelper.cpp" />
+    <ClCompile Include="Source\wlGDIPImage.cpp" />
+    <ClCompile Include="Source\wlGDIPStartup.cpp" />
+    <ClCompile Include="Source\wlGDIPWindow.cpp" />
+    <ClCompile Include="Source\wlLog.cpp" />
+    <ClCompile Include="Source\wlModule.cpp" />
+    <ClCompile Include="Source\wlMutex.cpp" />
+    <ClCompile Include="Source\wlNonCopyable.cpp" />
+    <ClCompile Include="Source\wlPathHelper.cpp" />
+    <ClCompile Include="Source\wlProcess.cpp" />
+    <ClCompile Include="Source\wlProcessEnumCallbackWarpper.cpp" />
+    <ClCompile Include="Source\wlProcessHelper.cpp" />
+    <ClCompile Include="Source\wlSingleAppInstance.cpp" />
+    <ClCompile Include="Source\wlStringHelper.cpp" />
+    <ClCompile Include="Source\wlThread.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{6F5BFCEA-195B-4D7D-9758-31CB6BB0B3EA}</ProjectGuid>

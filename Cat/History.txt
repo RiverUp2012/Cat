@@ -22,3 +22,8 @@
 	* 移除对 TurboLib 库的引用
 	* 新增对 WinLib 库的引用
 	* 移除 RemoteControl 模块的实现代码，将来基于 WinLib 重写实现代码
+
+* 2019-09-14
+
+	* 移除对 WinLib 库的引用
+	* 新增对 WorkSpace 库的引用

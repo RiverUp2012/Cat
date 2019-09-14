@@ -1,0 +1,149 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Include">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="WinLibSource">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="SurgeGameEngineSource">
+      <UniqueIdentifier>{b05f0f47-37ca-43a6-986a-3cbb661b3d2d}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="SurgeGameEngine.h" />
+    <ClInclude Include="SurgeGameEngineTemplate.h" />
+    <ClInclude Include="WinLib.h" />
+    <ClInclude Include="Include\SurgeGameEnginePrivate.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\WinLibPrivate.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="SurgeGameEngineSource\sgePaintObject.cpp">
+      <Filter>SurgeGameEngineSource</Filter>
+    </ClCompile>
+    <ClCompile Include="SurgeGameEngineSource\sgePerformanceCounter.cpp">
+      <Filter>SurgeGameEngineSource</Filter>
+    </ClCompile>
+    <ClCompile Include="SurgeGameEngineSource\sgeRefCounter.cpp">
+      <Filter>SurgeGameEngineSource</Filter>
+    </ClCompile>
+    <ClCompile Include="SurgeGameEngineSource\sgeSound.cpp">
+      <Filter>SurgeGameEngineSource</Filter>
+    </ClCompile>
+    <ClCompile Include="SurgeGameEngineSource\sgeSoundDevice.cpp">
+      <Filter>SurgeGameEngineSource</Filter>
+    </ClCompile>
+    <ClCompile Include="SurgeGameEngineSource\sgeSprite.cpp">
+      <Filter>SurgeGameEngineSource</Filter>
+    </ClCompile>
+    <ClCompile Include="SurgeGameEngineSource\sgeStringTool.cpp">
+      <Filter>SurgeGameEngineSource</Filter>
+    </ClCompile>
+    <ClCompile Include="SurgeGameEngineSource\sgeTexture.cpp">
+      <Filter>SurgeGameEngineSource</Filter>
+    </ClCompile>
+    <ClCompile Include="SurgeGameEngineSource\sgeVertexBuffer.cpp">
+      <Filter>SurgeGameEngineSource</Filter>
+    </ClCompile>
+    <ClCompile Include="SurgeGameEngineSource\sgeVideoDevice.cpp">
+      <Filter>SurgeGameEngineSource</Filter>
+    </ClCompile>
+    <ClCompile Include="SurgeGameEngineSource\sgeWaveReader.cpp">
+      <Filter>SurgeGameEngineSource</Filter>
+    </ClCompile>
+    <ClCompile Include="SurgeGameEngineSource\sgeWindow.cpp">
+      <Filter>SurgeGameEngineSource</Filter>
+    </ClCompile>
+    <ClCompile Include="SurgeGameEngineSource\sgeBatchPrimitive.cpp">
+      <Filter>SurgeGameEngineSource</Filter>
+    </ClCompile>
+    <ClCompile Include="SurgeGameEngineSource\sgeBatchSprite.cpp">
+      <Filter>SurgeGameEngineSource</Filter>
+    </ClCompile>
+    <ClCompile Include="SurgeGameEngineSource\sgeEngine.cpp">
+      <Filter>SurgeGameEngineSource</Filter>
+    </ClCompile>
+    <ClCompile Include="SurgeGameEngineSource\sgeFile.cpp">
+      <Filter>SurgeGameEngineSource</Filter>
+    </ClCompile>
+    <ClCompile Include="SurgeGameEngineSource\sgeFont.cpp">
+      <Filter>SurgeGameEngineSource</Filter>
+    </ClCompile>
+    <ClCompile Include="SurgeGameEngineSource\sgeGameState.cpp">
+      <Filter>SurgeGameEngineSource</Filter>
+    </ClCompile>
+    <ClCompile Include="SurgeGameEngineSource\sgeGlobalData.cpp">
+      <Filter>SurgeGameEngineSource</Filter>
+    </ClCompile>
+    <ClCompile Include="SurgeGameEngineSource\sgeInputHandler.cpp">
+      <Filter>SurgeGameEngineSource</Filter>
+    </ClCompile>
+    <ClCompile Include="SurgeGameEngineSource\sgeModule.cpp">
+      <Filter>SurgeGameEngineSource</Filter>
+    </ClCompile>
+    <ClCompile Include="SurgeGameEngineSource\sgeNonCopyable.cpp">
+      <Filter>SurgeGameEngineSource</Filter>
+    </ClCompile>
+    <ClCompile Include="WinLibSource\wlGDIPStartup.cpp">
+      <Filter>WinLibSource</Filter>
+    </ClCompile>
+    <ClCompile Include="WinLibSource\wlGDIPWindow.cpp">
+      <Filter>WinLibSource</Filter>
+    </ClCompile>
+    <ClCompile Include="WinLibSource\wlLog.cpp">
+      <Filter>WinLibSource</Filter>
+    </ClCompile>
+    <ClCompile Include="WinLibSource\wlModule.cpp">
+      <Filter>WinLibSource</Filter>
+    </ClCompile>
+    <ClCompile Include="WinLibSource\wlMutex.cpp">
+      <Filter>WinLibSource</Filter>
+    </ClCompile>
+    <ClCompile Include="WinLibSource\wlNonCopyable.cpp">
+      <Filter>WinLibSource</Filter>
+    </ClCompile>
+    <ClCompile Include="WinLibSource\wlPathHelper.cpp">
+      <Filter>WinLibSource</Filter>
+    </ClCompile>
+    <ClCompile Include="WinLibSource\wlProcess.cpp">
+      <Filter>WinLibSource</Filter>
+    </ClCompile>
+    <ClCompile Include="WinLibSource\wlProcessEnumCallbackWarpper.cpp">
+      <Filter>WinLibSource</Filter>
+    </ClCompile>
+    <ClCompile Include="WinLibSource\wlProcessHelper.cpp">
+      <Filter>WinLibSource</Filter>
+    </ClCompile>
+    <ClCompile Include="WinLibSource\wlSingleAppInstance.cpp">
+      <Filter>WinLibSource</Filter>
+    </ClCompile>
+    <ClCompile Include="WinLibSource\wlStringHelper.cpp">
+      <Filter>WinLibSource</Filter>
+    </ClCompile>
+    <ClCompile Include="WinLibSource\wlThread.cpp">
+      <Filter>WinLibSource</Filter>
+    </ClCompile>
+    <ClCompile Include="WinLibSource\wlEvent.cpp">
+      <Filter>WinLibSource</Filter>
+    </ClCompile>
+    <ClCompile Include="WinLibSource\wlFileHelper.cpp">
+      <Filter>WinLibSource</Filter>
+    </ClCompile>
+    <ClCompile Include="WinLibSource\wlGDIBitmap.cpp">
+      <Filter>WinLibSource</Filter>
+    </ClCompile>
+    <ClCompile Include="WinLibSource\wlGDIDC.cpp">
+      <Filter>WinLibSource</Filter>
+    </ClCompile>
+    <ClCompile Include="WinLibSource\wlGDIPImage.cpp">
+      <Filter>WinLibSource</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

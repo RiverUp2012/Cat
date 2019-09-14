@@ -32,6 +32,8 @@
 //-------------------------------------------------------------------------------
 
 #include <vector>
+#include <list>
+#include <string>
 
 //-------------------------------------------------------------------------------
 // GDI+ 相关配置
@@ -40,21 +42,21 @@
 #pragma comment(lib, "gdiplus.lib")
 
 //-------------------------------------------------------------------------------
-// WinLib 相关配置
+// WorkSpace 相关配置
 //-------------------------------------------------------------------------------
 
-#include "../WinLib/Include/WinLib.h"
+#include "../WorkSpace/WinLib.h"
 
 #if defined WIN64 || defined _WIN64
 #	if defined DEBUG || defined _DEBUG
-#		pragma comment(lib, "../x64/Debug/WinLib.lib")
+#		pragma comment(lib, "../x64/Debug/WorkSpace.lib")
 #	else
-#		pragma comment(lib, "../x64/Release/WinLib.lib")
+#		pragma comment(lib, "../x64/Release/WorkSpace.lib")
 #	endif
 #else
 #	if defined DEBUG || defined _DEBUG
-#		pragma comment(lib, "../Debug/WinLib.lib")
+#		pragma comment(lib, "../Debug/WorkSpace.lib")
 #	else
-#		pragma comment(lib, "../Release/WinLib.lib")
+#		pragma comment(lib, "../Release/WorkSpace.lib")
 #	endif
 #endif

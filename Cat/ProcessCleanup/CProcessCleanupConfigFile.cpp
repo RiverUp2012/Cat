@@ -45,7 +45,7 @@ void CProcessCleanupConfigFile::saveW(
 	wchar_t value[64] = { 0 };
 	int processCount = 0;
 	if (configFileName) {
-		wl::FileHelper::deleteFileW(configFileName);
+		wlFileHelper::deleteFileW(configFileName);
 		for (const auto & processExeFileName : gProcessExeFileNameArray) {
 			swprintf_s(key, CONFIG_KEY_PROCESS_FMT, processCount);
 			WritePrivateProfileStringW(

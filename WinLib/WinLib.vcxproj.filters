@@ -19,58 +19,58 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Source\Thread.cpp">
+    <ClCompile Include="Source\wlEvent.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="Source\NonCopyable.cpp">
+    <ClCompile Include="Source\wlFileHelper.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Mutex.cpp">
+    <ClCompile Include="Source\wlGDIBitmap.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Process.cpp">
+    <ClCompile Include="Source\wlGDIDC.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="Source\ProcessHelper.cpp">
+    <ClCompile Include="Source\wlGDIPImage.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Module.cpp">
+    <ClCompile Include="Source\wlGDIPStartup.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="Source\StringHelper.cpp">
+    <ClCompile Include="Source\wlGDIPWindow.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="Source\ProcessEnumCallbackWarpper.cpp">
+    <ClCompile Include="Source\wlLog.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Event.cpp">
+    <ClCompile Include="Source\wlModule.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="Source\SingleAppInstance.cpp">
+    <ClCompile Include="Source\wlMutex.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="Source\PathHelper.cpp">
+    <ClCompile Include="Source\wlPathHelper.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="Source\FileHelper.cpp">
+    <ClCompile Include="Source\wlNonCopyable.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="Source\GDIPWindow.cpp">
+    <ClCompile Include="Source\wlProcess.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="Source\GDIDC.cpp">
+    <ClCompile Include="Source\wlProcessEnumCallbackWarpper.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="Source\GDIBitmap.cpp">
+    <ClCompile Include="Source\wlProcessHelper.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="Source\GDIPStartup.cpp">
+    <ClCompile Include="Source\wlSingleAppInstance.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="Source\GDIPImage.cpp">
+    <ClCompile Include="Source\wlStringHelper.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Log.cpp">
+    <ClCompile Include="Source\wlThread.cpp">
       <Filter>Source</Filter>
     </ClCompile>
   </ItemGroup>

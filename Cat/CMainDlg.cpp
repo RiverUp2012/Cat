@@ -20,14 +20,14 @@ CMainDlg::CMainDlg(CWnd* pParent) : CDialogEx(IDD_DLG_MAIN, pParent) {
 }
 
 BOOL CMainDlg::OnInitDialog() {
-	std::wstring imageFileName;
-	std::wstring configFileName;
-	std::wstring appPath;
+	sgeStringW imageFileName;
+	sgeStringW configFileName;
+	sgeStringW appPath;
 
 	CDialogEx::OnInitDialog();
 	SetIcon(m_hIcon, TRUE);
 	SetIcon(m_hIcon, FALSE);
-	wl::PathHelper::getAppPathW(appPath);
+	wlPathHelper::getAppPathW(appPath);
 
 	// 绘制猫猫背景
 
@@ -36,7 +36,7 @@ BOOL CMainDlg::OnInitDialog() {
 
 	if (createFromHWND(GetSafeHwnd())) {
 		imageFileName = appPath + L"Cat\\Image\\Cat.png";
-		if (mImgBK.createFromFileW(imageFileName.c_str())) {
+		if (mImgBK.createFromFileW(imageFileName.getString())) {
 			drawImage(mImgBK, 0, 0, mImgBK.getWidth(), mImgBK.getHeight());
 			present();
 		}
@@ -45,7 +45,7 @@ BOOL CMainDlg::OnInitDialog() {
 	// 从配置文件加载要清理的进程列表
 
 	configFileName = appPath +  L"Cat\\Config\\ProcessCleanup.ini";
-	CProcessCleanupConfigFile::loadW(configFileName.c_str());
+	CProcessCleanupConfigFile::loadW(configFileName.getString());
 
 	// 将要清理的进程告诉进程清理模块
 

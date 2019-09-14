@@ -9,24 +9,24 @@ namespace {
 	// 每隔多少毫秒清理一次进程
 	static int gCleanupTimeInterval = DEFAULT_CLEANUP_TIME_INTERVAL;
 	static std::vector<std::wstring> gProcessExeFileNameArray;
-	static wl::Mutex gProcessExeFileNameArrayLock;
+	static wlMutex gProcessExeFileNameArrayLock;
 
-	class MyThread : public wl::Thread {
+	class MyThread : public wlThread {
 	public:
 		void onThreadRun(void) override {
 			while (true) {
-				wl::ProcessEnumCallbackWarpper pecw;
+				wlProcessEnumCallbackWarpper pecw;
 				pecw.enumProcess();
-				for (const auto & processID : pecw.getProcessIDList()) {
-					wl::Process process;
+				for (auto iter = pecw.getProcessIDList().begin(); iter.isValid(); iter.moveNext()) {
+					wlProcess process;
 					if (process.openByProcessID(
-						processID,
-						wl::PROCESS_FEATURE_QUERY_INFO | wl::PROCESS_FEATURE_QUERY_INFO)) {
-						std::wstring imageFileName;
+						iter.getData(),
+						WL_PROCESS_FEATURE_QUERY_INFO | WL_PROCESS_FEATURE_QUERY_INFO)) {
+						sgeStringW imageFileName;
 						if (process.getImageFileNameW(imageFileName)) {
-							std::wstring fileName;
-							if (wl::PathHelper::getFileNameWithExtW(imageFileName.c_str(), fileName)) {
-								if (processCanKillW(imageFileName.c_str())) {
+							sgeStringW fileName;
+							if (wlPathHelper::getFileNameWithExtW(imageFileName.getString(), fileName)) {
+								if (processCanKillW(imageFileName.getString())) {
 									process.terminate();
 								}
 							}
@@ -39,7 +39,7 @@ namespace {
 		}
 	private:
 		bool processCanKillW(const wchar_t * imageFileName) const {
-			wl::MutexGuard mutexGuard(&gProcessExeFileNameArrayLock);
+			wlMutexGuard mutexGuard(&gProcessExeFileNameArrayLock);
 			if (imageFileName) {
 				for (const auto & processExeFileName : gProcessExeFileNameArray) {
 					if (0 == _wcsicmp(imageFileName, processExeFileName.c_str())) {
@@ -69,7 +69,7 @@ void CProcessCleanup::shutdown(void) {
 
 bool CProcessCleanup::addProcessExeFileNameW(
 	const wchar_t * processExeFileName) {
-	wl::MutexGuard mutexGuard(&gProcessExeFileNameArrayLock);
+	wlMutexGuard mutexGuard(&gProcessExeFileNameArrayLock);
 	if (processExeFileName) {
 		gProcessExeFileNameArray.push_back(processExeFileName);
 	}
@@ -77,6 +77,6 @@ bool CProcessCleanup::addProcessExeFileNameW(
 }
 
 void CProcessCleanup::removeAllProcessExeFileName(void) {
-	wl::MutexGuard mutexGuard(&gProcessExeFileNameArrayLock);
+	wlMutexGuard mutexGuard(&gProcessExeFileNameArrayLock);
 	gProcessExeFileNameArray.clear();
 }
