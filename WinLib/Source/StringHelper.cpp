@@ -69,4 +69,18 @@ namespace wl {
 		return false;
 	}
 
+	bool StringHelper::formatW(const wchar_t * format, const va_list & vl, std::wstring & string) {
+		if (format && vl) {
+
+		}
+		return false;
+	}
+
+	bool StringHelper::formatA(const char * format, const va_list & vl, std::string & string) {
+		if (format && vl) {
+
+		}
+		return false;
+	}
+
 } // namespace wl

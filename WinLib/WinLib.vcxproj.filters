@@ -70,5 +70,8 @@
     <ClCompile Include="Source\GDIPImage.cpp">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Log.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

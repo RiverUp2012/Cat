@@ -22,6 +22,7 @@
     <ClCompile Include="Source\GDIPImage.cpp" />
     <ClCompile Include="Source\GDIPStartup.cpp" />
     <ClCompile Include="Source\GDIPWindow.cpp" />
+    <ClCompile Include="Source\Log.cpp" />
     <ClCompile Include="Source\Module.cpp" />
     <ClCompile Include="Source\Mutex.cpp" />
     <ClCompile Include="Source\NonCopyable.cpp" />

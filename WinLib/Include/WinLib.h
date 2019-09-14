@@ -12,6 +12,7 @@
 #include <Windows.h>
 #include <TlHelp32.h>
 #include <gdiplus.h>
+#include <stdarg.h>
 #include <list>
 #include <string>
 
@@ -28,6 +29,28 @@ namespace wl {
 		virtual ~NonCopyable();
 	public:
 		NonCopyable & operator = (const NonCopyable & other) = delete;
+	};
+
+	//
+	// @brief
+	//
+	class Log {
+	public:
+		static bool openW(const wchar_t * logFileName);
+		static void close(void);
+		static bool putMessageW(const wchar_t * format, ...);
+		static bool putMessageA(const char * format, ...);
+	};
+
+	class File : public NonCopyable {
+	public:
+		File();
+		virtual ~File();
+	public:
+		bool openW(const wchar_t * fileName, const bool forRead, const bool forWrite);
+		void close(void);
+	private:
+		HANDLE mFileHandle = 0;
 	};
 
 	//
@@ -171,6 +194,8 @@ namespace wl {
 	public:
 		static bool a2w(const char * stringA, std::wstring & stringW, const bool toUTF8 = false);
 		static bool w2a(const wchar_t * stringW, std::string & stringA, const bool toUTF8 = false);
+		static bool formatW(const wchar_t * format, const va_list & vl, std::wstring & string);
+		static bool formatA(const char * format, const va_list & vl, std::string & string);
 	};
 
 	//
@@ -292,6 +317,16 @@ namespace wl {
 		virtual bool onMouseMove(const int mouseX, const int mouseY) { return true; }
 		virtual bool onKeyUp(const int keyCode) { return true; }
 		virtual bool onKeyDown(const int keyCode) { return true; }
+		virtual bool onMouseWhellUp(void) { return true; }
+		virtual bool onMouseWhellDown(void) { return true; }
+	};
+
+	class GDIPUIWindows : public InputHandler, public GDIPWindow {
+	public:
+		GDIPUIWindows();
+		virtual ~GDIPUIWindows();
+	public:
+	private:
 	};
 
 } // namespace wl
