@@ -1,5 +1,6 @@
 
 #include "../WinLib.h"
+#include "../Include/WinLibPrivate.h"
 
 static DWORD WINAPI globalThreadProc(LPVOID param) {
 	wlThread * thread = static_cast<wlThread *>(param);

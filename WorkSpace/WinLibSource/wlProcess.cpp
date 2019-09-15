@@ -1,19 +1,20 @@
 
 #include "../WinLib.h"
+#include "../Include/WinLibPrivate.h"
 
-typedef BOOL(WINAPI * TQueryFullProcessImageNameW)(
+typedef BOOL(WINAPI * wlQueryFullProcessImageNameW)(
 	HANDLE hProcess,
 	DWORD dwFlags,
 	LPWSTR lpExeName,
 	PDWORD lpdwSize);
-typedef DWORD(WINAPI * TGetModuleFileNameExW)(
+typedef DWORD(WINAPI * wlGetModuleFileNameExW)(
 	HANDLE hProcess,
 	HMODULE hModule,
 	LPWSTR lpFilename,
 	DWORD nSize);
 
-static TQueryFullProcessImageNameW gQueryFullProcessImageNameW = 0;
-static TGetModuleFileNameExW gGetModuleFileNameExW = 0;
+static wlQueryFullProcessImageNameW gQueryFullProcessImageNameW = 0;
+static wlGetModuleFileNameExW gGetModuleFileNameExW = 0;
 static wlModule gModuleKernel32;
 static wlModule gModulePsapi;
 
@@ -25,7 +26,7 @@ wlProcess::~wlProcess() {
 	close();
 }
 
-bool wlProcess::openByProcessID(const DWORD processID, const int features) {
+bool wlProcess::openByProcessID(const unsigned long processID, const int features) {
 	DWORD desiredAccess = 0;
 	if (!mProcessHandle) {
 		if (features & WL_PROCESS_FEATURE_TERMINATE) desiredAccess |= PROCESS_TERMINATE;
@@ -56,13 +57,13 @@ bool wlProcess::terminate(void) {
 	return ret;
 }
 
-bool wlProcess::getImageFileNameW(sgeStringW & imageFileName) {
+bool wlProcess::getImageFileNameW(glStringW & imageFileName) {
 	wchar_t imageFileNameTemp[520] = { 0 };
 	DWORD imageFileNameSize = _countof(imageFileNameTemp);
 	if (mProcessHandle) {
 		if (!gModuleKernel32.isAlready()) {
 			if (gModuleKernel32.loadW(L"kernel32.dll")) {
-				gQueryFullProcessImageNameW = (TQueryFullProcessImageNameW)
+				gQueryFullProcessImageNameW = (wlQueryFullProcessImageNameW)
 					gModuleKernel32.getProcAddressA("QueryFullProcessImageNameW");
 			}
 		}
@@ -78,7 +79,7 @@ bool wlProcess::getImageFileNameW(sgeStringW & imageFileName) {
 		}
 		if (!gModulePsapi.isAlready()) {
 			if (gModulePsapi.loadW(L"psapi.dll")) {
-				gGetModuleFileNameExW = (TGetModuleFileNameExW)
+				gGetModuleFileNameExW = (wlGetModuleFileNameExW)
 					gModulePsapi.getProcAddressA("GetModuleFileNameExW");
 			}
 		}

@@ -1,10 +1,17 @@
 
-//
-// @file WinLib.h
-// @brief Windows 编程工具库私有接口
-// @desc 为 WinLib 的公共接口提供内部支持
-// @author 李远兵
-// @date 2019-09-12
-//
-
 #pragma once
+
+#include <Windows.h>
+#include <TlHelp32.h>
+#include <gdiplus.h>
+#include <stdio.h>
+
+//
+// @brief GDI+ 启动类
+// @desc 用于自动启动与关闭 GDI+ 库
+//
+class wlGDIPStartup {
+public:
+	static void startup(void);
+	static void shutdown(void);
+};

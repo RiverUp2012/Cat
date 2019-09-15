@@ -1,5 +1,6 @@
 
 #include "../WinLib.h"
+#include "../Include/WinLibPrivate.h"
 
 wlModule::wlModule() {
 	mModuleHandle = 0;

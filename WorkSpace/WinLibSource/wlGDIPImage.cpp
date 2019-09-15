@@ -1,8 +1,10 @@
 
 #include "../WinLib.h"
+#include "../Include/WinLibPrivate.h"
 
 wlGDIPImage::wlGDIPImage() {
 	mImage = 0;
+	wlGDIPStartup::startup();
 }
 
 wlGDIPImage::~wlGDIPImage() {

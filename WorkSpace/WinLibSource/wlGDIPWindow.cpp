@@ -1,9 +1,11 @@
 
 #include "../WinLib.h"
+#include "../Include/WinLibPrivate.h"
 
 wlGDIPWindow::wlGDIPWindow() {
 	mGraphics = 0;
 	mWndHandle = 0;
+	wlGDIPStartup::startup();
 }
 
 wlGDIPWindow::~wlGDIPWindow() {

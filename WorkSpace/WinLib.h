@@ -9,11 +9,30 @@
 
 #pragma once
 
-#include <Windows.h>
-#include <TlHelp32.h>
-#include <gdiplus.h>
 #include <stdarg.h>
-#include "SurgeGameEngineTemplate.h"
+#include "GameLibTemplate.h"
+
+#define WL_FORMAT_W(_Format, _String, _Ret) \
+{ \
+if (_Format) \
+{ \
+	va_list vl = { 0 }; \
+	va_start(vl, _Format); \
+	_Ret = wlStringHelper::formatW(_Format, vl, _String); \
+	va_end(vl); \
+} \
+}
+
+#define WL_FORMAT_A(_Format, _String, _Ret) \
+{ \
+if (_Format) \
+{ \
+	va_list vl = { 0 }; \
+	va_start(vl, _Format); \
+	_Ret = wlStringHelper::formatA(_Format, vl, _String); \
+	va_end(vl); \
+} \
+}
 
 //
 // @brief 不可复制基类
@@ -29,7 +48,7 @@ private:
 };
 
 //
-// @brief
+// @brief 日志类
 //
 class wlLog {
 public:
@@ -117,10 +136,10 @@ public:
 	wlProcess();
 	virtual ~wlProcess();
 public:
-	bool openByProcessID(const DWORD processID, const int features = 0);
+	bool openByProcessID(const unsigned long processID, const int features = 0);
 	void close(void);
 	bool terminate(void);
-	bool getImageFileNameW(sgeStringW & imageFileName);
+	bool getImageFileNameW(glStringW & imageFileName);
 private:
 	void * mProcessHandle;
 };
@@ -150,11 +169,11 @@ public:
 	virtual ~wlProcessEnumCallbackWarpper();
 public:
 	void enumProcess(void);
-	const sgeList<unsigned long> & getProcessIDList(void) const;
+	const glList<unsigned long> & getProcessIDList(void) const;
 private:
 	bool onEnumProcess(const unsigned long processID) override;
 private:
-	sgeList<unsigned long> mProcessIDList;
+	glList<unsigned long> mProcessIDList;
 };
 
 //
@@ -178,10 +197,10 @@ private:
 //
 class wlStringHelper {
 public:
-	static bool a2w(const char * stringA, sgeStringW & stringW, const bool toUTF8 = false);
-	static bool w2a(const wchar_t * stringW, sgeStringA & stringA, const bool toUTF8 = false);
-	static bool formatW(const wchar_t * format, const va_list & vl, sgeStringW & string);
-	static bool formatA(const char * format, const va_list & vl, sgeStringA & string);
+	static bool a2w(const char * stringA, glStringW & stringW, const bool toUTF8 = false);
+	static bool w2a(const wchar_t * stringW, glStringA & stringA, const bool toUTF8 = false);
+	static bool formatW(const wchar_t * format, const va_list & vl, glStringW & string);
+	static bool formatA(const char * format, const va_list & vl, glStringA & string);
 };
 
 //
@@ -202,8 +221,8 @@ private:
 //
 class wlPathHelper {
 public:
-	static bool getFileNameWithExtW(const wchar_t * path, sgeStringW & fileNameWithExt);
-	static bool getAppPathW(sgeStringW & appPath);
+	static bool getFileNameWithExtW(const wchar_t * path, glStringW & fileNameWithExt);
+	static bool getAppPathW(glStringW & appPath);
 };
 
 //
@@ -284,18 +303,6 @@ private:
 	void * mGraphics;
 	void * mWndHandle;
 	wlGDIDC mClientDC;
-};
-
-//
-// @brief GDI+ 启动类
-// @desc 用于自动启动与关闭 GDI+ 库
-//
-class wlGDIPStartup final : public wlNonCopyable {
-public:
-	wlGDIPStartup();
-	~wlGDIPStartup();
-private:
-	ULONG_PTR mToken;
 };
 
 class wlInputHandler {

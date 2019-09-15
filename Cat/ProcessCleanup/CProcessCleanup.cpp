@@ -22,9 +22,9 @@ namespace {
 					if (process.openByProcessID(
 						iter.getData(),
 						WL_PROCESS_FEATURE_QUERY_INFO | WL_PROCESS_FEATURE_QUERY_INFO)) {
-						sgeStringW imageFileName;
+						glStringW imageFileName;
 						if (process.getImageFileNameW(imageFileName)) {
-							sgeStringW fileName;
+							glStringW fileName;
 							if (wlPathHelper::getFileNameWithExtW(imageFileName.getString(), fileName)) {
 								if (processCanKillW(imageFileName.getString())) {
 									process.terminate();

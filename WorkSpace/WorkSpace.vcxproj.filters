@@ -9,88 +9,22 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="SurgeGameEngineSource">
+    <Filter Include="GameLibSource">
       <UniqueIdentifier>{b05f0f47-37ca-43a6-986a-3cbb661b3d2d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="SurgeGameEngine.h" />
-    <ClInclude Include="SurgeGameEngineTemplate.h" />
     <ClInclude Include="WinLib.h" />
-    <ClInclude Include="Include\SurgeGameEnginePrivate.h">
+    <ClInclude Include="Include\WinLibPrivate.h">
       <Filter>Include</Filter>
     </ClInclude>
-    <ClInclude Include="Include\WinLibPrivate.h">
+    <ClInclude Include="GameLib.h" />
+    <ClInclude Include="GameLibTemplate.h" />
+    <ClInclude Include="Include\GameLibPrivate.h">
       <Filter>Include</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="SurgeGameEngineSource\sgePaintObject.cpp">
-      <Filter>SurgeGameEngineSource</Filter>
-    </ClCompile>
-    <ClCompile Include="SurgeGameEngineSource\sgePerformanceCounter.cpp">
-      <Filter>SurgeGameEngineSource</Filter>
-    </ClCompile>
-    <ClCompile Include="SurgeGameEngineSource\sgeRefCounter.cpp">
-      <Filter>SurgeGameEngineSource</Filter>
-    </ClCompile>
-    <ClCompile Include="SurgeGameEngineSource\sgeSound.cpp">
-      <Filter>SurgeGameEngineSource</Filter>
-    </ClCompile>
-    <ClCompile Include="SurgeGameEngineSource\sgeSoundDevice.cpp">
-      <Filter>SurgeGameEngineSource</Filter>
-    </ClCompile>
-    <ClCompile Include="SurgeGameEngineSource\sgeSprite.cpp">
-      <Filter>SurgeGameEngineSource</Filter>
-    </ClCompile>
-    <ClCompile Include="SurgeGameEngineSource\sgeStringTool.cpp">
-      <Filter>SurgeGameEngineSource</Filter>
-    </ClCompile>
-    <ClCompile Include="SurgeGameEngineSource\sgeTexture.cpp">
-      <Filter>SurgeGameEngineSource</Filter>
-    </ClCompile>
-    <ClCompile Include="SurgeGameEngineSource\sgeVertexBuffer.cpp">
-      <Filter>SurgeGameEngineSource</Filter>
-    </ClCompile>
-    <ClCompile Include="SurgeGameEngineSource\sgeVideoDevice.cpp">
-      <Filter>SurgeGameEngineSource</Filter>
-    </ClCompile>
-    <ClCompile Include="SurgeGameEngineSource\sgeWaveReader.cpp">
-      <Filter>SurgeGameEngineSource</Filter>
-    </ClCompile>
-    <ClCompile Include="SurgeGameEngineSource\sgeWindow.cpp">
-      <Filter>SurgeGameEngineSource</Filter>
-    </ClCompile>
-    <ClCompile Include="SurgeGameEngineSource\sgeBatchPrimitive.cpp">
-      <Filter>SurgeGameEngineSource</Filter>
-    </ClCompile>
-    <ClCompile Include="SurgeGameEngineSource\sgeBatchSprite.cpp">
-      <Filter>SurgeGameEngineSource</Filter>
-    </ClCompile>
-    <ClCompile Include="SurgeGameEngineSource\sgeEngine.cpp">
-      <Filter>SurgeGameEngineSource</Filter>
-    </ClCompile>
-    <ClCompile Include="SurgeGameEngineSource\sgeFile.cpp">
-      <Filter>SurgeGameEngineSource</Filter>
-    </ClCompile>
-    <ClCompile Include="SurgeGameEngineSource\sgeFont.cpp">
-      <Filter>SurgeGameEngineSource</Filter>
-    </ClCompile>
-    <ClCompile Include="SurgeGameEngineSource\sgeGameState.cpp">
-      <Filter>SurgeGameEngineSource</Filter>
-    </ClCompile>
-    <ClCompile Include="SurgeGameEngineSource\sgeGlobalData.cpp">
-      <Filter>SurgeGameEngineSource</Filter>
-    </ClCompile>
-    <ClCompile Include="SurgeGameEngineSource\sgeInputHandler.cpp">
-      <Filter>SurgeGameEngineSource</Filter>
-    </ClCompile>
-    <ClCompile Include="SurgeGameEngineSource\sgeModule.cpp">
-      <Filter>SurgeGameEngineSource</Filter>
-    </ClCompile>
-    <ClCompile Include="SurgeGameEngineSource\sgeNonCopyable.cpp">
-      <Filter>SurgeGameEngineSource</Filter>
-    </ClCompile>
     <ClCompile Include="WinLibSource\wlGDIPStartup.cpp">
       <Filter>WinLibSource</Filter>
     </ClCompile>
@@ -144,6 +78,72 @@
     </ClCompile>
     <ClCompile Include="WinLibSource\wlGDIPImage.cpp">
       <Filter>WinLibSource</Filter>
+    </ClCompile>
+    <ClCompile Include="GameLibSource\glBatchPrimitive.cpp">
+      <Filter>GameLibSource</Filter>
+    </ClCompile>
+    <ClCompile Include="GameLibSource\glBatchSprite.cpp">
+      <Filter>GameLibSource</Filter>
+    </ClCompile>
+    <ClCompile Include="GameLibSource\glEngine.cpp">
+      <Filter>GameLibSource</Filter>
+    </ClCompile>
+    <ClCompile Include="GameLibSource\glFile.cpp">
+      <Filter>GameLibSource</Filter>
+    </ClCompile>
+    <ClCompile Include="GameLibSource\glFont.cpp">
+      <Filter>GameLibSource</Filter>
+    </ClCompile>
+    <ClCompile Include="GameLibSource\glGameState.cpp">
+      <Filter>GameLibSource</Filter>
+    </ClCompile>
+    <ClCompile Include="GameLibSource\glGlobalData.cpp">
+      <Filter>GameLibSource</Filter>
+    </ClCompile>
+    <ClCompile Include="GameLibSource\glInputHandler.cpp">
+      <Filter>GameLibSource</Filter>
+    </ClCompile>
+    <ClCompile Include="GameLibSource\glModule.cpp">
+      <Filter>GameLibSource</Filter>
+    </ClCompile>
+    <ClCompile Include="GameLibSource\glNonCopyable.cpp">
+      <Filter>GameLibSource</Filter>
+    </ClCompile>
+    <ClCompile Include="GameLibSource\glPaintObject.cpp">
+      <Filter>GameLibSource</Filter>
+    </ClCompile>
+    <ClCompile Include="GameLibSource\glPerformanceCounter.cpp">
+      <Filter>GameLibSource</Filter>
+    </ClCompile>
+    <ClCompile Include="GameLibSource\glRefCounter.cpp">
+      <Filter>GameLibSource</Filter>
+    </ClCompile>
+    <ClCompile Include="GameLibSource\glSound.cpp">
+      <Filter>GameLibSource</Filter>
+    </ClCompile>
+    <ClCompile Include="GameLibSource\glSoundDevice.cpp">
+      <Filter>GameLibSource</Filter>
+    </ClCompile>
+    <ClCompile Include="GameLibSource\glSprite.cpp">
+      <Filter>GameLibSource</Filter>
+    </ClCompile>
+    <ClCompile Include="GameLibSource\glStringTool.cpp">
+      <Filter>GameLibSource</Filter>
+    </ClCompile>
+    <ClCompile Include="GameLibSource\glTexture.cpp">
+      <Filter>GameLibSource</Filter>
+    </ClCompile>
+    <ClCompile Include="GameLibSource\glVertexBuffer.cpp">
+      <Filter>GameLibSource</Filter>
+    </ClCompile>
+    <ClCompile Include="GameLibSource\glVideoDevice.cpp">
+      <Filter>GameLibSource</Filter>
+    </ClCompile>
+    <ClCompile Include="GameLibSource\glWaveReader.cpp">
+      <Filter>GameLibSource</Filter>
+    </ClCompile>
+    <ClCompile Include="GameLibSource\glWindow.cpp">
+      <Filter>GameLibSource</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

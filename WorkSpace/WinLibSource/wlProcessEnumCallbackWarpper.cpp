@@ -14,7 +14,7 @@ void wlProcessEnumCallbackWarpper::enumProcess(void) {
 	wlProcessHelper::enumProcess(this);
 }
 
-const sgeList<unsigned long> & wlProcessEnumCallbackWarpper::getProcessIDList(void) const {
+const glList<unsigned long> & wlProcessEnumCallbackWarpper::getProcessIDList(void) const {
 	return mProcessIDList;
 }
 

@@ -1,5 +1,6 @@
 
 #include "../WinLib.h"
+#include "../Include/WinLibPrivate.h"
 
 bool wlFileHelper::deleteFileW(const wchar_t * fileName) {
 	DWORD fileAttributes = 0;

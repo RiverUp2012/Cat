@@ -11,35 +11,35 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Include\SurgeGameEnginePrivate.h" />
+    <ClInclude Include="Include\GameLibPrivate.h" />
     <ClInclude Include="Include\WinLibPrivate.h" />
-    <ClInclude Include="SurgeGameEngine.h" />
-    <ClInclude Include="SurgeGameEngineTemplate.h" />
+    <ClInclude Include="GameLib.h" />
+    <ClInclude Include="GameLibTemplate.h" />
     <ClInclude Include="WinLib.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="SurgeGameEngineSource\sgeBatchPrimitive.cpp" />
-    <ClCompile Include="SurgeGameEngineSource\sgeBatchSprite.cpp" />
-    <ClCompile Include="SurgeGameEngineSource\sgeEngine.cpp" />
-    <ClCompile Include="SurgeGameEngineSource\sgeFile.cpp" />
-    <ClCompile Include="SurgeGameEngineSource\sgeFont.cpp" />
-    <ClCompile Include="SurgeGameEngineSource\sgeGameState.cpp" />
-    <ClCompile Include="SurgeGameEngineSource\sgeGlobalData.cpp" />
-    <ClCompile Include="SurgeGameEngineSource\sgeInputHandler.cpp" />
-    <ClCompile Include="SurgeGameEngineSource\sgeModule.cpp" />
-    <ClCompile Include="SurgeGameEngineSource\sgeNonCopyable.cpp" />
-    <ClCompile Include="SurgeGameEngineSource\sgePaintObject.cpp" />
-    <ClCompile Include="SurgeGameEngineSource\sgePerformanceCounter.cpp" />
-    <ClCompile Include="SurgeGameEngineSource\sgeRefCounter.cpp" />
-    <ClCompile Include="SurgeGameEngineSource\sgeSound.cpp" />
-    <ClCompile Include="SurgeGameEngineSource\sgeSoundDevice.cpp" />
-    <ClCompile Include="SurgeGameEngineSource\sgeSprite.cpp" />
-    <ClCompile Include="SurgeGameEngineSource\sgeStringTool.cpp" />
-    <ClCompile Include="SurgeGameEngineSource\sgeTexture.cpp" />
-    <ClCompile Include="SurgeGameEngineSource\sgeVertexBuffer.cpp" />
-    <ClCompile Include="SurgeGameEngineSource\sgeVideoDevice.cpp" />
-    <ClCompile Include="SurgeGameEngineSource\sgeWaveReader.cpp" />
-    <ClCompile Include="SurgeGameEngineSource\sgeWindow.cpp" />
+    <ClCompile Include="GameLibSource\glBatchPrimitive.cpp" />
+    <ClCompile Include="GameLibSource\glBatchSprite.cpp" />
+    <ClCompile Include="GameLibSource\glEngine.cpp" />
+    <ClCompile Include="GameLibSource\glFile.cpp" />
+    <ClCompile Include="GameLibSource\glFont.cpp" />
+    <ClCompile Include="GameLibSource\glGameState.cpp" />
+    <ClCompile Include="GameLibSource\glGlobalData.cpp" />
+    <ClCompile Include="GameLibSource\glInputHandler.cpp" />
+    <ClCompile Include="GameLibSource\glModule.cpp" />
+    <ClCompile Include="GameLibSource\glNonCopyable.cpp" />
+    <ClCompile Include="GameLibSource\glPaintObject.cpp" />
+    <ClCompile Include="GameLibSource\glPerformanceCounter.cpp" />
+    <ClCompile Include="GameLibSource\glRefCounter.cpp" />
+    <ClCompile Include="GameLibSource\glSound.cpp" />
+    <ClCompile Include="GameLibSource\glSoundDevice.cpp" />
+    <ClCompile Include="GameLibSource\glSprite.cpp" />
+    <ClCompile Include="GameLibSource\glStringTool.cpp" />
+    <ClCompile Include="GameLibSource\glTexture.cpp" />
+    <ClCompile Include="GameLibSource\glVertexBuffer.cpp" />
+    <ClCompile Include="GameLibSource\glVideoDevice.cpp" />
+    <ClCompile Include="GameLibSource\glWaveReader.cpp" />
+    <ClCompile Include="GameLibSource\glWindow.cpp" />
     <ClCompile Include="WinLibSource\wlEvent.cpp" />
     <ClCompile Include="WinLibSource\wlFileHelper.cpp" />
     <ClCompile Include="WinLibSource\wlGDIBitmap.cpp" />

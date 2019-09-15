@@ -1,5 +1,6 @@
 
 #include "../WinLib.h"
+#include "../Include/WinLibPrivate.h"
 
 wlGDIBitmap::wlGDIBitmap() {
 	mBitmapHandle = 0;

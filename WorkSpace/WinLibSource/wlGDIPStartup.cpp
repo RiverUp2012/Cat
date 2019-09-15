@@ -1,16 +1,20 @@
 
-#include "../WinLib.h"
+#include "../Include/WinLibPrivate.h"
 
-wlGDIPStartup::wlGDIPStartup() {
+namespace {
+	ULONG_PTR gToken = 0;
+}
+
+void wlGDIPStartup::startup(void) {
 	Gdiplus::GdiplusStartupInput startupInput = { 0 };
-	if (!mToken) {
-		Gdiplus::GdiplusStartup(&mToken, &startupInput, 0);
+	if (!gToken) {
+		Gdiplus::GdiplusStartup(&gToken, &startupInput, 0);
 	}
 }
 
-wlGDIPStartup::~wlGDIPStartup() {
-	if (mToken) {
-		Gdiplus::GdiplusShutdown(mToken);
-		mToken = 0;
+void wlGDIPStartup::shutdown(void) {
+	if (gToken) {
+		Gdiplus::GdiplusShutdown(gToken);
+		gToken = 0;
 	}
 }

@@ -20,9 +20,9 @@ CMainDlg::CMainDlg(CWnd* pParent) : CDialogEx(IDD_DLG_MAIN, pParent) {
 }
 
 BOOL CMainDlg::OnInitDialog() {
-	sgeStringW imageFileName;
-	sgeStringW configFileName;
-	sgeStringW appPath;
+	glStringW imageFileName;
+	glStringW configFileName;
+	glStringW appPath;
 
 	CDialogEx::OnInitDialog();
 	SetIcon(m_hIcon, TRUE);
@@ -30,9 +30,6 @@ BOOL CMainDlg::OnInitDialog() {
 	wlPathHelper::getAppPathW(appPath);
 
 	// 绘制猫猫背景
-
-	//adjustWindowPosToDesktopBottomRight();
-	//SetWindowPos(0, 0, 0, 328, 401, SWP_NOREPOSITION); // 令窗口大小等于背景图像大小，姑且先硬编码一下，以后优化
 
 	if (createFromHWND(GetSafeHwnd())) {
 		imageFileName = appPath + L"Cat\\Image\\Cat.png";

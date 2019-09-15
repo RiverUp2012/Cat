@@ -1,21 +1,28 @@
 
 #include "../WinLib.h"
-#include <string>
+#include "../Include/WinLibPrivate.h"
 
-bool wlPathHelper::getFileNameWithExtW(const wchar_t * path, sgeStringW & fileNameWithExt) {
-	const std::wstring pathTemp = path ? path : L"";
-	const std::wstring::size_type findIndex = pathTemp.find_last_of(L'\\');
-	if (std::wstring::npos != findIndex) {
-		fileNameWithExt = pathTemp.substr(findIndex + 1).c_str();
-		return true;
+bool wlPathHelper::getFileNameWithExtW(const wchar_t * path, glStringW & fileNameWithExt) {
+	int pathLength = path ? glStringW::getLength(path) : 0;
+	if (path && pathLength > 0) {
+		for (int i = pathLength - 1; i >= 0; --i) {
+			if (L'\\' == path[i]) {
+				if (fileNameWithExt.resize(i + 1)) {
+					glStringW::copy(fileNameWithExt.getBuffer(), path, i);
+					fileNameWithExt.setAt(i, L'\0');
+					return true;
+				}
+				break;
+			}
+		}
 	}
 	return false;
 }
 
-bool wlPathHelper::getAppPathW(sgeStringW & appPath) {
+bool wlPathHelper::getAppPathW(glStringW & appPath) {
 	wchar_t appPathTemp[520] = { 0 };
 	if (GetModuleFileNameW(0, appPathTemp, _countof(appPathTemp))) {
-		for (int i = wcslen(appPathTemp) - 1; i >= 0; --i) {
+		for (int i = glStringW::getLength(appPathTemp) - 1; i >= 0; --i) {
 			if (L'\\' == appPathTemp[i]) {
 				appPathTemp[i + 1] = L'\0';
 				appPath = appPathTemp;
