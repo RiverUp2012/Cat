@@ -32,6 +32,10 @@ public:
 	virtual bool setLeonMaxHP(const int maxHP) = 0;
 	//
 	// @brief 增加当前装备数量
-	//
 	virtual bool addCurrentItemCount(const int addItemCount) = 0;
+	//
+	//
+	// @brief 增加当前武器的子弹数量
+	//
+	virtual bool addCurrentGunBulletCount(const int addGunBulletCount) = 0;
 };

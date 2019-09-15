@@ -59,13 +59,17 @@ bool CBio4MemCheatOldAsiaV10::setLeonMaxHP(const int maxHP) {
 }
 
 bool CBio4MemCheatOldAsiaV10::addCurrentItemCount(const int addItemCount) {
+	return false;
+}
+
+bool CBio4MemCheatOldAsiaV10::addCurrentGunBulletCount(const int addGunBulletCount) {
 	int itemAddr = 0;
-	__int16 itemCount = 0;
+	__int16 bulletCount = 0;
 	if (mBio4Process.vmRead((const void *)0x033E2C4C, &itemAddr, 4)) {
 		itemAddr += 8;
-		if (mBio4Process.vmRead((const void *)itemAddr, &itemCount, 2)) {
-			itemCount += static_cast<__int16>(addItemCount * 8);
-			if (mBio4Process.vmWrite((void *)itemAddr, &itemCount, 2)) {
+		if (mBio4Process.vmRead((const void *)itemAddr, &bulletCount, 2)) {
+			bulletCount += static_cast<__int16>(addGunBulletCount * 8);
+			if (mBio4Process.vmWrite((void *)itemAddr, &bulletCount, 2)) {
 				return true;
 			}
 		}

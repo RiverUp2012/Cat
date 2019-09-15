@@ -15,6 +15,7 @@ public:
 	bool queryLeonMaxHP(int & maxHP) override;
 	bool setLeonMaxHP(const int maxHP) override;
 	bool addCurrentItemCount(const int addItemCount) override;
+	bool addCurrentGunBulletCount(const int addItemCount) override;
 private:
 	wlProcess mBio4Process;
 };

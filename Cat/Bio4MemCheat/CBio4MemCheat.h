@@ -30,4 +30,5 @@ public:
 	static bool queryLeonMaxHP(int & maxHP);
 	static bool setLeonMaxHP(const int maxHP);
 	static bool addCurrentItemCount(const int addItemCount);
+	static bool addCurrentGunBulletCount(const int addGunBulletCount);
 };
