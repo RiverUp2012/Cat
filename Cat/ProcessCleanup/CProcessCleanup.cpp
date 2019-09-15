@@ -17,10 +17,10 @@ namespace {
 			while (true) {
 				wlProcessEnumCallbackWarpper pecw;
 				pecw.enumProcess();
-				for (auto iter = pecw.getProcessIDList().begin(); iter.isValid(); iter.moveNext()) {
+				for (auto iter = pecw.getProcessInfoList().begin(); iter.isValid(); iter.moveNext()) {
 					wlProcess process;
 					if (process.openByProcessID(
-						iter.getData(),
+						iter.getData().mProcessID,
 						WL_PROCESS_FEATURE_QUERY_INFO | WL_PROCESS_FEATURE_QUERY_INFO)) {
 						glStringW imageFileName;
 						if (process.getImageFileNameW(imageFileName)) {

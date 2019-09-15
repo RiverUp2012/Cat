@@ -31,6 +31,7 @@ bool wlProcess::openByProcessID(const unsigned long processID, const int feature
 	if (!mProcessHandle) {
 		if (features & WL_PROCESS_FEATURE_TERMINATE) desiredAccess |= PROCESS_TERMINATE;
 		if (features & WL_PROCESS_FEATURE_QUERY_INFO) desiredAccess |= PROCESS_QUERY_INFORMATION;
+		if (features & WL_PROCESS_FEATURE_VM_OPERATION) desiredAccess |= (PROCESS_VM_OPERATION | PROCESS_VM_READ | PROCESS_VM_READ);
 		mProcessHandle = (void *)OpenProcess(desiredAccess, FALSE, processID);
 		if (mProcessHandle) {
 			return true;
@@ -95,4 +96,66 @@ bool wlProcess::getImageFileNameW(glStringW & imageFileName) {
 		}
 	}
 	return false;
+}
+
+bool wlProcess::vmRead(const void * vmAddress, void * buffer, const int bytesToRead) {
+	SIZE_T bytesReaded = 0;
+	if (mProcessHandle && vmAddress && buffer && bytesToRead > 0) {
+		if (ReadProcessMemory(
+			(HANDLE)mProcessHandle,
+			vmAddress,
+			buffer,
+			bytesToRead,
+			&bytesReaded)) {
+			return true;
+		}
+	}
+	return false;
+}
+
+bool wlProcess::vmWrite(void * vmAddress, const void * buffer, const int bytesToWrite) {
+	SIZE_T bytesWrited = 0;
+	if (mProcessHandle && vmAddress && buffer && bytesToWrite > 0) {
+		if (WriteProcessMemory(
+			(HANDLE)mProcessHandle,
+			vmAddress,
+			buffer,
+			bytesToWrite,
+			&bytesWrited)) {
+			return true;
+		}
+	}
+	return false;
+}
+
+bool wlProcess::setPrivilegeW(const wchar_t * privilegeName, const bool enableOrDisable) {
+	bool ret = false;
+	HANDLE tokenHandle = 0;
+	TOKEN_PRIVILEGES tokenPrivileges = { 0 };
+	if (mProcessHandle) {
+		if (OpenProcessToken(
+			(HANDLE)mProcessHandle,
+			TOKEN_ADJUST_PRIVILEGES,
+			&tokenHandle)) {
+			tokenPrivileges.PrivilegeCount = 1;
+			if (LookupPrivilegeValueW(
+				0,
+				SE_DEBUG_NAME,
+				&tokenPrivileges.Privileges[0].Luid)) {
+				tokenPrivileges.Privileges[0].Attributes = enableOrDisable ? SE_PRIVILEGE_ENABLED : SE_PRIVILEGE_REMOVED;
+				if (AdjustTokenPrivileges(
+					tokenHandle,
+					FALSE,
+					&tokenPrivileges,
+					sizeof(tokenPrivileges),
+					0,
+					0)) {
+					ret = true;
+				}
+			}
+			CloseHandle(tokenHandle);
+			tokenHandle = 0;
+		}
+	}
+	return ret;
 }

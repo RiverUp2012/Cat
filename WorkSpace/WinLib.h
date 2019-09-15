@@ -126,6 +126,8 @@ enum wlProcessFeature {
 	WL_PROCESS_FEATURE_TERMINATE = (1 << 0),
 	// 查询进程信息
 	WL_PROCESS_FEATURE_QUERY_INFO = (1 << 2),
+	// 操纵进程虚拟内存
+	WL_PROCESS_FEATURE_VM_OPERATION = (1 << 3),
 };
 
 //
@@ -140,6 +142,9 @@ public:
 	void close(void);
 	bool terminate(void);
 	bool getImageFileNameW(glStringW & imageFileName);
+	bool vmRead(const void * vmAddress, void * buffer, const int bytesToRead);
+	bool vmWrite(void * vmAddress, const void * buffer, const int bytesToWrite);
+	bool setPrivilegeW(const wchar_t * privilegeName, const bool enableOrDisable);
 private:
 	void * mProcessHandle;
 };
@@ -149,7 +154,9 @@ private:
 //
 class wlProcessEnumCallback {
 public:
-	virtual bool onEnumProcess(const unsigned long processID) = 0;
+	virtual bool onEnumProcessW(
+		const unsigned long processID,
+		const wchar_t * exeFileName) = 0;
 };
 
 //
@@ -165,15 +172,22 @@ public:
 //
 class wlProcessEnumCallbackWarpper : public wlProcessEnumCallback, public wlNonCopyable {
 public:
+	struct wlProcessInfo {
+		unsigned long mProcessID;
+		glStringW mExeFileName;
+	};
+public:
 	wlProcessEnumCallbackWarpper();
 	virtual ~wlProcessEnumCallbackWarpper();
 public:
 	void enumProcess(void);
-	const glList<unsigned long> & getProcessIDList(void) const;
+	const glList<wlProcessInfo> & getProcessInfoList(void) const;
 private:
-	bool onEnumProcess(const unsigned long processID) override;
+	bool onEnumProcessW(
+		const unsigned long processID,
+		const wchar_t * exeFileName) override;
 private:
-	glList<unsigned long> mProcessIDList;
+	glList<wlProcessInfo> mProcessInfoList;
 };
 
 //

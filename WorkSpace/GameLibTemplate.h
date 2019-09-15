@@ -322,7 +322,9 @@ public:
 
 	const _U * getString(void) const
 	{
-		return mString;
+		static const _U nullString[1] = { getNullChar() };
+
+		return mString ? mString : nullString;
 	}
 
 	int getLength(void) const

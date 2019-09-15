@@ -10,15 +10,20 @@ wlProcessEnumCallbackWarpper::~wlProcessEnumCallbackWarpper() {
 }
 
 void wlProcessEnumCallbackWarpper::enumProcess(void) {
-	mProcessIDList.clear();
+	mProcessInfoList.clear();
 	wlProcessHelper::enumProcess(this);
 }
 
-const glList<unsigned long> & wlProcessEnumCallbackWarpper::getProcessIDList(void) const {
-	return mProcessIDList;
+const glList<wlProcessEnumCallbackWarpper::wlProcessInfo> & wlProcessEnumCallbackWarpper::getProcessInfoList(void) const {
+	return mProcessInfoList;
 }
 
-bool wlProcessEnumCallbackWarpper::onEnumProcess(const unsigned long processID) {
-	mProcessIDList.pushBack(processID);
+bool wlProcessEnumCallbackWarpper::onEnumProcessW(
+	const unsigned long processID,
+	const wchar_t * exeFileName) {
+	wlProcessInfo processInfo;
+	processInfo.mProcessID = processID;
+	processInfo.mExeFileName = exeFileName;
+	mProcessInfoList.pushBack(processInfo);
 	return true;
 }

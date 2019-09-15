@@ -96,6 +96,10 @@
     </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Bio4MemCheat\CBio4MemCheat.h" />
+    <ClInclude Include="Bio4MemCheat\CBio4MemCheatOldAsiaV10.h" />
+    <ClInclude Include="Bio4MemCheat\IBio4MemCheat.h" />
+    <ClInclude Include="CBio4MemCheatDlg.h" />
     <ClInclude Include="CCatApp.h" />
     <ClInclude Include="Common\CMemoryReader.h" />
     <ClInclude Include="Common\CMemoryWriter.h" />
@@ -109,6 +113,9 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Bio4MemCheat\CBio4MemCheat.cpp" />
+    <ClCompile Include="Bio4MemCheat\CBio4MemCheatOldAsiaV10.cpp" />
+    <ClCompile Include="CBio4MemCheatDlg.cpp" />
     <ClCompile Include="CCatApp.cpp" />
     <ClCompile Include="CMainDlg.cpp" />
     <ClCompile Include="Common\CMemoryReader.cpp" />
@@ -133,6 +140,9 @@
     <Image Include="res\Cat.ico" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="Doc\C++ 命令行编译信息.txt" />
+    <Text Include="Doc\一些有用的 URL.txt" />
+    <Text Include="Doc\生化危机 4 内存信息.txt" />
     <Text Include="History.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

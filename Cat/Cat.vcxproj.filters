@@ -22,6 +22,12 @@
     <Filter Include="ProcessCleanup">
       <UniqueIdentifier>{a474ca45-3c65-405b-a853-ec88c08b0432}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Bio4MemCheat">
+      <UniqueIdentifier>{f595eae7-6433-456c-8e41-9e0cf7f89be2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Doc">
+      <UniqueIdentifier>{8507a510-1814-465f-b223-bad4267cdf11}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -57,6 +63,18 @@
     <ClInclude Include="ProcessCleanup\CProcessCleanupConfigFile.h">
       <Filter>ProcessCleanup</Filter>
     </ClInclude>
+    <ClInclude Include="CBio4MemCheatDlg.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="Bio4MemCheat\CBio4MemCheat.h">
+      <Filter>Bio4MemCheat</Filter>
+    </ClInclude>
+    <ClInclude Include="Bio4MemCheat\IBio4MemCheat.h">
+      <Filter>Bio4MemCheat</Filter>
+    </ClInclude>
+    <ClInclude Include="Bio4MemCheat\CBio4MemCheatOldAsiaV10.h">
+      <Filter>Bio4MemCheat</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -89,6 +107,15 @@
     <ClCompile Include="ProcessCleanup\CProcessCleanupConfigFile.cpp">
       <Filter>ProcessCleanup</Filter>
     </ClCompile>
+    <ClCompile Include="CBio4MemCheatDlg.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Bio4MemCheat\CBio4MemCheat.cpp">
+      <Filter>Bio4MemCheat</Filter>
+    </ClCompile>
+    <ClCompile Include="Bio4MemCheat\CBio4MemCheatOldAsiaV10.cpp">
+      <Filter>Bio4MemCheat</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Cat.rc">
@@ -107,5 +134,14 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="History.txt" />
+    <Text Include="Doc\生化危机 4 内存信息.txt">
+      <Filter>Doc</Filter>
+    </Text>
+    <Text Include="Doc\C++ 命令行编译信息.txt">
+      <Filter>Doc</Filter>
+    </Text>
+    <Text Include="Doc\一些有用的 URL.txt">
+      <Filter>Doc</Filter>
+    </Text>
   </ItemGroup>
 </Project>

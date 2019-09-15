@@ -27,3 +27,16 @@
 
 	* 移除对 WinLib 库的引用
 	* 新增对 WorkSpace 库的引用
+
+* 2019-09-15
+
+	* 新增 Bio4MemCheat 生化危机 4 内存修改模块，包含下述内容：
+		Bio4MemCheat 目录
+		CBio4MemCheat.h/cpp 文件
+		IBio4MemCheat.h 文件
+		CBio4MemCheatOldAsiaV10.h/cpp 文件
+		CBio4MemCheatDlg.h/cpp 文件
+	* 新增 Doc 目录，用于存放一些文本资料，包含下述内容：
+		C++ 命令行编译信息.txt
+		生化危机 4 内存信息.txt
+		一些有用的 URL.txt

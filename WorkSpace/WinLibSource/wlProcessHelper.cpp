@@ -11,7 +11,9 @@ void wlProcessHelper::enumProcess(wlProcessEnumCallback * callback) {
 			processEntry.dwSize = sizeof(processEntry);
 			if (Process32FirstW(snapshotHandle, &processEntry)) {
 				do {
-					if (!callback->onEnumProcess(processEntry.th32ProcessID)) {
+					if (!callback->onEnumProcessW(
+						processEntry.th32ProcessID,
+						processEntry.szExeFile)) {
 						break;
 					}
 				} while (Process32NextW(snapshotHandle, &processEntry));
