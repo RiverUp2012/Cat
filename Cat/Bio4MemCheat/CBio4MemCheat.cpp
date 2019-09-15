@@ -8,7 +8,7 @@ namespace {
 	static wlProcess mProcessThis;
 }
 
-bool CBio4MemCheat::setup(void) {
+bool CBio4MemCheat::setup(const Bio4Ver & ver) {
 	shutdown();
 	// 打开当前进程
 	if (mProcessThis.openByProcessID(
@@ -17,7 +17,18 @@ bool CBio4MemCheat::setup(void) {
 		// 启用 Debug 特权
 		if (mProcessThis.setPrivilegeW(SE_DEBUG_NAME, true)) {
 			// 启动作弊器
-			gBio4MemCheat = new CBio4MemCheatOldAsiaV10();
+			if (Bio4VerOldAsiaV10 == ver) {
+				gBio4MemCheat = new CBio4MemCheatOldAsiaV10();
+			}
+			else if (Bio4VerOldAsiaV11 == ver) {
+
+			}
+			else if (Bio4VerOldEuropeV10 == ver) {
+
+			}
+			else if (Bio4VerOldEuropeV11 == ver) {
+
+			}
 			if (gBio4MemCheat) {
 				if (gBio4MemCheat->setup()) {
 					return true;
@@ -35,4 +46,39 @@ void CBio4MemCheat::shutdown(void) {
 		gBio4MemCheat = 0;
 	}
 	mProcessThis.close();
+}
+
+bool CBio4MemCheat::queryLeonHP(int & hp) {
+	if (gBio4MemCheat) {
+		return gBio4MemCheat->queryLeonHP(hp);
+	}
+	return false;
+}
+
+bool CBio4MemCheat::setLeonHP(const int hp) {
+	if (gBio4MemCheat) {
+		return gBio4MemCheat->setLeonHP(hp);
+	}
+	return false;
+}
+
+bool CBio4MemCheat::queryLeonMaxHP(int & maxHP) {
+	if (gBio4MemCheat) {
+		return gBio4MemCheat->queryLeonMaxHP(maxHP);
+	}
+	return false;
+}
+
+bool CBio4MemCheat::setLeonMaxHP(const int maxHP) {
+	if (gBio4MemCheat) {
+		return gBio4MemCheat->setLeonMaxHP(maxHP);
+	}
+	return false;
+}
+
+bool CBio4MemCheat::addCurrentItemCount(const int addItemCount) {
+	if (gBio4MemCheat) {
+		return gBio4MemCheat->addCurrentItemCount(addItemCount);
+	}
+	return false;
 }

@@ -22,4 +22,16 @@ public:
 	// @brief 设置 leon 生命值
 	//
 	virtual bool setLeonHP(const int hp) = 0;
+	//
+	// @brief 查询 leon 最大生命值
+	//
+	virtual bool queryLeonMaxHP(int & maxHP) = 0;
+	//
+	// @brief 设置 leon 最大生命值
+	//
+	virtual bool setLeonMaxHP(const int maxHP) = 0;
+	//
+	// @brief 增加当前装备数量
+	//
+	virtual bool addCurrentItemCount(const int addItemCount) = 0;
 };

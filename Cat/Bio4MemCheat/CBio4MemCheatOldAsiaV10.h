@@ -12,6 +12,9 @@ public:
 	void shutdown(void) override;
 	bool queryLeonHP(int & hp) override;
 	bool setLeonHP(const int hp) override;
+	bool queryLeonMaxHP(int & maxHP) override;
+	bool setLeonMaxHP(const int maxHP) override;
+	bool addCurrentItemCount(const int addItemCount) override;
 private:
-	wlProcess mProcess;
+	wlProcess mBio4Process;
 };

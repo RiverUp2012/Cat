@@ -40,3 +40,5 @@
 		C++ 命令行编译信息.txt
 		生化危机 4 内存信息.txt
 		一些有用的 URL.txt
+	* 新增 CMFCHelper 类
+

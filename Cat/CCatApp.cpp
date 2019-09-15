@@ -2,6 +2,7 @@
 #include "stdafx.h"
 #include "CCatApp.h"
 #include "CMainDlg.h"
+#include "CBio4MemCheatDlg.h"
 
 #ifdef _DEBUG
 #	define new DEBUG_NEW
@@ -25,7 +26,8 @@ BOOL CCatApp::InitInstance() {
 
 	// 启动主对话框
 
-	CMainDlg dlg;
+	//CMainDlg dlg;
+	CBio4MemCheatDlg dlg;
 	m_pMainWnd = &dlg;
 	dlg.DoModal();
 

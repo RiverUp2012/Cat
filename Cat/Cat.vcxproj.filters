@@ -75,6 +75,9 @@
     <ClInclude Include="Bio4MemCheat\CBio4MemCheatOldAsiaV10.h">
       <Filter>Bio4MemCheat</Filter>
     </ClInclude>
+    <ClInclude Include="Common\CMFCHelper.h">
+      <Filter>Common</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -115,6 +118,9 @@
     </ClCompile>
     <ClCompile Include="Bio4MemCheat\CBio4MemCheatOldAsiaV10.cpp">
       <Filter>Bio4MemCheat</Filter>
+    </ClCompile>
+    <ClCompile Include="Common\CMFCHelper.cpp">
+      <Filter>Common</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

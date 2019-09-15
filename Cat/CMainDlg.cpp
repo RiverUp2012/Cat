@@ -6,7 +6,6 @@
 #include "RemoteControl/CRemoteControlClient.h"
 #include "ProcessCleanup/CProcessCleanup.h"
 #include "ProcessCleanup/CProcessCleanupConfigFile.h"
-#include "Bio4MemCheat/CBio4MemCheat.h"
 
 #ifdef _DEBUG
 #	define new DEBUG_NEW
@@ -54,10 +53,6 @@ BOOL CMainDlg::OnInitDialog() {
 	// 启动进程清理模块
 
 	CProcessCleanup::startup(0);
-
-	// 启动生化危机 4 内存修改模块
-
-	CBio4MemCheat::setup();
 
 	return TRUE;
 }

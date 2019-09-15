@@ -31,7 +31,7 @@ bool wlProcess::openByProcessID(const unsigned long processID, const int feature
 	if (!mProcessHandle) {
 		if (features & WL_PROCESS_FEATURE_TERMINATE) desiredAccess |= PROCESS_TERMINATE;
 		if (features & WL_PROCESS_FEATURE_QUERY_INFO) desiredAccess |= PROCESS_QUERY_INFORMATION;
-		if (features & WL_PROCESS_FEATURE_VM_OPERATION) desiredAccess |= (PROCESS_VM_OPERATION | PROCESS_VM_READ | PROCESS_VM_READ);
+		if (features & WL_PROCESS_FEATURE_VM_OPERATION) desiredAccess |= (PROCESS_VM_OPERATION | PROCESS_VM_READ | PROCESS_VM_WRITE);
 		mProcessHandle = (void *)OpenProcess(desiredAccess, FALSE, processID);
 		if (mProcessHandle) {
 			return true;
