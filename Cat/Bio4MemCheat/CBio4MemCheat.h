@@ -31,4 +31,6 @@ public:
 	static bool setLeonMaxHP(const int maxHP);
 	static bool addCurrentItemCount(const int addItemCount);
 	static bool addCurrentGunBulletCount(const int addGunBulletCount);
+	static bool queryLeonPTAS(int & ptas);
+	static bool setLeonPTAS(const int ptas);
 };

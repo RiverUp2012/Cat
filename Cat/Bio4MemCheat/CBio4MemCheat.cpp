@@ -77,12 +77,29 @@ bool CBio4MemCheat::setLeonMaxHP(const int maxHP) {
 }
 
 bool CBio4MemCheat::addCurrentItemCount(const int addItemCount) {
+	if (gBio4MemCheat) {
+		return gBio4MemCheat->addCurrentItemCount(addItemCount);
+	}
 	return false;
 }
 
 bool CBio4MemCheat::addCurrentGunBulletCount(const int addGunBulletCount) {
 	if (gBio4MemCheat) {
 		return gBio4MemCheat->addCurrentGunBulletCount(addGunBulletCount);
+	}
+	return false;
+}
+
+bool CBio4MemCheat::queryLeonPTAS(int & ptas) {
+	if (gBio4MemCheat) {
+		return gBio4MemCheat->queryLeonPTAS(ptas);
+	}
+	return false;
+}
+
+bool CBio4MemCheat::setLeonPTAS(const int ptas) {
+	if (gBio4MemCheat) {
+		return gBio4MemCheat->setLeonPTAS(ptas);
 	}
 	return false;
 }

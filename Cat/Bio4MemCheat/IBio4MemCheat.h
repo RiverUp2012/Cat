@@ -32,10 +32,18 @@ public:
 	virtual bool setLeonMaxHP(const int maxHP) = 0;
 	//
 	// @brief 增加当前装备数量
-	virtual bool addCurrentItemCount(const int addItemCount) = 0;
 	//
+	virtual bool addCurrentItemCount(const int addItemCount) = 0;
 	//
 	// @brief 增加当前武器的子弹数量
 	//
 	virtual bool addCurrentGunBulletCount(const int addGunBulletCount) = 0;
+	//
+	// @brief 查询 leon 金钱
+	//
+	virtual bool queryLeonPTAS(int & ptas) = 0;
+	//
+	// @brief 设置 leon 金钱
+	//
+	virtual bool setLeonPTAS(const int ptas) = 0;
 };

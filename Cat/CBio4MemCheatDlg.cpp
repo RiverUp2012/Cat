@@ -11,6 +11,8 @@ BEGIN_MESSAGE_MAP(CBio4MemCheatDlg, CDialogEx)
 	ON_BN_CLICKED(IDC_BTN_SHUTDOWN, &CBio4MemCheatDlg::OnBnClickedBtnShutdown)
 	ON_BN_CLICKED(IDC_BTN_ADD_CURRENT_ITEM_COUNT, &CBio4MemCheatDlg::OnBnClickedBtnAddCurrentItemCount)
 	ON_BN_CLICKED(IDC_BTN_ADD_HP, &CBio4MemCheatDlg::OnBnClickedBtnAddHp)
+	ON_BN_CLICKED(IDC_BTN_ADD_CURRENT_GUN_BULLET, &CBio4MemCheatDlg::OnBnClickedBtnAddCurrentGunBullet)
+	ON_BN_CLICKED(IDC_BTN_ADD_PTAS, &CBio4MemCheatDlg::OnBnClickedBtnAddPtas)
 END_MESSAGE_MAP()
 
 CBio4MemCheatDlg::CBio4MemCheatDlg(CWnd* pParent)
@@ -64,12 +66,23 @@ void CBio4MemCheatDlg::OnBnClickedBtnShutdown() {
 }
 
 void CBio4MemCheatDlg::OnBnClickedBtnAddCurrentItemCount() {
-	CBio4MemCheat::addCurrentItemCount(12);
+	CBio4MemCheat::addCurrentItemCount(8);
 }
 
 void CBio4MemCheatDlg::OnBnClickedBtnAddHp() {
 	int maxHP = 0;
 	if (CBio4MemCheat::queryLeonMaxHP(maxHP)) {
 		CBio4MemCheat::setLeonHP(maxHP);
+	}
+}
+
+void CBio4MemCheatDlg::OnBnClickedBtnAddCurrentGunBullet() {
+	CBio4MemCheat::addCurrentGunBulletCount(12);
+}
+
+void CBio4MemCheatDlg::OnBnClickedBtnAddPtas() {
+	int ptas = 0;
+	if (CBio4MemCheat::queryLeonPTAS(ptas)) {
+		CBio4MemCheat::setLeonPTAS(ptas + 10000);
 	}
 }

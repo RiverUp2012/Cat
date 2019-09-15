@@ -18,4 +18,6 @@ public:
 	afx_msg void OnCbnSelchangeCbBio4Version();
 	afx_msg void OnBnClickedBtnAddCurrentItemCount();
 	afx_msg void OnBnClickedBtnAddHp();
+	afx_msg void OnBnClickedBtnAddCurrentGunBullet();
+	afx_msg void OnBnClickedBtnAddPtas();
 };

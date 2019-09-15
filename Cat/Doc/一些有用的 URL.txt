@@ -1,3 +1,6 @@
 
 用 C++ 写一个简易的《生化危机 4》修改器
 http://www.bubuko.com/infodetail-1178079.html
+
+生化危机 4 物品修改方法
+https://wenku.baidu.com/view/0b51eda0ec3a87c24028c487.html
