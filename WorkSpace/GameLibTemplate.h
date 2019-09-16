@@ -9,189 +9,126 @@ class glFile;
 class glGameState;
 
 template <typename _U>
-class glPoint
-{
+class glPoint {
 public:
-
-	glPoint()
-	{
+	glPoint() {
 		mX = 0;
 		mY = 0;
 	}
-
-	glPoint(const _U & x, const _U & y)
-	{
+	glPoint(const _U & x, const _U & y) {
 		mX = x;
 		mY = y;
 	}
-
 	template <typename _V>
-	glPoint(const _V & x, const _V & y)
-	{
+	glPoint(const _V & x, const _V & y) {
 		mX = (_U)x;
 		mY = (_U)y;
 	}
-
-	glPoint(const glPoint & other)
-	{
+	glPoint(const glPoint & other) {
 		mX = other.mX;
 		mY = other.mY;
 	}
-
 	template <typename _V>
-	glPoint(const glPoint<_V> & other)
-	{
+	glPoint(const glPoint<_V> & other) {
 		mX = (_U)other.mX;
 		mY = (_U)other.mY;
 	}
-
-	virtual ~glPoint()
-	{
+	virtual ~glPoint() {
 
 	}
-
 public:
-
-	glPoint & operator += (const glPoint & other)
-	{
+	glPoint & operator += (const glPoint & other) {
 		mX += other.mX;
 		mY += other.mY;
-
 		return *this;
 	}
-
-	glPoint & operator -= (const glPoint & other)
-	{
+	glPoint & operator -= (const glPoint & other) {
 		mX -= other.mX;
 		mY -= other.mY;
-
 		return *this;
 	}
-
-	glPoint operator + (const glPoint & other) const
-	{
+	glPoint operator + (const glPoint & other) const {
 		return glPoint(mX + other.mX, mY + other.mY);
 	}
-
-	glPoint operator - (const glPoint & other) const
-	{
+	glPoint operator - (const glPoint & other) const {
 		return glPoint(mX - other.mX, mY - other.mY);
 	}
-
-	bool operator == (const glPoint<_U> & other) const
-	{
+	bool operator == (const glPoint<_U> & other) const {
 		return mX == other.mX && mY == other.mY;
 	}
-
-	bool operator != (const glPoint<_U> & other) const
-	{
+	bool operator != (const glPoint<_U> & other) const {
 		return mX != other.mX || mY != other.mY;
 	}
-
 public:
-
 	_U mX;
 	_U mY;
 };
 
 template <typename _U>
-class glSize
-{
+class glSize {
 public:
-
-	glSize()
-	{
+	glSize() {
 		mWidth = 0;
 		mHeight = 0;
 	}
-
-	glSize(const _U & width, const _U & height)
-	{
+	glSize(const _U & width, const _U & height) {
 		mWidth = width;
 		mHeight = height;
 	}
-
 	template <typename _V>
-	glSize(const _V & width, const _V & height)
-	{
+	glSize(const _V & width, const _V & height) {
 		mWidth = (_U)width;
 		mHeight = (_U)height;
 	}
-
-	glSize(const glSize & other)
-	{
+	glSize(const glSize & other) {
 		mWidth = other.mWidth;
 		mHeight = other.mHeight;
 	}
-
 	template <typename _V>
-	glSize(const glSize<_V> & other)
-	{
+	glSize(const glSize<_V> & other) {
 		mWidth = (_U)other.mWidth;
 		mHeight = (_U)other.mHeight;
 	}
-
-	virtual ~glSize()
-	{
+	virtual ~glSize() {
 
 	}
-
 public:
-
 	_U mWidth;
 	_U mHeight;
 };
 
 template <typename _U>
-class glRect : public glPoint<_U>, public glSize<_U>
-{
+class glRect : public glPoint<_U>, public glSize<_U> {
 public:
-
-	glRect()
-	{
+	glRect() {
 
 	}
-
 	glRect(const _U & x, const _U & y, const _U & width, const _U & height) :
 		glPoint(x, y),
-		glSize(width, height)
-	{
+		glSize(width, height) {
 
 	}
-
 	glRect(const glPoint<_U> & pos, const glSize<_U> & size) :
 		glPoint(pos),
-		glSize(size)
-	{
+		glSize(size) {
 
 	}
-
 	glRect(const glRect & other) :
 		glPoint(other.mX, other.mY),
-		glSize(other.mWidth, other.mHeight)
-	{
+		glSize(other.mWidth, other.mHeight) {
 
 	}
-
-	virtual ~glRect()
-	{
+	virtual ~glRect() {
 
 	}
-
 public:
-
-	_U getRight(void) const
-	{
+	_U getRight(void) const {
 		return mX + mWidth;
 	}
-
-	_U getBottom(void) const
-	{
+	_U getBottom(void) const {
 		return mY + mHeight;
 	}
-
-	bool containPt(const glPoint<_U> & pt) const
-	{
+	bool containPt(const glPoint<_U> & pt) const {
 		if (pt.mX < mX) return false;
 		if (pt.mY < mY) return false;
 		if (pt.mX > getRight()) return false;
@@ -202,214 +139,150 @@ public:
 };
 
 template <typename _U>
-class glString
-{
+class glString {
 public:
-
-	static int getLength(const _U string[])
-	{
+	static int getLength(const _U string[]) {
 		int length = 0;
-
-		if (string)
-		{
-			while (string[length])
-			{
+		if (string) {
+			while (string[length]) {
 				++length;
 			}
 		}
-
 		return length;
 	}
-
-	static void copy(_U * destString, const _U * srcString, const int charsToCopy = 0)
-	{
+	static void copy(_U * destString, const _U * srcString, const int charsToCopy = 0) {
 		const int charsToCopyTemp = (charsToCopy <= 0) ? getLength(srcString) : charsToCopy;
-
-		if (destString && srcString)
-		{
-			for (int i = 0; i < charsToCopyTemp; ++i)
-			{
+		if (destString && srcString) {
+			for (int i = 0; i < charsToCopyTemp; ++i) {
 				destString[i] = srcString[i];
 			}
-
 			destString[charsToCopyTemp] = getNullChar();
 		}
 	}
-
-	static unsigned int getCharSize(void)
-	{
+	static unsigned int getCharSize(void) {
 		return sizeof(_U);
 	}
-
-	static _U getNullChar(void)
-	{
+	static _U getNullChar(void) {
 		return 0;
 	}
-
 public:
-
-	glString()
-	{
+	glString() {
 		mString = 0;
 		mCapacity = 0;
 	}
-
-	glString(const _U string[])
-	{
+	glString(const _U string[]) {
 		mString = 0;
 		mCapacity = 0;
-
 		const int stringLength = getLength(string);
-		if (stringLength > 0 && resize(stringLength + 1))
-		{
+		if (stringLength > 0 && resize(stringLength + 1)) {
 			copy(mString, string, stringLength);
 		}
 	}
-
-	glString(const glString & other)
-	{
+	glString(const glString & other) {
 		mString = 0;
 		mCapacity = 0;
-
 		const int stringLength = other.getLength();
-		if (stringLength > 0 && resize(stringLength + 1))
-		{
+		if (stringLength > 0 && resize(stringLength + 1)) {
 			copy(mString, other.getString(), stringLength);
 		}
 	}
-
-	virtual ~glString()
-	{
+	virtual ~glString() {
 		clear();
 	}
-
 public:
-
-	void clear(void)
-	{
-		if (mString)
-		{
+	void clear(void) {
+		if (mString) {
 			free(mString);
 			mString = 0;
 		}
-
 		mCapacity = 0;
 	}
-
-	bool resize(const int capacity)
-	{
+	bool resize(const int capacity) {
 		clear();
-
-		if (capacity > 0)
-		{
+		if (capacity > 0) {
 			mString = (_U *)malloc(getCharSize() * capacity);
-			if (mString)
-			{
+			if (mString) {
 				mString[0] = getNullChar();
 				mCapacity = capacity;
-
 				return true;
 			}
 		}
-
 		return false;
 	}
-
-	_U * getBuffer(void) const
-	{
+	_U * getBuffer(void) const {
 		return mString;
 	}
-
-	const _U * getString(void) const
-	{
+	const _U * getString(void) const {
 		static const _U nullString[1] = { getNullChar() };
-
 		return mString ? mString : nullString;
 	}
-
-	int getLength(void) const
-	{
+	int getLength(void) const {
 		return getLength(mString);
 	}
-
-	int getCapacity(void) const
-	{
+	int getCapacity(void) const {
 		return mCapacity;
 	}
-
-	bool setAt(const int index, const _U charToSet)
-	{
-		if (mString && index >= 0 && index < mCapacity)
-		{
+	bool setAt(const int index, const _U charToSet) {
+		if (mString && index >= 0 && index < mCapacity) {
 			mString[index] = charToSet;
-
 			return true;
 		}
-
 		return false;
 	}
-
-	const _U & getAt(const int index) const
-	{
+	const _U & getAt(const int index) const {
 		assert(mString && index >= 0 && index < mCapacity);
-
 		return mString[index];
 	}
-
+	bool sub(const int offset, const int length, glString & subString) const {
+		const int stringLength = getLength();
+		if (offset + length <= stringLength && subString.resize(length + 1)) {
+			copy(subString.getBuffer(), &(mString[offset]), length);
+			subString.setAt(length, 0);
+			return true;
+		}
+		return false;
+	}
+	bool left(const int length, glString & subString) const {
+		return sub(0, length, subString);
+	}
+	bool right(const int length, glString & subString) const {
+		return sub(getLength() - length, length, subString);
+	}
 public:
-
-	glString & operator = (const _U string[])
-	{
-		if (mString != string)
-		{
+	glString & operator = (const _U string[]) {
+		if (mString != string) {
 			const int stringLength = getLength(string);
-			if (stringLength > 0 && resize(stringLength + 1))
-			{
+			if (stringLength > 0 && resize(stringLength + 1)) {
 				copy(mString, string, stringLength);
 			}
 		}
-
 		return *this;
 	}
-
-	glString & operator = (const glString & other)
-	{
-		if (this != &other)
-		{
+	glString & operator = (const glString & other) {
+		if (this != &other) {
 			const int stringLength = other.getLength();
-			if (stringLength > 0 && resize(stringLength + 1))
-			{
+			if (stringLength > 0 && resize(stringLength + 1)) {
 				copy(mString, other.getString(), stringLength);
 			}
 		}
-
 		return *this;
 	}
-
-	glString operator + (const _U string[]) const
-	{
+	glString operator + (const _U string[]) const {
 		glString ret;
 		int stringLength = string ? getLength(string) : 0;
 		int thisStringLength = getLength();
-
-		if (ret.resize(thisStringLength + stringLength + 1))
-		{
-			if (getString())
-			{
+		if (ret.resize(thisStringLength + stringLength + 1)) {
+			if (getString()) {
 				copy(ret.getBuffer(), getString(), thisStringLength);
 				ret.setAt(thisStringLength, 0);
 			}
-
-			if (string)
-			{
+			if (string) {
 				copy(&(ret.getBuffer()[thisStringLength]), string, stringLength);
 				ret.setAt(thisStringLength + stringLength, 0);
 			}
 		}
-
 		return ret;
 	}
-
 	glString operator + (const glString & other) const
 	{
 		glString ret;
