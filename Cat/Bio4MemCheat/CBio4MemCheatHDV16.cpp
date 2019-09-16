@@ -63,10 +63,32 @@ bool CBio4MemCheatHDV16::setLeonMaxHP(const int maxHP) {
 }
 
 bool CBio4MemCheatHDV16::addCurrentItemCount(const int addItemCount) {
+	int address = mBio4ModuleBaseAddress + 0x86D760;
+	__int16 itemCount = 0;
+	if (mBio4Process.vmRead((const void *)address, &address, 4)) {
+		address += 2;
+		if (mBio4Process.vmRead((const void *)address, &itemCount, 2)) {
+			itemCount += static_cast<__int16>(addItemCount);
+			if (mBio4Process.vmWrite((void *)address, &itemCount, 2)) {
+				return true;
+			}
+		}
+	}
 	return false;
 }
 
-bool CBio4MemCheatHDV16::addCurrentGunBulletCount(const int addItemCount) {
+bool CBio4MemCheatHDV16::addCurrentGunBulletCount(const int addGunBulletCount) {
+	int address = mBio4ModuleBaseAddress + 0x86D760;
+	__int16 bulletCount = 0;
+	if (mBio4Process.vmRead((const void *)address, &address, 4)) {
+		address += 8;
+		if (mBio4Process.vmRead((const void *)address, &bulletCount, 2)) {
+			bulletCount += static_cast<__int16>(addGunBulletCount * 8);
+			if (mBio4Process.vmWrite((void *)address, &bulletCount, 2)) {
+				return true;
+			}
+		}
+	}
 	return false;
 }
 

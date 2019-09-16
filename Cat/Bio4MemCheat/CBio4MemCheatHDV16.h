@@ -17,7 +17,7 @@ public:
 	bool queryLeonMaxHP(int & maxHP) override;
 	bool setLeonMaxHP(const int maxHP) override;
 	bool addCurrentItemCount(const int addItemCount) override;
-	bool addCurrentGunBulletCount(const int addItemCount) override;
+	bool addCurrentGunBulletCount(const int addGunBulletCount) override;
 	bool queryLeonPTAS(int & ptas) override;
 	bool setLeonPTAS(const int ptas) override;
 private:
