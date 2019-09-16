@@ -20,6 +20,7 @@ static wlModule gModulePsapi;
 
 wlProcess::wlProcess() {
 	mProcessHandle = 0;
+	mProcessID = 0;
 }
 
 wlProcess::~wlProcess() {
@@ -34,6 +35,7 @@ bool wlProcess::openByProcessID(const unsigned long processID, const int feature
 		if (features & WL_PROCESS_FEATURE_VM_OPERATION) desiredAccess |= (PROCESS_VM_OPERATION | PROCESS_VM_READ | PROCESS_VM_WRITE);
 		mProcessHandle = (void *)OpenProcess(desiredAccess, FALSE, processID);
 		if (mProcessHandle) {
+			mProcessID = processID;
 			return true;
 		}
 	}
@@ -45,6 +47,7 @@ void wlProcess::close(void) {
 		CloseHandle((HANDLE)mProcessHandle);
 		mProcessHandle = 0;
 	}
+	mProcessID = 0;
 }
 
 bool wlProcess::terminate(void) {
@@ -158,4 +161,12 @@ bool wlProcess::setPrivilegeW(const wchar_t * privilegeName, const bool enableOr
 		}
 	}
 	return ret;
+}
+
+void * wlProcess::getProcessHandle(void) const {
+	return mProcessHandle;
+}
+
+unsigned long wlProcess::getProcesseID(void) const {
+	return mProcessID;
 }

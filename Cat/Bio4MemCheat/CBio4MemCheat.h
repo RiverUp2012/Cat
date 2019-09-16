@@ -10,6 +10,7 @@ enum Bio4Ver {
 	Bio4VerOldAsiaV11, // 老版本 亚版 v1.1
 	Bio4VerOldEuropeV10, // 老版本 欧版 v1.0
 	Bio4VerOldEuropeV11, // 老版本 欧版 v1.1
+	Bio4VerHDV16, // 终极高清版 v1.06
 };
 
 //

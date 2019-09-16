@@ -145,8 +145,11 @@ public:
 	bool vmRead(const void * vmAddress, void * buffer, const int bytesToRead);
 	bool vmWrite(void * vmAddress, const void * buffer, const int bytesToWrite);
 	bool setPrivilegeW(const wchar_t * privilegeName, const bool enableOrDisable);
+	void * getProcessHandle(void) const;
+	unsigned long getProcesseID(void) const;
 private:
 	void * mProcessHandle;
+	unsigned long mProcessID;
 };
 
 //
@@ -160,11 +163,22 @@ public:
 };
 
 //
+// @brief 模块枚举回调接口类
+//
+class wlModuleEnumCallback {
+public:
+	virtual bool onEnumModuleW(
+		const wchar_t * moduleFileName,
+		void * moduleHandle) = 0;
+};
+
+//
 // @brief 进程工具类
 //
 class wlProcessHelper {
 public:
 	static void enumProcess(wlProcessEnumCallback * callback);
+	static void enumModule(const unsigned long processId, wlModuleEnumCallback * callback);
 };
 
 //
@@ -188,6 +202,29 @@ private:
 		const wchar_t * exeFileName) override;
 private:
 	glList<wlProcessInfo> mProcessInfoList;
+};
+
+//
+// @brief 模块枚举接口包装类
+//
+class wlModuleEnumCallbackWarpper : public wlModuleEnumCallback, public wlNonCopyable {
+public:
+	struct wlModuleInfo {
+		void * mModuleHandle;
+		glStringW mModuleFileName;
+	};
+public:
+	wlModuleEnumCallbackWarpper();
+	virtual ~wlModuleEnumCallbackWarpper();
+public:
+	void enumModule(const unsigned long processId);
+	const glList<wlModuleInfo> & getModuleInfoList(void) const;
+private:
+	bool onEnumModuleW(
+		const wchar_t * moduleFileName,
+		void * moduleHandle) override;
+private:
+	glList<wlModuleInfo> mModuleInfoList;
 };
 
 //

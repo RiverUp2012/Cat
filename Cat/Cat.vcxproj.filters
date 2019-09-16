@@ -78,6 +78,12 @@
     <ClInclude Include="Common\CMFCHelper.h">
       <Filter>Common</Filter>
     </ClInclude>
+    <ClInclude Include="Bio4MemCheat\CBio4MemCheatHDV16.h">
+      <Filter>Bio4MemCheat</Filter>
+    </ClInclude>
+    <ClInclude Include="CMainDlg.h">
+      <Filter>Include</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -121,6 +127,9 @@
     </ClCompile>
     <ClCompile Include="Common\CMFCHelper.cpp">
       <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Bio4MemCheat\CBio4MemCheatHDV16.cpp">
+      <Filter>Bio4MemCheat</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

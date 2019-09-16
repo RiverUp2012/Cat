@@ -2,6 +2,7 @@
 #include "stdafx.h"
 #include "CBio4MemCheat.h"
 #include "CBio4MemCheatOldAsiaV10.h"
+#include "CBio4MemCheatHDV16.h"
 
 namespace {
 	static IBio4MemCheat * gBio4MemCheat = 0;
@@ -28,6 +29,9 @@ bool CBio4MemCheat::setup(const Bio4Ver & ver) {
 			}
 			else if (Bio4VerOldEuropeV11 == ver) {
 
+			}
+			else if (Bio4VerHDV16 == ver) {
+				gBio4MemCheat = new CBio4MemCheatHDV16();
 			}
 			if (gBio4MemCheat) {
 				if (gBio4MemCheat->setup()) {

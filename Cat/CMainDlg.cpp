@@ -21,15 +21,15 @@ CMainDlg::CMainDlg(CWnd* pParent) : CDialogEx(IDD_DLG_MAIN, pParent) {
 
 BOOL CMainDlg::OnInitDialog() {
 	glStringW imageFileName;
-	glStringW configFileName;
 	glStringW appPath;
 
 	CDialogEx::OnInitDialog();
 	SetIcon(m_hIcon, TRUE);
 	SetIcon(m_hIcon, FALSE);
-	wlPathHelper::getAppPathW(appPath);
 
 	// 绘制猫猫背景
+
+	wlPathHelper::getAppPathW(appPath);
 
 	if (createFromHWND(GetSafeHwnd())) {
 		imageFileName = appPath + L"Cat\\Image\\Cat.png";
@@ -38,21 +38,6 @@ BOOL CMainDlg::OnInitDialog() {
 			present();
 		}
 	}
-
-	// 从配置文件加载要清理的进程列表
-
-	configFileName = appPath +  L"Cat\\Config\\ProcessCleanup.ini";
-	CProcessCleanupConfigFile::loadW(configFileName.getString());
-
-	// 将要清理的进程告诉进程清理模块
-
-	for (const auto & processExeFileName : CProcessCleanupConfigFile::getProcessExeFileNameList()) {
-		CProcessCleanup::addProcessExeFileNameW(processExeFileName.c_str());
-	}
-
-	// 启动进程清理模块
-
-	CProcessCleanup::startup(0);
 
 	return TRUE;
 }

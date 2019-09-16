@@ -145,5 +145,8 @@
     <ClCompile Include="GameLibSource\glWindow.cpp">
       <Filter>GameLibSource</Filter>
     </ClCompile>
+    <ClCompile Include="WinLibSource\wlModuleEnumCallbackWarpper.cpp">
+      <Filter>WinLibSource</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

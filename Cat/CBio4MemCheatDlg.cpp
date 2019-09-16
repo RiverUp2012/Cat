@@ -5,6 +5,10 @@
 #include "Bio4MemCheat/CBio4MemCheat.h"
 #include "resource.h"
 
+#ifdef _DEBUG
+#	define new DEBUG_NEW
+#endif
+
 BEGIN_MESSAGE_MAP(CBio4MemCheatDlg, CDialogEx)
 	ON_BN_CLICKED(IDC_BTN_HOW_TO, &CBio4MemCheatDlg::OnBnClickedBtnHowTo)
 	ON_BN_CLICKED(IDC_BTN_SETUP, &CBio4MemCheatDlg::OnBnClickedBtnSetup)
@@ -15,26 +19,26 @@ BEGIN_MESSAGE_MAP(CBio4MemCheatDlg, CDialogEx)
 	ON_BN_CLICKED(IDC_BTN_ADD_PTAS, &CBio4MemCheatDlg::OnBnClickedBtnAddPtas)
 END_MESSAGE_MAP()
 
-CBio4MemCheatDlg::CBio4MemCheatDlg(CWnd* pParent)
-	: CDialogEx(IDD_DLG_BIO4_MEM_CHEAT, pParent) {
-
+CBio4MemCheatDlg::CBio4MemCheatDlg(CWnd* pParent) : CDialogEx(IDD_DLG_BIO4_MEM_CHEAT, pParent) {
+	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 }
 
 CBio4MemCheatDlg::~CBio4MemCheatDlg() {
-
+	mCBBio4Ver.Detach();
 }
 
 BOOL CBio4MemCheatDlg::OnInitDialog(void) {
 	CDialogEx::OnInitDialog();
-
+	SetIcon(m_hIcon, TRUE);
+	SetIcon(m_hIcon, FALSE);
 	if (CMFCHelper::attachDialogControl(this, &mCBBio4Ver, IDC_CB_BIO4_VERSION)) {
 		mCBBio4Ver.InsertString(-1, _TEXT("老版本 欧版 v1.0"));
 		mCBBio4Ver.InsertString(-1, _TEXT("老版本 欧版 v1.1"));
 		mCBBio4Ver.InsertString(-1, _TEXT("老版本 亚版 v1.0"));
 		mCBBio4Ver.InsertString(-1, _TEXT("老版本 亚版 v1.1"));
+		mCBBio4Ver.InsertString(-1, _TEXT("终极高清版 v1.06"));
 		mCBBio4Ver.SetCurSel(0);
 	}
-
 	return TRUE;
 }
 
@@ -45,7 +49,8 @@ void CBio4MemCheatDlg::OnBnClickedBtnHowTo() {
 		L"显示【biohazard 4 Ver1.0.0】为亚版 v1.0 \r\n"
 		L"显示【biohazard 4 Ver1.1.0】为亚版 v1.1 \r\n"
 		L"显示【resident evil 4 Ver1.0.0】为欧版 v1.0 \r\n"
-		L"显示【resident evil 4 Ver1.1.0】为欧版 v1.1 \r\n",
+		L"显示【resident evil 4 Ver1.1.0】为欧版 v1.1 \r\n"
+		L"\r\n",
 		L"如何选择游戏版本");
 }
 
@@ -56,6 +61,7 @@ void CBio4MemCheatDlg::OnBnClickedBtnSetup() {
 	else if (1 == curSel) ver = Bio4VerOldAsiaV11;
 	else if (2 == curSel) ver = Bio4VerOldEuropeV10;
 	else if (3 == curSel) ver = Bio4VerOldEuropeV11;
+	else if (4 == curSel) ver = Bio4VerHDV16;
 	if (Bio4VerUnknown != ver) {
 		CBio4MemCheat::setup(ver);
 	}

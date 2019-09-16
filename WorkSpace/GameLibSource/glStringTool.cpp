@@ -84,16 +84,12 @@ int glStringTool::findA(const char * string, const char * subString)
 	return -1;
 }
 
-int glStringTool::findW(const wchar_t * string, const wchar_t * subString)
-{
-	if (string && subString)
-	{
+int glStringTool::findW(const wchar_t * string, const wchar_t * subString) {
+	if (string && subString) {
 		const wchar_t * findRet = wcsstr(string, subString);
-		if (findRet)
-		{
-			return (int)string - (int)findRet;
+		if (findRet) {
+			return (int)findRet - (int)string;
 		}
 	}
-
 	return -1;
 }

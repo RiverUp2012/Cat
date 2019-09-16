@@ -49,6 +49,7 @@
     <ClCompile Include="WinLibSource\wlGDIPWindow.cpp" />
     <ClCompile Include="WinLibSource\wlLog.cpp" />
     <ClCompile Include="WinLibSource\wlModule.cpp" />
+    <ClCompile Include="WinLibSource\wlModuleEnumCallbackWarpper.cpp" />
     <ClCompile Include="WinLibSource\wlMutex.cpp" />
     <ClCompile Include="WinLibSource\wlNonCopyable.cpp" />
     <ClCompile Include="WinLibSource\wlPathHelper.cpp" />
