@@ -1,16 +1,16 @@
 
-#include "../WinLib.h"
-#include "../Include/WinLibPrivate.h"
+#include "../GameLib.h"
+#include "../Include/GameLibPrivate.h"
 
-wlEvent::wlEvent() {
+glEvent::glEvent() {
 	mEventHandle = 0;
 }
 
-wlEvent::~wlEvent() {
+glEvent::~glEvent() {
 	destroy();
 }
 
-bool wlEvent::createW(const wchar_t * eventName, const bool manualReset, const bool initState) {
+bool glEvent::createW(const wchar_t * eventName, const bool manualReset, const bool initState) {
 	if (!mEventHandle) {
 		mEventHandle = (void *)CreateEventW(
 			0,
@@ -24,7 +24,7 @@ bool wlEvent::createW(const wchar_t * eventName, const bool manualReset, const b
 	return false;
 }
 
-bool wlEvent::openW(const wchar_t * eventName) {
+bool glEvent::openW(const wchar_t * eventName) {
 	if (!mEventHandle && eventName) {
 		mEventHandle = (void *)OpenEventW(
 			EVENT_ALL_ACCESS,
@@ -37,7 +37,7 @@ bool wlEvent::openW(const wchar_t * eventName) {
 	return false;
 }
 
-void wlEvent::destroy(void) {
+void glEvent::destroy(void) {
 	if (mEventHandle) {
 		CloseHandle((HANDLE)mEventHandle);
 		mEventHandle = 0;

@@ -31,21 +31,6 @@
     <ClCompile Include="WinLibSource\wlGDIPWindow.cpp">
       <Filter>WinLibSource</Filter>
     </ClCompile>
-    <ClCompile Include="WinLibSource\wlLog.cpp">
-      <Filter>WinLibSource</Filter>
-    </ClCompile>
-    <ClCompile Include="WinLibSource\wlModule.cpp">
-      <Filter>WinLibSource</Filter>
-    </ClCompile>
-    <ClCompile Include="WinLibSource\wlMutex.cpp">
-      <Filter>WinLibSource</Filter>
-    </ClCompile>
-    <ClCompile Include="WinLibSource\wlNonCopyable.cpp">
-      <Filter>WinLibSource</Filter>
-    </ClCompile>
-    <ClCompile Include="WinLibSource\wlPathHelper.cpp">
-      <Filter>WinLibSource</Filter>
-    </ClCompile>
     <ClCompile Include="WinLibSource\wlProcess.cpp">
       <Filter>WinLibSource</Filter>
     </ClCompile>
@@ -53,21 +38,6 @@
       <Filter>WinLibSource</Filter>
     </ClCompile>
     <ClCompile Include="WinLibSource\wlProcessHelper.cpp">
-      <Filter>WinLibSource</Filter>
-    </ClCompile>
-    <ClCompile Include="WinLibSource\wlSingleAppInstance.cpp">
-      <Filter>WinLibSource</Filter>
-    </ClCompile>
-    <ClCompile Include="WinLibSource\wlStringHelper.cpp">
-      <Filter>WinLibSource</Filter>
-    </ClCompile>
-    <ClCompile Include="WinLibSource\wlThread.cpp">
-      <Filter>WinLibSource</Filter>
-    </ClCompile>
-    <ClCompile Include="WinLibSource\wlEvent.cpp">
-      <Filter>WinLibSource</Filter>
-    </ClCompile>
-    <ClCompile Include="WinLibSource\wlFileHelper.cpp">
       <Filter>WinLibSource</Filter>
     </ClCompile>
     <ClCompile Include="WinLibSource\wlGDIBitmap.cpp">
@@ -127,9 +97,6 @@
     <ClCompile Include="GameLibSource\glSprite.cpp">
       <Filter>GameLibSource</Filter>
     </ClCompile>
-    <ClCompile Include="GameLibSource\glStringTool.cpp">
-      <Filter>GameLibSource</Filter>
-    </ClCompile>
     <ClCompile Include="GameLibSource\glTexture.cpp">
       <Filter>GameLibSource</Filter>
     </ClCompile>
@@ -147,6 +114,30 @@
     </ClCompile>
     <ClCompile Include="WinLibSource\wlModuleEnumCallbackWarpper.cpp">
       <Filter>WinLibSource</Filter>
+    </ClCompile>
+    <ClCompile Include="GameLibSource\glStringHelper.cpp">
+      <Filter>GameLibSource</Filter>
+    </ClCompile>
+    <ClCompile Include="GameLibSource\glLog.cpp">
+      <Filter>GameLibSource</Filter>
+    </ClCompile>
+    <ClCompile Include="GameLibSource\glMutex.cpp">
+      <Filter>GameLibSource</Filter>
+    </ClCompile>
+    <ClCompile Include="GameLibSource\glEvent.cpp">
+      <Filter>GameLibSource</Filter>
+    </ClCompile>
+    <ClCompile Include="GameLibSource\glThread.cpp">
+      <Filter>GameLibSource</Filter>
+    </ClCompile>
+    <ClCompile Include="GameLibSource\glSingleAppInstance.cpp">
+      <Filter>GameLibSource</Filter>
+    </ClCompile>
+    <ClCompile Include="GameLibSource\glPathHelper.cpp">
+      <Filter>GameLibSource</Filter>
+    </ClCompile>
+    <ClCompile Include="GameLibSource\glFileHelper.cpp">
+      <Filter>GameLibSource</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

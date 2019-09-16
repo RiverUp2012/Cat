@@ -9,19 +9,55 @@
 
 #pragma once
 
+#include <stdarg.h>
 #include "GameLibTemplate.h"
 
+//
+// @brief 求取编译时大小已知的数组容量
+//
 #define GL_DIM(_Array) (sizeof(_Array) / sizeof(_Array[0]))
 
-enum glInputType
-{
+//
+// @brief 格式化字符串
+//
+#define GL_FORMAT_W(_Format, _String, _Ret) \
+{ \
+if (_Format) \
+{ \
+	va_list vl = { 0 }; \
+	va_start(vl, _Format); \
+	_Ret = glStringHelper::formatW(_Format, vl, _String); \
+	va_end(vl); \
+} \
+}
+
+//
+// @brief 格式化字符串
+//
+#define GL_FORMAT_A(_Format, _String, _Ret) \
+{ \
+if (_Format) \
+{ \
+	va_list vl = { 0 }; \
+	va_start(vl, _Format); \
+	_Ret = glStringHelper::formatA(_Format, vl, _String); \
+	va_end(vl); \
+} \
+}
+
+//
+// @brief 输入类型枚举体
+//
+enum glInputType {
 	glInputTypeKeyDown,
 	glInputTypeKeyUp,
 	glInputTypeMouseMove,
 };
 
-class glNonCopyable
-{
+//
+// @brief 不可复制基类
+//
+class glNonCopyable {
 public:
 	glNonCopyable();
 	virtual ~glNonCopyable();
@@ -30,8 +66,10 @@ private:
 	glNonCopyable & operator = (const glNonCopyable & other);
 };
 
-class glRefCounter
-{
+//
+// @brief 引用计数器类
+//
+class glRefCounter {
 public:
 	glRefCounter();
 	virtual ~glRefCounter();
@@ -43,8 +81,10 @@ private:
 	int mRefCount;
 };
 
-class glGameState : public glRefCounter
-{
+//
+// @brief 游戏状态类
+//
+class glGameState : public glRefCounter {
 public:
 	glGameState();
 	virtual ~glGameState();
@@ -57,8 +97,10 @@ public:
 	virtual void onPaint(void);
 };
 
-class glPaintObject
-{
+//
+// @brief 可绘制对象类
+//
+class glPaintObject {
 public:
 	glPaintObject();
 	virtual ~glPaintObject();
@@ -78,8 +120,10 @@ private:
 	bool mVisible;
 };
 
-class glInputHandler
-{
+//
+// @brief 输入处理器类
+//
+class glInputHandler {
 public:
 	glInputHandler();
 	virtual ~glInputHandler();
@@ -95,8 +139,10 @@ private:
 	bool mHandleInputEvent;
 };
 
-class glTexture : public glNonCopyable
-{
+//
+// @brief 纹理类
+//
+class glTexture : public glNonCopyable {
 public:
 	glTexture();
 	virtual ~glTexture();
@@ -117,8 +163,10 @@ private:
 	glStringW mImageFileName;
 };
 
-class glSprite : public glNonCopyable
-{
+//
+// @brief 精灵类
+//
+class glSprite : public glNonCopyable {
 public:
 	glSprite();
 	glSprite(glTexture * texture);
@@ -138,8 +186,10 @@ private:
 	glSize<float> mSurfaceSize;
 };
 
-class glFont : public glNonCopyable
-{
+//
+// @brief 字体类
+//
+class glFont : public glNonCopyable {
 public:
 	glFont();
 	virtual ~glFont();
@@ -165,8 +215,10 @@ private:
 	void * mD3DXFont;
 };
 
-class glSound : public glNonCopyable
-{
+//
+// @brief 声音类
+//
+class glSound : public glNonCopyable {
 public:
 	glSound();
 	virtual ~glSound();
@@ -189,8 +241,10 @@ private:
 	void * mDSBuf8;
 };
 
-class glFile : public glNonCopyable
-{
+//
+// @brief 文件类
+//
+class glFile : public glNonCopyable {
 public:
 	glFile();
 	virtual ~glFile();
@@ -217,8 +271,10 @@ private:
 	void * mFileHandle;
 };
 
-class glModule : public glNonCopyable
-{
+//
+// @brief 模块类
+//
+class glModule : public glNonCopyable {
 public:
 	glModule();
 	glModule(const wchar_t * moduleFileName);
@@ -226,14 +282,17 @@ public:
 public:
 	bool createW(const wchar_t * moduleFileName);
 	void destroy(void);
+	bool isAlready(void) const;
 	void * getProcAddressW(const wchar_t * procName);
 	void * getProcAddressA(const char * procName);
 private:
 	void * mModuleHandle;
 };
 
-class glEngine : public glNonCopyable
-{
+//
+// @brief 引擎类
+//
+class glEngine : public glNonCopyable {
 public:
 	static glEngine * get(void);
 public:
@@ -278,11 +337,116 @@ private:
 	glList<glGameState *> mGameStateList;
 };
 
-class glStringTool
-{
+//
+// @brief 字符串助手类
+//
+class glStringHelper {
 public:
 	static bool a2w(const char * stringA, glStringW & stringW, const bool toUTF8 = false);
 	static bool w2a(const wchar_t * stringW, glStringA & stringA, const bool toUTF8 = false);
 	static int findA(const char * string, const char * subString);
 	static int findW(const wchar_t * string, const wchar_t * subString);
+	static bool formatW(const wchar_t * format, const va_list & vl, glStringW & string);
+	static bool formatA(const char * format, const va_list & vl, glStringA & string);
+};
+
+//
+// @brief 日志类
+//
+class glLog {
+public:
+	static bool openW(const wchar_t * logFileName);
+	static void close(void);
+	static bool putMessageW(const wchar_t * format, ...);
+	static bool putMessageA(const char * format, ...);
+};
+
+//
+// @brief 互斥类
+// @desc 用于线程资源同步
+//
+class glMutex : public glNonCopyable {
+public:
+	glMutex();
+	virtual ~glMutex();
+public:
+	void lock(void);
+	void unlock(void);
+private:
+	void * mCriticalSection;
+};
+
+//
+// @brief 代码域互斥哨兵
+// @desc 在生命期内自动同步线程资源
+//
+class glMutexGuard : public glNonCopyable {
+public:
+	glMutexGuard(glMutex * mutex);
+	virtual ~glMutexGuard();
+private:
+	glMutex * mMutex = 0;
+};
+
+//
+// @brief 事件类
+//
+class glEvent : public glNonCopyable {
+public:
+	glEvent();
+	virtual ~glEvent();
+public:
+	bool createW(const wchar_t * eventName, const bool manualReset, const bool initState);
+	bool openW(const wchar_t * eventName);
+	void destroy(void);
+private:
+	void * mEventHandle;
+};
+
+//
+// @brief 线程类
+//
+class glThread : public glNonCopyable {
+public:
+	glThread();
+	virtual ~glThread();
+public:
+	bool create(const bool runNow = true);
+	void destroy(const int waitTimeout = 0);
+	bool isAlready(void) const;
+public:
+	virtual void onThreadRun(void) = 0;
+private:
+	void * mThreadHandle;
+	unsigned long mThreadID = 0;
+};
+
+//
+// @brief 用于保证应用程序只有一个实例正在运行的类
+//
+class glSingleAppInstance : public glNonCopyable {
+public:
+	glSingleAppInstance();
+	virtual ~glSingleAppInstance();
+public:
+	bool checkW(const wchar_t * appInstanceName);
+private:
+	glEvent mEvent;
+};
+
+//
+// @brief 路径工具类
+//
+class glPathHelper {
+public:
+	static bool getFileNameWithExtW(const wchar_t * path, glStringW & fileNameWithExt);
+	static bool getAppPathW(glStringW & appPath);
+};
+
+//
+// @brief 文件工具类
+//
+class glFileHelper {
+public:
+	static bool deleteFileW(const wchar_t * fileName);
 };

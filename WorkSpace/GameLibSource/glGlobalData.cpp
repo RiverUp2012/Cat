@@ -12,3 +12,4 @@ glModule gModuleDSound;
 glModule gModuleUser32;
 glModule gModuleKernel32;
 glModule gModuleGDI32;
+glModule gModulePsapi;

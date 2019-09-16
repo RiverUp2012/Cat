@@ -2,173 +2,127 @@
 #include "../GameLib.h"
 #include "../Include/GameLibPrivate.h"
 
-#define SGE_PRIMITIVE_VERTEX_SIZE (sizeof(glPrimitiveVertex))
-#define SGE_PRIMITIVE_VERTEX_FVF (D3DFVF_XYZRHW | D3DFVF_DIFFUSE)
-#define SGE_MAX_PRIMITIVE_VERTEX (1024 * 8)
+#define GL_PRIMITIVE_VERTEX_SIZE (sizeof(glPrimitiveVertex))
+#define GL_PRIMITIVE_VERTEX_FVF (D3DFVF_XYZRHW | D3DFVF_DIFFUSE)
+#define GL_MAX_PRIMITIVE_VERTEX (1024 * 8)
 
-glBatchPrimitive::glBatchPrimitive()
-{
+glBatchPrimitive::glBatchPrimitive() {
 	mVertexList = 0;
 	mPrimitiveCount = 0;
 	mPrimitiveType = glPrimitiveTypeUnknown;
 }
 
-glBatchPrimitive::~glBatchPrimitive()
-{
+glBatchPrimitive::~glBatchPrimitive() {
 	destroy();
 }
 
-bool glBatchPrimitive::create(void)
-{
+bool glBatchPrimitive::create(void) {
 	destroy();
-
 	if (mVertexBuffer.create(
-		SGE_PRIMITIVE_VERTEX_SIZE * SGE_MAX_PRIMITIVE_VERTEX,
-		SGE_PRIMITIVE_VERTEX_FVF))
-	{
+		GL_PRIMITIVE_VERTEX_SIZE * GL_MAX_PRIMITIVE_VERTEX,
+		GL_PRIMITIVE_VERTEX_FVF)) 	{
 		lockVertexBuffer();
-
 		return true;
 	}
-
 	return false;
 }
 
-void glBatchPrimitive::destroy(void)
-{
+void glBatchPrimitive::destroy(void) {
 	unlockVertexBuffer();
-
 	mVertexBuffer.destroy();
 	mVertexList = 0;
 	mPrimitiveCount = 0;
 	mPrimitiveType = glPrimitiveTypeUnknown;
 }
 
-bool glBatchPrimitive::flush(void)
-{
+bool glBatchPrimitive::flush(void) {
 	bool ret = false;
 	D3DPRIMITIVETYPE d3dPrimType = D3DPT_POINTLIST;
-
 	IDirect3DDevice9 * d3dDev9 = gVideoDevice.getIDirect3DDevice9();
-	if (mVertexBuffer.isAlready() && d3dDev9)
-	{
-		if (glPrimitiveTypeUnknown != mPrimitiveType && mPrimitiveCount > 0)
-		{
+	if (mVertexBuffer.isAlready() && d3dDev9) {
+		if (glPrimitiveTypeUnknown != mPrimitiveType && mPrimitiveCount > 0) {
 			unlockVertexBuffer();
-
-			if (glPrimitiveTypePoint == mPrimitiveType)
-			{
+			if (glPrimitiveTypePoint == mPrimitiveType) {
 				d3dPrimType = D3DPT_POINTLIST;
 			}
-			else if (glPrimitiveTypeLine == mPrimitiveType)
-			{
+			else if (glPrimitiveTypeLine == mPrimitiveType) {
 				d3dPrimType = D3DPT_LINELIST;
 			}
-			else if (glPrimitiveTypeTriangle == mPrimitiveType)
-			{
+			else if (glPrimitiveTypeTriangle == mPrimitiveType) {
 				d3dPrimType = D3DPT_TRIANGLELIST;
 			}
-
-			if (SUCCEEDED(d3dDev9->SetTexture(
-				0,
-				0)))
-			{
+			if (SUCCEEDED(d3dDev9->SetTexture(0, 0))) {
 				if (SUCCEEDED(d3dDev9->SetStreamSource(
 					0,
 					mVertexBuffer.getIDirect3DVertexBuffer9(),
 					0,
-					SGE_PRIMITIVE_VERTEX_SIZE)))
-				{
-					if (SUCCEEDED(d3dDev9->SetFVF(SGE_PRIMITIVE_VERTEX_FVF)))
-					{
+					GL_PRIMITIVE_VERTEX_SIZE))) {
+					if (SUCCEEDED(d3dDev9->SetFVF(GL_PRIMITIVE_VERTEX_FVF))) {
 						if (SUCCEEDED(d3dDev9->DrawPrimitive(
 							d3dPrimType,
 							0,
-							mPrimitiveCount)))
-						{
+							mPrimitiveCount))) {
 							mPrimitiveCount = 0;
-
 							ret = true;
 						}
 					}
 				}
 			}
 		}
-		else
-		{
+		else {
 			ret = true;
 		}
 	}
-
 	return ret;
 }
 
 bool glBatchPrimitive::paintPoint(
 	const glPoint<float> & pos,
-	const unsigned int color)
-{
-	if (mVertexBuffer.isAlready())
-	{
+	const unsigned int color) {
+	if (mVertexBuffer.isAlready()) {
 		if (glPrimitiveTypePoint != mPrimitiveType ||
-			mPrimitiveCount >= SGE_MAX_PRIMITIVE_VERTEX)
-		{
+			mPrimitiveCount >= GL_MAX_PRIMITIVE_VERTEX) {
 			flush();
-
 			mPrimitiveType = glPrimitiveTypePoint;
 			mPrimitiveCount = 0;
 		}
-
 		lockVertexBuffer();
-		if (mVertexList)
-		{
+		if (mVertexList) {
 			glPrimitiveVertex * vertexList = &mVertexList[mPrimitiveCount];
 			++mPrimitiveCount;
-
 			vertexList[0].x = pos.mX;
 			vertexList[0].y = pos.mY;
 			vertexList[0].diffuse = color;
-
 			return true;
 		}
 	}
-
 	return false;
 }
 
 bool glBatchPrimitive::paintLine(
 	const glPoint<float> & posStart,
 	const glPoint<float> & posEnd,
-	const unsigned int color)
-{
-	if (mVertexBuffer.isAlready())
-	{
+	const unsigned int color) {
+	if (mVertexBuffer.isAlready()) {
 		if (glPrimitiveTypeLine != mPrimitiveType ||
-			mPrimitiveCount * 2 >= SGE_MAX_PRIMITIVE_VERTEX)
-		{
+			mPrimitiveCount * 2 >= GL_MAX_PRIMITIVE_VERTEX) {
 			flush();
-
 			mPrimitiveType = glPrimitiveTypeLine;
 			mPrimitiveCount = 0;
 		}
-
 		lockVertexBuffer();
-		if (mVertexList)
-		{
+		if (mVertexList) {
 			glPrimitiveVertex * vertexList = &mVertexList[mPrimitiveCount * 2];
 			++mPrimitiveCount;
-
 			vertexList[0].x = posStart.mX;
 			vertexList[0].y = posStart.mY;
 			vertexList[0].diffuse = color;
-
 			vertexList[1].x = posEnd.mX;
 			vertexList[1].y = posEnd.mY;
 			vertexList[1].diffuse = color;
-
 			return true;
 		}
 	}
-
 	return false;
 }
 
@@ -184,7 +138,7 @@ bool glBatchPrimitive::paintTriangle(
 		if (mVertexBuffer.isAlready())
 		{
 			if (glPrimitiveTypeTriangle != mPrimitiveType ||
-				mPrimitiveCount * 3 >= SGE_MAX_PRIMITIVE_VERTEX)
+				mPrimitiveCount * 3 >= GL_MAX_PRIMITIVE_VERTEX)
 			{
 				flush();
 
@@ -269,7 +223,7 @@ void glBatchPrimitive::lockVertexBuffer(void)
 		{
 			if (1.0f != mVertexList[0].rhw)
 			{
-				for (int i = 0; i < SGE_MAX_PRIMITIVE_VERTEX; ++i)
+				for (int i = 0; i < GL_MAX_PRIMITIVE_VERTEX; ++i)
 				{
 					mVertexList[i].rhw = 1.0f;
 					mVertexList[i].z = 0.0f;

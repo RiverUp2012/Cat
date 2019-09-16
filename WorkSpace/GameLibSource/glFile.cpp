@@ -82,7 +82,7 @@ bool glFile::openA(
 {
 	glStringW fileNameW;
 
-	if (glStringTool::a2w(fileName, fileNameW))
+	if (glStringHelper::a2w(fileName, fileNameW))
 	{
 		return openW(fileNameW.getString(), forRead, forWrite);
 	}

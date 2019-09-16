@@ -1,31 +1,31 @@
 
-#include "../WinLib.h"
-#include "../Include/WinLibPrivate.h"
+#include "../GameLib.h"
+#include "../Include/GameLibPrivate.h"
 
-wlMutex::wlMutex() {
+glMutex::glMutex() {
 	mCriticalSection = new CRITICAL_SECTION();
 	memset(mCriticalSection, 0, sizeof(CRITICAL_SECTION));
 	InitializeCriticalSection((CRITICAL_SECTION *)mCriticalSection);
 }
 
-wlMutex::~wlMutex() {
+glMutex::~glMutex() {
 	DeleteCriticalSection((CRITICAL_SECTION *)mCriticalSection);
 	delete mCriticalSection;
 	mCriticalSection = 0;
 }
 
-void wlMutex::lock(void) {
+void glMutex::lock(void) {
 	EnterCriticalSection((CRITICAL_SECTION *)mCriticalSection);
 }
 
-void wlMutex::unlock(void) {
+void glMutex::unlock(void) {
 	LeaveCriticalSection((CRITICAL_SECTION *)mCriticalSection);
 }
 
-wlMutexGuard::wlMutexGuard(wlMutex * mutex) : mMutex(mutex) {
+glMutexGuard::glMutexGuard(glMutex * mutex) : mMutex(mutex) {
 	if (mMutex) mMutex->lock();
 }
 
-wlMutexGuard::~wlMutexGuard() {
+glMutexGuard::~glMutexGuard() {
 	if (mMutex) mMutex->unlock();
 }

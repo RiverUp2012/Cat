@@ -9,7 +9,7 @@
 #endif
 
 static CCatApp gApp;
-static wlSingleAppInstance gSingleAppInstance;
+static glSingleAppInstance gSingleAppInstance;
 
 BOOL CCatApp::InitInstance() {
 	// 防止多重实例启动

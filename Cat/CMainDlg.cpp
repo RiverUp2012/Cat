@@ -29,7 +29,7 @@ BOOL CMainDlg::OnInitDialog() {
 
 	// ªÊ÷∆√®√®±≥æ∞
 
-	wlPathHelper::getAppPathW(appPath);
+	glPathHelper::getAppPathW(appPath);
 
 	if (createFromHWND(GetSafeHwnd())) {
 		imageFileName = appPath + L"Cat\\Image\\Cat.png";

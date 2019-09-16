@@ -1,25 +1,25 @@
 
-#include "../WinLib.h"
-#include "../Include/WinLibPrivate.h"
+#include "../GameLib.h"
+#include "../Include/GameLibPrivate.h"
 
 static DWORD WINAPI globalThreadProc(LPVOID param) {
-	wlThread * thread = static_cast<wlThread *>(param);
+	glThread * thread = static_cast<glThread *>(param);
 	if (thread) {
 		thread->onThreadRun();
 	}
 	return 0;
 }
 
-wlThread::wlThread() {
+glThread::glThread() {
 	mThreadHandle = 0;
 	mThreadID = 0;
 }
 
-wlThread::~wlThread() {
+glThread::~glThread() {
 
 }
 
-bool wlThread::create(const bool runNow) {
+bool glThread::create(const bool runNow) {
 	bool ret = false;
 	if (!mThreadHandle) {
 		mThreadHandle = (void *)CreateThread(
@@ -43,7 +43,7 @@ bool wlThread::create(const bool runNow) {
 	return ret;
 }
 
-void wlThread::destroy(const int waitTimeout) {
+void glThread::destroy(const int waitTimeout) {
 	if (mThreadHandle) {
 		WaitForSingleObject((HANDLE)mThreadHandle, waitTimeout);
 		CloseHandle((HANDLE)mThreadHandle);
@@ -51,7 +51,7 @@ void wlThread::destroy(const int waitTimeout) {
 	}
 }
 
-bool wlThread::isAlready(void) const {
+bool glThread::isAlready(void) const {
 	if (mThreadHandle) {
 		if (WAIT_TIMEOUT == WaitForSingleObject((HANDLE)mThreadHandle, 0)) {
 			return true;

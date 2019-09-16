@@ -9,9 +9,9 @@ namespace {
 	// 每隔多少毫秒清理一次进程
 	static int gCleanupTimeInterval = DEFAULT_CLEANUP_TIME_INTERVAL;
 	static std::vector<std::wstring> gProcessExeFileNameArray;
-	static wlMutex gProcessExeFileNameArrayLock;
+	static glMutex gProcessExeFileNameArrayLock;
 
-	class MyThread : public wlThread {
+	class MyThread : public glThread {
 	public:
 		void onThreadRun(void) override {
 			while (true) {
@@ -25,7 +25,7 @@ namespace {
 						glStringW imageFileName;
 						if (process.getImageFileNameW(imageFileName)) {
 							glStringW fileName;
-							if (wlPathHelper::getFileNameWithExtW(imageFileName.getString(), fileName)) {
+							if (glPathHelper::getFileNameWithExtW(imageFileName.getString(), fileName)) {
 								if (processCanKillW(imageFileName.getString())) {
 									process.terminate();
 								}
@@ -39,7 +39,7 @@ namespace {
 		}
 	private:
 		bool processCanKillW(const wchar_t * imageFileName) const {
-			wlMutexGuard mutexGuard(&gProcessExeFileNameArrayLock);
+			glMutexGuard mutexGuard(&gProcessExeFileNameArrayLock);
 			if (imageFileName) {
 				for (const auto & processExeFileName : gProcessExeFileNameArray) {
 					if (0 == _wcsicmp(imageFileName, processExeFileName.c_str())) {
@@ -69,7 +69,7 @@ void CProcessCleanup::shutdown(void) {
 
 bool CProcessCleanup::addProcessExeFileNameW(
 	const wchar_t * processExeFileName) {
-	wlMutexGuard mutexGuard(&gProcessExeFileNameArrayLock);
+	glMutexGuard mutexGuard(&gProcessExeFileNameArrayLock);
 	if (processExeFileName) {
 		gProcessExeFileNameArray.push_back(processExeFileName);
 	}
@@ -77,6 +77,6 @@ bool CProcessCleanup::addProcessExeFileNameW(
 }
 
 void CProcessCleanup::removeAllProcessExeFileName(void) {
-	wlMutexGuard mutexGuard(&gProcessExeFileNameArrayLock);
+	glMutexGuard mutexGuard(&gProcessExeFileNameArrayLock);
 	gProcessExeFileNameArray.clear();
 }

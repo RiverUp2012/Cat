@@ -1,8 +1,8 @@
 
-#include "../WinLib.h"
-#include "../Include/WinLibPrivate.h"
+#include "../GameLib.h"
+#include "../Include/GameLibPrivate.h"
 
-bool wlPathHelper::getFileNameWithExtW(const wchar_t * path, glStringW & fileNameWithExt) {
+bool glPathHelper::getFileNameWithExtW(const wchar_t * path, glStringW & fileNameWithExt) {
 	int pathLength = path ? glStringW::getLength(path) : 0;
 	if (path && pathLength > 0) {
 		for (int i = pathLength - 1; i >= 0; --i) {
@@ -19,7 +19,7 @@ bool wlPathHelper::getFileNameWithExtW(const wchar_t * path, glStringW & fileNam
 	return false;
 }
 
-bool wlPathHelper::getAppPathW(glStringW & appPath) {
+bool glPathHelper::getAppPathW(glStringW & appPath) {
 	wchar_t appPathTemp[520] = { 0 };
 	if (GetModuleFileNameW(0, appPathTemp, _countof(appPathTemp))) {
 		for (int i = glStringW::getLength(appPathTemp) - 1; i >= 0; --i) {

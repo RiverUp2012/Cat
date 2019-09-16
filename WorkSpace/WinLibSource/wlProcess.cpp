@@ -1,6 +1,7 @@
 
 #include "../WinLib.h"
 #include "../Include/WinLibPrivate.h"
+#include "../Include/GameLibPrivate.h"
 
 typedef BOOL(WINAPI * wlQueryFullProcessImageNameW)(
 	HANDLE hProcess,
@@ -15,8 +16,6 @@ typedef DWORD(WINAPI * wlGetModuleFileNameExW)(
 
 static wlQueryFullProcessImageNameW gQueryFullProcessImageNameW = 0;
 static wlGetModuleFileNameExW gGetModuleFileNameExW = 0;
-static wlModule gModuleKernel32;
-static wlModule gModulePsapi;
 
 wlProcess::wlProcess() {
 	mProcessHandle = 0;
@@ -66,7 +65,7 @@ bool wlProcess::getImageFileNameW(glStringW & imageFileName) {
 	DWORD imageFileNameSize = _countof(imageFileNameTemp);
 	if (mProcessHandle) {
 		if (!gModuleKernel32.isAlready()) {
-			if (gModuleKernel32.loadW(L"kernel32.dll")) {
+			if (gModuleKernel32.createW(L"kernel32.dll")) {
 				gQueryFullProcessImageNameW = (wlQueryFullProcessImageNameW)
 					gModuleKernel32.getProcAddressA("QueryFullProcessImageNameW");
 			}
@@ -82,7 +81,7 @@ bool wlProcess::getImageFileNameW(glStringW & imageFileName) {
 			}
 		}
 		if (!gModulePsapi.isAlready()) {
-			if (gModulePsapi.loadW(L"psapi.dll")) {
+			if (gModulePsapi.createW(L"psapi.dll")) {
 				gGetModuleFileNameExW = (wlGetModuleFileNameExW)
 					gModulePsapi.getProcAddressA("GetModuleFileNameExW");
 			}

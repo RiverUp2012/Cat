@@ -10,113 +10,7 @@
 #pragma once
 
 #include <stdarg.h>
-#include "GameLibTemplate.h"
-
-#define WL_FORMAT_W(_Format, _String, _Ret) \
-{ \
-if (_Format) \
-{ \
-	va_list vl = { 0 }; \
-	va_start(vl, _Format); \
-	_Ret = wlStringHelper::formatW(_Format, vl, _String); \
-	va_end(vl); \
-} \
-}
-
-#define WL_FORMAT_A(_Format, _String, _Ret) \
-{ \
-if (_Format) \
-{ \
-	va_list vl = { 0 }; \
-	va_start(vl, _Format); \
-	_Ret = wlStringHelper::formatA(_Format, vl, _String); \
-	va_end(vl); \
-} \
-}
-
-//
-// @brief 不可复制基类
-// @desc 任何继承自该类的子类，都将不可复制，若执行复制操作，将引起编译错误
-//
-class wlNonCopyable {
-public:
-	wlNonCopyable();
-	virtual ~wlNonCopyable();
-private:
-	wlNonCopyable(const wlNonCopyable & other);
-	wlNonCopyable & operator = (const wlNonCopyable & other);
-};
-
-//
-// @brief 日志类
-//
-class wlLog {
-public:
-	static bool openW(const wchar_t * logFileName);
-	static void close(void);
-	static bool putMessageW(const wchar_t * format, ...);
-	static bool putMessageA(const char * format, ...);
-};
-
-//
-// @brief 互斥类
-// @desc 用于线程资源同步
-//
-class wlMutex : public wlNonCopyable {
-public:
-	wlMutex();
-	virtual ~wlMutex();
-public:
-	void lock(void);
-	void unlock(void);
-private:
-	void * mCriticalSection;
-};
-
-//
-// @brief 代码域互斥哨兵
-// @desc 在生命期内自动同步线程资源
-//
-class wlMutexGuard : public wlNonCopyable {
-public:
-	wlMutexGuard(wlMutex * mutex);
-	virtual ~wlMutexGuard();
-private:
-	wlMutex * mMutex = 0;
-};
-
-//
-// @brief 事件类
-//
-class wlEvent : public wlNonCopyable {
-public:
-	wlEvent();
-	virtual ~wlEvent();
-public:
-	bool createW(const wchar_t * eventName, const bool manualReset, const bool initState);
-	bool openW(const wchar_t * eventName);
-	void destroy(void);
-private:
-	void * mEventHandle;
-};
-
-//
-// @brief 线程类
-//
-class wlThread : public wlNonCopyable {
-public:
-	wlThread();
-	virtual ~wlThread();
-public:
-	bool create(const bool runNow = true);
-	void destroy(const int waitTimeout = 0);
-	bool isAlready(void) const;
-public:
-	virtual void onThreadRun(void) = 0;
-private:
-	void * mThreadHandle ;
-	unsigned long mThreadID = 0;
-};
+#include "GameLib.h"
 
 //
 // @brief 进程特性枚举体
@@ -133,7 +27,7 @@ enum wlProcessFeature {
 //
 // @brief 进程类
 //
-class wlProcess : public wlNonCopyable {
+class wlProcess : public glNonCopyable {
 public:
 	wlProcess();
 	virtual ~wlProcess();
@@ -184,7 +78,7 @@ public:
 //
 // @brief 进程枚举接口包装类
 //
-class wlProcessEnumCallbackWarpper : public wlProcessEnumCallback, public wlNonCopyable {
+class wlProcessEnumCallbackWarpper : public wlProcessEnumCallback, public glNonCopyable {
 public:
 	struct wlProcessInfo {
 		unsigned long mProcessID;
@@ -207,7 +101,7 @@ private:
 //
 // @brief 模块枚举接口包装类
 //
-class wlModuleEnumCallbackWarpper : public wlModuleEnumCallback, public wlNonCopyable {
+class wlModuleEnumCallbackWarpper : public wlModuleEnumCallback, public glNonCopyable {
 public:
 	struct wlModuleInfo {
 		void * mModuleHandle;
@@ -228,66 +122,9 @@ private:
 };
 
 //
-// @brief 模块类
-//
-class wlModule : public wlNonCopyable {
-public:
-	wlModule();
-	virtual ~wlModule();
-public:
-	bool loadW(const wchar_t * moduleFileName);
-	void unload(void);
-	bool isAlready(void) const;
-	void * getProcAddressA(const char * procName);
-private:
-	void * mModuleHandle;
-};
-
-//
-// @brief 字符串工具类
-//
-class wlStringHelper {
-public:
-	static bool a2w(const char * stringA, glStringW & stringW, const bool toUTF8 = false);
-	static bool w2a(const wchar_t * stringW, glStringA & stringA, const bool toUTF8 = false);
-	static bool formatW(const wchar_t * format, const va_list & vl, glStringW & string);
-	static bool formatA(const char * format, const va_list & vl, glStringA & string);
-};
-
-//
-// @brief 用于保证应用程序只有一个实例正在运行的类
-//
-class wlSingleAppInstance : public wlNonCopyable {
-public:
-	wlSingleAppInstance();
-	virtual ~wlSingleAppInstance();
-public:
-	bool checkW(const wchar_t * appInstanceName);
-private:
-	wlEvent mEvent;
-};
-
-//
-// @brief 路径工具类
-//
-class wlPathHelper {
-public:
-	static bool getFileNameWithExtW(const wchar_t * path, glStringW & fileNameWithExt);
-	static bool getAppPathW(glStringW & appPath);
-};
-
-//
-// @brief 文件工具类
-//
-class wlFileHelper {
-public:
-	static bool deleteFileW(const wchar_t * fileName);
-};
-
-//
 // @brief GDI 位图类
 //
-class wlGDIBitmap : public wlNonCopyable {
+class wlGDIBitmap : public glNonCopyable {
 public:
 	wlGDIBitmap();
 	virtual ~wlGDIBitmap();
@@ -302,7 +139,7 @@ private:
 //
 // @brief GDI DC 类
 //
-class wlGDIDC : public wlNonCopyable {
+class wlGDIDC : public glNonCopyable {
 public:
 	wlGDIDC();
 	virtual ~wlGDIDC();
@@ -321,7 +158,7 @@ private:
 //
 // @brief GDI+ 图像类
 //
-class wlGDIPImage : public wlNonCopyable {
+class wlGDIPImage : public glNonCopyable {
 public:
 	wlGDIPImage();
 	virtual ~wlGDIPImage();
@@ -338,7 +175,7 @@ private:
 //
 // @brief GDI+ 窗口类
 //
-class wlGDIPWindow : public wlNonCopyable {
+class wlGDIPWindow : public glNonCopyable {
 public:
 	wlGDIPWindow();
 	virtual ~wlGDIPWindow();

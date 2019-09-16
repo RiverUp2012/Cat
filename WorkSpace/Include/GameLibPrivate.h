@@ -213,3 +213,4 @@ extern glModule gModuleDSound;
 extern glModule gModuleUser32;
 extern glModule gModuleKernel32;
 extern glModule gModuleGDI32;
+extern glModule gModulePsapi;

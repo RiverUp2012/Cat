@@ -1,8 +1,8 @@
 
-#include "../WinLib.h"
-#include "../Include/WinLibPrivate.h"
+#include "../GameLib.h"
+#include "../Include/GameLibPrivate.h"
 
-bool wlFileHelper::deleteFileW(const wchar_t * fileName) {
+bool glFileHelper::deleteFileW(const wchar_t * fileName) {
 	DWORD fileAttributes = 0;
 	if (fileName) {
 		fileAttributes = GetFileAttributesW(fileName);
