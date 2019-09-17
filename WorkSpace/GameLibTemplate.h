@@ -833,15 +833,26 @@ public:
 		}
 		return false;
 	}
-	bool getResource(const int id, _U & resource, const bool markResourceUnuse = true) const {
+	bool getResource(const int id, _U & resource, const bool markResourceUnuse = true) {
 		for (int i = 0; i < mItemArray.getCapacity(); ++i) {
-			const glItem & item = mItemArray.getAt(i);
+			glItem & item = mItemArray.getAtRef(i);
 			if (item.mInUse && id == item.mID) {
 				resource = item.mResource;
 				if (markResourceUnuse) {
 					item.mInUse = false;
 					item.mID = 0;
 				}
+				return true;
+			}
+		}
+		return false;
+	}
+	bool markResourceUnuse(const int id) {
+		for (int i = 0; i < mItemArray.getCapacity(); ++i) {
+			glItem & item = mItemArray.getAtRef(i);
+			if (id == item.mID) {
+				item.mInUse = false;
+				item.mID = 0;
 				return true;
 			}
 		}
