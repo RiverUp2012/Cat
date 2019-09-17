@@ -203,7 +203,7 @@ public:
 		mCapacity = 0;
 		const int stringLength = other.getLength();
 		if (stringLength > 0 && resize(stringLength + 1)) {
-			copy(mString, other.getString(), stringLength);
+			copy(mString, other, stringLength);
 		}
 	}
 	virtual ~glString() {
@@ -286,7 +286,7 @@ public:
 		if (this != &other) {
 			const int stringLength = other.getLength();
 			if (stringLength > 0 && resize(stringLength + 1)) {
-				copy(mString, other.getString(), stringLength);
+				copy(mString, other, stringLength);
 			}
 		}
 		return *this;

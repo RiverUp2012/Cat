@@ -16,7 +16,7 @@ bool CBio4MemCheatHDV16::setup(void) {
 	pecw.enumProcess();
 	for (auto iter = pecw.getProcessInfoList().begin(); iter.isValid(); iter.moveNext()) {
 		const auto & processInfo = iter.getData();
-		if (0 == _wcsicmp(L"bio4.exe", processInfo.mExeFileName.getString())) {
+		if (0 == _wcsicmp(L"bio4.exe", processInfo.mExeFileName)) {
 			if (mBio4Process.openByProcessID(
 				processInfo.mProcessID,
 				WL_PROCESS_FEATURE_VM_OPERATION)) {
@@ -26,7 +26,7 @@ bool CBio4MemCheatHDV16::setup(void) {
 				mecw.enumModule(mBio4Process.getProcesseID());
 				for (auto iter = mecw.getModuleInfoList().begin(); iter.isValid(); iter.moveNext()) {
 					const auto & moduleInfo = iter.getData();
-					if (glStringHelper::findW(moduleInfo.mModuleFileName.getString(), L"bio4.exe") >= 0) {
+					if (glStringHelper::findW(moduleInfo.mModuleFileName, L"bio4.exe") >= 0) {
 						//
 						// 将游戏可执行模块基地址保存起来
 						//

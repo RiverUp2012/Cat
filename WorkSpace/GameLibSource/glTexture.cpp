@@ -110,5 +110,5 @@ void * glTexture::getIDirect3DTexture9(void) const {
 }
 
 const wchar_t * glTexture::getImageFileNameW(void) const {
-	return mImageFileName.getString();
+	return mImageFileName;
 }

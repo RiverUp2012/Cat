@@ -41,6 +41,7 @@
     <ClCompile Include="GameLibSource\glPerformanceCounter.cpp" />
     <ClCompile Include="GameLibSource\glRefCounter.cpp" />
     <ClCompile Include="GameLibSource\glSingleAppInstance.cpp" />
+    <ClCompile Include="GameLibSource\glSocket.cpp" />
     <ClCompile Include="GameLibSource\glSound.cpp" />
     <ClCompile Include="GameLibSource\glSoundDevice.cpp" />
     <ClCompile Include="GameLibSource\glSprite.cpp" />

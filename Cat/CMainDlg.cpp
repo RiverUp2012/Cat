@@ -33,7 +33,7 @@ BOOL CMainDlg::OnInitDialog() {
 
 	if (createFromHWND(GetSafeHwnd())) {
 		imageFileName = appPath + L"Cat\\Image\\Cat.png";
-		if (mImgBK.createFromFileW(imageFileName.getString())) {
+		if (mImgBK.createFromFileW(imageFileName)) {
 			drawImage(mImgBK, 0, 0, mImgBK.getWidth(), mImgBK.getHeight());
 			present();
 		}

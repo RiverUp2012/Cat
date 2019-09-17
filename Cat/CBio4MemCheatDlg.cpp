@@ -72,7 +72,7 @@ void CBio4MemCheatDlg::OnBnClickedBtnShutdown() {
 }
 
 void CBio4MemCheatDlg::OnBnClickedBtnAddCurrentItemCount() {
-	CBio4MemCheat::addCurrentItemCount(8);
+	CBio4MemCheat::addCurrentItemCount(16);
 }
 
 void CBio4MemCheatDlg::OnBnClickedBtnAddHp() {
@@ -83,7 +83,7 @@ void CBio4MemCheatDlg::OnBnClickedBtnAddHp() {
 }
 
 void CBio4MemCheatDlg::OnBnClickedBtnAddCurrentGunBullet() {
-	CBio4MemCheat::addCurrentGunBulletCount(12);
+	CBio4MemCheat::addCurrentGunBulletCount(24);
 }
 
 void CBio4MemCheatDlg::OnBnClickedBtnAddPtas() {

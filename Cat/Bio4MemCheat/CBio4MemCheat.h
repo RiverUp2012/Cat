@@ -26,12 +26,36 @@ public:
 	// @brief 关闭模块
 	//
 	static void shutdown(void);
+	//
+	// @brief 查询 leon 生命值
+	//
 	static bool queryLeonHP(int & hp);
+	//
+	// @brief 设置 leon 生命值
+	//
 	static bool setLeonHP(const int hp);
+	//
+	// @brief 查询 leon 最大生命值
+	//
 	static bool queryLeonMaxHP(int & maxHP);
+	//
+	// @brief 设置 leon 最大生命值
+	//
 	static bool setLeonMaxHP(const int maxHP);
+	//
+	// @brief 增加当前手持道具数量
+	//
 	static bool addCurrentItemCount(const int addItemCount);
+	//
+	// @brief 增加当前手持枪械子弹数量
+	//
 	static bool addCurrentGunBulletCount(const int addGunBulletCount);
+	//
+	// @brief 查询 leon 金币数
+	//
 	static bool queryLeonPTAS(int & ptas);
+	//
+	// @brief 设置 leon 金币数
+	//
 	static bool setLeonPTAS(const int ptas);
 };

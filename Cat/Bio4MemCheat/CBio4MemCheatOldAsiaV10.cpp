@@ -8,7 +8,7 @@ bool CBio4MemCheatOldAsiaV10::setup(void) {
 	pecw.enumProcess();
 	for (auto iter = pecw.getProcessInfoList().begin(); iter.isValid(); iter.moveNext()) {
 		const auto & processInfo = iter.getData();
-		if (0 == _wcsicmp(L"game.exe", processInfo.mExeFileName.getString())) {
+		if (0 == _wcsicmp(L"game.exe", processInfo.mExeFileName)) {
 			if (mBio4Process.openByProcessID(
 				processInfo.mProcessID,
 				WL_PROCESS_FEATURE_VM_OPERATION)) {

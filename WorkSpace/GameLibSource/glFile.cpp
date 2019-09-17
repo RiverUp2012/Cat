@@ -64,7 +64,7 @@ bool glFile::openA(
 	const bool forWrite) {
 	glStringW fileNameW;
 	if (glStringHelper::a2w(fileName, fileNameW)) {
-		return openW(fileNameW.getString(), forRead, forWrite);
+		return openW(fileNameW, forRead, forWrite);
 	}
 	return false;
 }

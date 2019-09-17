@@ -37,6 +37,9 @@ bool wlProcess::openByProcessID(const unsigned long processID, const int feature
 			mProcessID = processID;
 			return true;
 		}
+		else {
+			throw glException(L"OpenProcess", GetLastError());
+		}
 	}
 	return false;
 }
@@ -55,6 +58,9 @@ bool wlProcess::terminate(void) {
 		if (TerminateProcess((HANDLE)mProcessHandle, 0)) {
 			mProcessHandle = 0;
 			ret = true;
+		}
+		else {
+			throw glException(L"TerminateProcess", GetLastError());
 		}
 	}
 	return ret;
@@ -79,6 +85,9 @@ bool wlProcess::getImageFileNameW(glStringW & imageFileName) {
 				imageFileName = imageFileNameTemp;
 				return true;
 			}
+			else {
+				throw glException(L"QueryFullProcessImageNameW", GetLastError());
+			}
 		}
 		if (!gModulePsapi.isAlready()) {
 			if (gModulePsapi.createW(L"psapi.dll")) {
@@ -94,6 +103,9 @@ bool wlProcess::getImageFileNameW(glStringW & imageFileName) {
 				imageFileNameSize)) {
 				imageFileName = imageFileNameTemp;
 				return true;
+			}
+			else {
+				throw glException(L"GetModuleFileNameExW", GetLastError());
 			}
 		}
 	}
@@ -111,6 +123,9 @@ bool wlProcess::vmRead(const void * vmAddress, void * buffer, const int bytesToR
 			&bytesReaded)) {
 			return true;
 		}
+		else {
+			throw glException(L"ReadProcessMemory", GetLastError());
+		}
 	}
 	return false;
 }
@@ -125,6 +140,9 @@ bool wlProcess::vmWrite(void * vmAddress, const void * buffer, const int bytesTo
 			bytesToWrite,
 			&bytesWrited)) {
 			return true;
+		}
+		else {
+			throw glException(L"WriteProcessMemory", GetLastError());
 		}
 	}
 	return false;
@@ -154,9 +172,18 @@ bool wlProcess::setPrivilegeW(const wchar_t * privilegeName, const bool enableOr
 					0)) {
 					ret = true;
 				}
+				else {
+					throw glException(L"AdjustTokenPrivileges", GetLastError());
+				}
+			}
+			else {
+				throw glException(L"LookupPrivilegeValueW", GetLastError());
 			}
 			CloseHandle(tokenHandle);
 			tokenHandle = 0;
+		}
+		else {
+			throw glException(L"OpenProcessToken", GetLastError());
 		}
 	}
 	return ret;

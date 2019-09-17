@@ -13,6 +13,8 @@ static glSingleAppInstance gSingleAppInstance;
 
 BOOL CCatApp::InitInstance() {
 
+	std::bad_alloc aa;
+
 	// 防止多重实例启动
 
 	if (gSingleAppInstance.checkW(L"CatInstanceName")) {

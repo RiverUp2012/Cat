@@ -3,6 +3,7 @@
 
 //
 // @brief 作弊器接口类
+// @desc 根据不同的游戏版本，提供不同的接口实现
 //
 class IBio4MemCheat {
 public:

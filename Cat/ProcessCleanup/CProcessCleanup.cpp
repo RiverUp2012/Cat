@@ -25,8 +25,8 @@ namespace {
 						glStringW imageFileName;
 						if (process.getImageFileNameW(imageFileName)) {
 							glStringW fileName;
-							if (glPathHelper::getFileNameWithExtW(imageFileName.getString(), fileName)) {
-								if (processCanKillW(imageFileName.getString())) {
+							if (glPathHelper::getFileNameWithExtW(imageFileName, fileName)) {
+								if (processCanKillW(imageFileName)) {
 									process.terminate();
 								}
 							}

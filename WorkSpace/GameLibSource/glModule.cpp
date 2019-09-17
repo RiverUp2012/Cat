@@ -20,7 +20,7 @@ bool glModule::createW(const wchar_t * moduleFileName) {
 		if (mModuleHandle) {
 			return true;
 		}
-		throw glException(GetLastError());
+		throw glException(L"LoadLibraryW", GetLastError());
 	}
 	return false;
 }
@@ -40,15 +40,19 @@ void * glModule::getProcAddressW(const wchar_t * procName) {
 	glStringA procNameA;
 	if (mModuleHandle && procName) {
 		if (glStringHelper::w2a(procName, procNameA)) {
-			return getProcAddressA(procNameA.getString());
+			return getProcAddressA(procNameA);
 		}
 	}
 	return 0;
 }
 
 void * glModule::getProcAddressA(const char * procName) {
+	void * procAddress = 0;
 	if (mModuleHandle && procName) {
-		return GetProcAddress((HMODULE)mModuleHandle, procName);
+		procAddress = GetProcAddress((HMODULE)mModuleHandle, procName);
+		if (!procAddress) {
+			throw glException(L"GetProcAddress", GetLastError());
+		}
 	}
-	return 0;
+	return procAddress;
 }

@@ -36,12 +36,12 @@ bool glLog::putMessageW(const wchar_t * format, ...) {
 	glMutexGuard mutexGuard(&gMutex);
 	GL_FORMAT_W(format, messageW, ret);
 	if (ret) {
-		if (glStringHelper::w2a(messageW.getString(), messageA)) {
+		if (glStringHelper::w2a(messageW, messageA)) {
 			if (gOutputDebugView) {
-				OutputDebugStringW(messageW.getString());
+				OutputDebugStringW(messageW);
 			}
 			if (gFile.write(
-				messageA.getString(),
+				messageA,
 				messageA.getLength() * messageA.getCharSize())) {
 				return true;
 			}
@@ -57,10 +57,10 @@ bool glLog::putMessageA(const char * format, ...) {
 	GL_FORMAT_A(format, messageA, ret);
 	if (ret) {
 		if (gOutputDebugView) {
-			OutputDebugStringA(messageA.getString());
+			OutputDebugStringA(messageA);
 		}
 		if (gFile.write(
-			messageA.getString(),
+			messageA,
 			messageA.getLength() * messageA.getCharSize())) {
 			return true;
 		}

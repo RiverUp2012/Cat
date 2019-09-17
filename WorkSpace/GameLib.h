@@ -63,13 +63,13 @@ enum glInputType {
 class glException {
 public:
 	glException(const wchar_t * message);
-	glException(const unsigned int win32LastError);
+	glException(const wchar_t * win32APIName, const unsigned int win32LastError);
 	virtual ~glException();
 public:
 	const wchar_t * getMessage(void) const;
 	unsigned int getWin32LastError(void) const;
 private:
-	const wchar_t * mMessage;
+	wchar_t mMessage[520];
 	unsigned int mWin32LastError;
 };
 
@@ -627,4 +627,25 @@ class glAsyncTaskQueue {
 public:
 	static void postTask(glAsyncTask * task);
 	static void quit(void);
+};
+
+//
+// @brief ÍøÂç Socket Àà
+//
+class glSocket : public glNonCopyable {
+public:
+	glSocket();
+private:
+	glSocket(const int socket);
+public:
+	virtual ~glSocket();
+public:
+	bool createForClient(void);
+	bool createForServerA(const char * ipV4, const short int port);
+	void destroy(void);
+	bool connectToServerA(const char * ipV4, const short int port);
+private:
+	int mSocket;
+	bool mClientSocket;
+	bool mServerSocket;
 };

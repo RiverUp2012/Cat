@@ -23,9 +23,6 @@ namespace {
 		glTimerThread() {
 			mQuitFlag = false;
 		}
-		//~glTimerThread() {
-		//	quit();
-		//}
 	public:
 		bool registerTimer(glTimer * timer, const int timerID, const int duration) {
 			glMutexGuard mutexGuard(&mTimerInfoListLock);
