@@ -62,26 +62,21 @@ static glDestroyWindow gDestroyWindow = 0;
 static glCreateWindowExW gCreateWindowExW = 0;
 static glUnregisterClassW gUnregisterClassW = 0;
 
-static LRESULT CALLBACK sgeWndMsgProc(
+static LRESULT CALLBACK glWndMsgProc(
 	HWND wndHandle,
 	UINT wndMessage,
 	WPARAM wParam,
-	LPARAM lParam)
-{
-	if (WM_DESTROY == wndMessage)
-	{
+	LPARAM lParam) {
+	if (WM_DESTROY == wndMessage) {
 		gPostQuitMessage(0);
 	}
-
 	return gDefWindowProcW(wndHandle, wndMessage, wParam, lParam);
 }
 
-glWindow::glWindow()
-{
+glWindow::glWindow() {
 	gModuleUser32.createW(L"user32.dll");
 	gModuleKernel32.createW(L"kernel32.dll");
-	gModuleGDI32.createW(L"gdi32.dll");
-	
+	gModuleGDI32.createW(L"gdi32.dll");	
 	gGetModuleHandleW = (glGetModuleHandleW)
 		gModuleKernel32.getProcAddressA("GetModuleHandleW");
 	gPostQuitMessage = (glPostQuitMessage)
@@ -106,20 +101,17 @@ glWindow::glWindow()
 		gModuleUser32.getProcAddressA("CreateWindowExW");
 	gUnregisterClassW = (glUnregisterClassW)
 		gModuleUser32.getProcAddressA("UnregisterClassW");
-
 	mWindowHandle = 0;
 }
 
-glWindow::~glWindow()
-{
+glWindow::~glWindow() {
 	destroy();
 }
 
 bool glWindow::createW(
 	const wchar_t * windowTitle,
 	const int screenWidth,
-	const int screenHeight)
-{
+	const int screenHeight) {
 	bool ret = false;
 	int desktopWidth = gGetSystemMetrics(SM_CXSCREEN);
 	int desktopHeight = gGetSystemMetrics(SM_CYSCREEN);
@@ -131,26 +123,20 @@ bool glWindow::createW(
 	int wndHeight = 0;
 	int wndX = 0;
 	int wndY = 0;
-
 	destroy();
-
 	wndCls.cbSize = sizeof(wndCls);
 	wndCls.hbrBackground = (HBRUSH)gGetStockObject(BLACK_BRUSH);
 	wndCls.hCursor = gLoadCursorW(0, MAKEINTRESOURCEW(32512));
-	wndCls.lpfnWndProc = sgeWndMsgProc;
+	wndCls.lpfnWndProc = glWndMsgProc;
 	wndCls.hInstance = GL_APP_INSTANCE;
 	wndCls.lpszClassName = GL_WINDOW_CLASS_NAME;
 	wndCls.style = CS_HREDRAW | CS_VREDRAW;
-
-	if (gRegisterClassExW(&wndCls))
-	{
-		if (gAdjustWindowRectEx(&wndRect, wndStyle, FALSE, wndStyleEx))
-		{
+	if (gRegisterClassExW(&wndCls)) {
+		if (gAdjustWindowRectEx(&wndRect, wndStyle, FALSE, wndStyleEx)) {
 			wndWidth = wndRect.right - wndRect.left;
 			wndHeight = wndRect.bottom - wndRect.top;
 			wndX = (desktopWidth - wndWidth) / 2;
 			wndY = (desktopHeight - wndHeight) / 2;
-
 			mWindowHandle = (void *)gCreateWindowExW(
 				wndStyleEx,
 				GL_WINDOW_CLASS_NAME,
@@ -164,33 +150,26 @@ bool glWindow::createW(
 				0,
 				GL_APP_INSTANCE,
 				0);
-			if (gIsWindow((HWND)mWindowHandle))
-			{
+			if (gIsWindow((HWND)mWindowHandle)) {
 				ret = true;
 			}
 		}
 	}
-
 	return ret;
 }
 
-void glWindow::destroy(void)
-{
-	if (gIsWindow((HWND)mWindowHandle))
-	{
+void glWindow::destroy(void) {
+	if (gIsWindow((HWND)mWindowHandle)) {
 		gDestroyWindow((HWND)mWindowHandle);
 		mWindowHandle = 0;
 	}
-
 	gUnregisterClassW(GL_WINDOW_CLASS_NAME, GL_APP_INSTANCE);
 }
 
-bool glWindow::isAlready(void) const
-{
+bool glWindow::isAlready(void) const {
 	return mWindowHandle && gIsWindow((HWND)mWindowHandle);
 }
 
-void * glWindow::getHandle(void) const
-{
+void * glWindow::getHandle(void) const {
 	return mWindowHandle;
 }

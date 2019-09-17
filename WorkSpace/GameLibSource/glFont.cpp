@@ -2,7 +2,7 @@
 #include "../GameLib.h"
 #include "../Include/GameLibPrivate.h"
 
-typedef HRESULT (WINAPI * sgeD3DXCreateFontW)(
+typedef HRESULT (WINAPI * glD3DXCreateFontW)(
 	LPDIRECT3DDEVICE9       pDevice,
 	INT                     Height,
 	UINT                    Width,
@@ -16,30 +16,24 @@ typedef HRESULT (WINAPI * sgeD3DXCreateFontW)(
 	LPCWSTR                 pFaceName,
 	LPD3DXFONT*             ppFont);
 
-glFont::glFont()
-{
+glFont::glFont() {
 	mD3DXFont = 0;
 }
 
-glFont::~glFont()
-{
+glFont::~glFont() {
 	destroy();
 }
 
 bool glFont::createW(
 	const wchar_t * fontName,
 	const int fontWidth,
-	const int fontHeight)
-{
+	const int fontHeight) {
 	ID3DXFont * d3dxFont = 0;
-
 	destroy();
-
 	IDirect3DDevice9 * d3dDev9 = gVideoDevice.getIDirect3DDevice9();
-	sgeD3DXCreateFontW d3dXCreateFontW = (sgeD3DXCreateFontW)
+	glD3DXCreateFontW d3dXCreateFontW = (glD3DXCreateFontW)
 		gModuleD3DX9.getProcAddressA("D3DXCreateFontW");
-	if (d3dDev9 && d3dXCreateFontW && fontName)
-	{
+	if (d3dDev9 && d3dXCreateFontW && fontName) {
 		if (SUCCEEDED(d3dXCreateFontW(
 			d3dDev9,
 			fontHeight,
@@ -52,27 +46,21 @@ bool glFont::createW(
 			0,
 			0,
 			fontName,
-			&d3dxFont)))
-		{
+			&d3dxFont))) {
 			mD3DXFont = (void *)d3dxFont;
 			return true;
 		}
 	}
-
 	return false;
 }
 
-void glFont::destroy(void)
-{
+void glFont::destroy(void) {
 	ID3DXFont * d3dxFont = (ID3DXFont *)mD3DXFont;
-	if (d3dxFont)
-	{
-		if (gVideoDevice.isAlready())
-		{
+	if (d3dxFont) {
+		if (gVideoDevice.isAlready()) {
 			d3dxFont->Release();
 		}
 	}
-
 	mD3DXFont = 0;
 }
 
@@ -81,37 +69,29 @@ bool glFont::paintTextW(
 	const int charsToPaint,
 	const glRect<int> & paintRect,
 	const unsigned int paintFormat,
-	const unsigned int color)
-{
+	const unsigned int color) {
 	RECT textRect = { 0 };
 	ID3DXFont * d3dxFont = (ID3DXFont *)mD3DXFont;
 	glEngine * engine = glEngine::get();
-
-	if (engine)
-	{
+	if (engine) {
 		gBatchSprite.flush();
 		gBatchPrimitive.flush();
 	}
-
-	if (d3dxFont && text)
-	{
+	if (d3dxFont && text) {
 		textRect.left = paintRect.mX;
 		textRect.top = paintRect.mY;
 		textRect.right = paintRect.getRight();
 		textRect.bottom = paintRect.getBottom();
-
 		if (SUCCEEDED(d3dxFont->DrawTextW(
 			0,
 			text,
 			charsToPaint,
 			&textRect,
 			paintFormat,
-			color)))
-		{
+			color))) {
 			return true;
 		}
 	}
-
 	return false;
 }
 
@@ -120,30 +100,23 @@ bool glFont::calcTextSizeW(
 	const int charsToCalc,
 	const glSize<int> & layoutSize,
 	const unsigned int calcFormat,
-	glSize<int> & textSize)
-{
+	glSize<int> & textSize) {
 	RECT textRect = { 0 };
 	ID3DXFont * d3dxFont = (ID3DXFont *)mD3DXFont;
-
-	if (d3dxFont && text)
-	{
+	if (d3dxFont && text) {
 		textRect.right = layoutSize.mWidth;
 		textRect.bottom = layoutSize.mHeight;
-
 		if (SUCCEEDED(d3dxFont->DrawTextW(
 			0,
 			text,
 			charsToCalc,
 			&textRect,
 			calcFormat | DT_CALCRECT,
-			0)))
-		{
+			0))) {
 			textSize.mWidth = textRect.right - textRect.left;
 			textSize.mHeight = textRect.bottom - textRect.top;
-
 			return true;
 		}
 	}
-
 	return false;
 }

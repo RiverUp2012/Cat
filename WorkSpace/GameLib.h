@@ -49,8 +49,11 @@ if (_Format) \
 // @brief 输入类型枚举体
 //
 enum glInputType {
+	// 按键按下
 	glInputTypeKeyDown,
+	// 按键弹起
 	glInputTypeKeyUp,
+	// 鼠标移动
 	glInputTypeMouseMove,
 };
 
@@ -355,8 +358,9 @@ public:
 //
 class glLog {
 public:
-	static bool openW(const wchar_t * logFileName);
-	static void close(void);
+	static bool createW(const wchar_t * logFileName);
+	static void destroy(void);
+	static void setOutputDebugView(const bool outputDebugView);
 	static bool putMessageW(const wchar_t * format, ...);
 	static bool putMessageA(const char * format, ...);
 };

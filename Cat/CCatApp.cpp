@@ -20,6 +20,12 @@ BOOL CCatApp::InitInstance() {
 
 	// 启动日志
 
+	glStringW logFileName;
+	glPathHelper::getAppPathW(logFileName);
+	logFileName += L"Cat.log";
+	glLog::createW(logFileName.getString());
+	glLog::setOutputDebugView(true);
+
 	// 启动 App
 
 	CWinApp::InitInstance();
@@ -32,6 +38,8 @@ BOOL CCatApp::InitInstance() {
 	dlg.DoModal();
 
 	// 关闭日志
+
+	glLog::destroy();
 
 	return FALSE;
 }

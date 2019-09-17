@@ -71,68 +71,47 @@ bool glBatchSprite::flush(void) {
 	return ret;
 }
 
-bool glBatchSprite::paintSprite(IDirect3DTexture9 * d3dTex9, glSpriteVertex * vertexList)
-{
-	if (d3dTex9 && vertexList && mVertexBuffer.isAlready())
-	{
-		if (d3dTex9 != mD3DTex9)
-		{
+bool glBatchSprite::paintSprite(IDirect3DTexture9 * d3dTex9, glSpriteVertex * vertexList) {
+	if (d3dTex9 && vertexList && mVertexBuffer.isAlready()) {
+		if (d3dTex9 != mD3DTex9) {
 			flush();
-
-			if (mD3DTex9)
-			{
-				if (gVideoDevice.isAlready())
-				{
+			if (mD3DTex9) {
+				if (gVideoDevice.isAlready()) {
 					mD3DTex9->Release();
 				}
 			}
-
 			mD3DTex9 = d3dTex9;
 			mD3DTex9->AddRef();
 		}
-
-		if (mSpriteCount * 6 >= GL_MAX_SPRITE_VERTEX)
-		{
+		if (mSpriteCount * 6 >= GL_MAX_SPRITE_VERTEX) {
 			flush();
-
 			mSpriteCount = 0;
 		}
-
 		lockVertexBuffer();
-		if (mVertexList)
-		{
+		if (mVertexList) {
 			glSpriteVertex * vertexListTemp = &mVertexList[mSpriteCount * 6];
 			++mSpriteCount;
-
 			vertexListTemp[0] = vertexList[0];
 			vertexListTemp[1] = vertexList[1];
 			vertexListTemp[2] = vertexList[2];
-
 			vertexListTemp[3] = vertexList[1];
 			vertexListTemp[4] = vertexList[3];
 			vertexListTemp[5] = vertexList[2];
-
 			return true;
 		}
 	}
-
 	return false;
 }
 
-void glBatchSprite::lockVertexBuffer(void)
-{
-	if (mVertexBuffer.isAlready() && !mVertexList)
-	{
+void glBatchSprite::lockVertexBuffer(void) {
+	if (mVertexBuffer.isAlready() && !mVertexList) {
 		mVertexList = (glSpriteVertex *)mVertexBuffer.lock();
 	}
 }
 
-void glBatchSprite::unlockVertexBuffer(void)
-{
-	if (mVertexBuffer.isAlready() && mVertexList)
-	{
-		if (mVertexBuffer.unlock())
-		{
+void glBatchSprite::unlockVertexBuffer(void) {
+	if (mVertexBuffer.isAlready() && mVertexList) {
+		if (mVertexBuffer.unlock()) {
 			mVertexList = 0;
 		}
 	}

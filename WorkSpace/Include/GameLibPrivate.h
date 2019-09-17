@@ -17,29 +17,25 @@
 #include "../DependLib/D3D9/d3dx9.h"
 #include "../DependLib/DS8/dsound.h"
 
-enum glPrimitiveType
-{
+enum glPrimitiveType {
 	glPrimitiveTypeUnknown,
 	glPrimitiveTypePoint,
 	glPrimitiveTypeLine,
 	glPrimitiveTypeTriangle,
 };
 
-struct glSpriteVertex
-{
+struct glSpriteVertex {
 	float x, y, z, rhw;
 	unsigned int diffuse;
 	float u, v;
 };
 
-struct glPrimitiveVertex
-{
+struct glPrimitiveVertex {
 	float x, y, z, rhw;
 	unsigned int diffuse;
 };
 
-class glVertexBuffer : public glNonCopyable
-{
+class glVertexBuffer : public glNonCopyable {
 public:
 	glVertexBuffer();
 	virtual ~glVertexBuffer();
@@ -54,8 +50,7 @@ private:
 	IDirect3DVertexBuffer9 * mD3DVB9;
 };
 
-class glBatchSprite : public glNonCopyable
-{
+class glBatchSprite : public glNonCopyable {
 public:
 	glBatchSprite();
 	virtual ~glBatchSprite();
@@ -74,8 +69,7 @@ private:
 	int mSpriteCount;
 };
 
-class glBatchPrimitive : public glNonCopyable
-{
+class glBatchPrimitive : public glNonCopyable {
 public:
 	glBatchPrimitive();
 	virtual ~glBatchPrimitive();
@@ -111,8 +105,7 @@ private:
 	glPrimitiveType mPrimitiveType;
 };
 
-class glWindow : public glNonCopyable
-{
+class glWindow : public glNonCopyable {
 public:
 	glWindow();
 	virtual ~glWindow();
@@ -128,8 +121,7 @@ private:
 	void * mWindowHandle;
 };
 
-class glVideoDevice : public glNonCopyable
-{
+class glVideoDevice : public glNonCopyable {
 public:
 	glVideoDevice();
 	virtual ~glVideoDevice();
@@ -149,8 +141,7 @@ private:
 	IDirect3DDevice9 * mD3DDev9;
 };
 
-class glSoundDevice : public glNonCopyable
-{
+class glSoundDevice : public glNonCopyable {
 public:
 	glSoundDevice();
 	virtual ~glSoundDevice();
@@ -166,8 +157,7 @@ private:
 	IDirectSoundBuffer * mDSBuf;
 };
 
-class glWaveReader : public glNonCopyable
-{
+class glWaveReader : public glNonCopyable {
 public:
 	glWaveReader();
 	virtual ~glWaveReader();
@@ -188,8 +178,7 @@ private:
 	unsigned int mPCMDataSize;
 };
 
-class glPerformanceCounter
-{
+class glPerformanceCounter {
 public:
 	glPerformanceCounter();
 	virtual ~glPerformanceCounter();

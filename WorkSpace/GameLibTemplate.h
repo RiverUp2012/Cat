@@ -1,4 +1,12 @@
 
+//
+// @file GameLibTemplate.h
+// @brief Windows 游戏编程模板工具库
+// @desc 用于辅助 Windows 操作系统下的游戏编程开发
+// @author 李远兵
+// @date 2019-09-12
+//
+
 #pragma once
 
 #include <assert.h>
@@ -283,32 +291,67 @@ public:
 		}
 		return ret;
 	}
-	glString operator + (const glString & other) const
-	{
+	glString operator + (const glString & other) const {
 		glString ret;
 		int stringLength = other.getLength();
 		int thisStringLength = getLength();
-
-		if (ret.resize(thisStringLength + stringLength + 1))
-		{
-			if (getString())
-			{
+		if (ret.resize(thisStringLength + stringLength + 1)) {
+			if (getString()) {
 				copy(ret.getBuffer(), getString(), thisStringLength);
 				ret.setAt(thisStringLength, 0);
 			}
-
-			if (other.getString())
-			{
+			if (other.getString()) {
 				copy(&(ret.getBuffer()[thisStringLength]), other.getString(), stringLength);
 				ret.setAt(thisStringLength + stringLength, 0);
 			}
 		}
-
 		return ret;
 	}
-
+	glString & operator += (const _U string[]) {
+		int stringLength = string ? getLength(string) : 0;
+		int thisStringLength = getLength();
+		_U * newString = 0;
+		if (thisStringLength + stringLength > 0) {
+			newString = new _U[thisStringLength + stringLength + 1];
+			if (newString) {
+				if (getString()) {
+					copy(newString, getString(), thisStringLength);
+					newString[thisStringLength] = 0;
+				}
+				if (string) {
+					copy(&(newString[thisStringLength]), string, stringLength);
+					newString[thisStringLength + stringLength] = 0;
+				}
+				clear();
+				mString = newString;
+				mCapacity = thisStringLength + stringLength + 1;
+			}
+		}
+		return *this;
+	}
+	glString & operator += (const glString & other) {
+		int stringLength = other.getLength();
+		int thisStringLength = getLength();
+		_U * newString = 0;
+		if (thisStringLength + stringLength > 0) {
+			newString = new _U[thisStringLength + stringLength + 1];
+			if (newString) {
+				if (getString()) {
+					copy(newString, getString(), thisStringLength);
+					newString[thisStringLength] = 0;
+				}
+				if (other.getString()) {
+					copy(&(newString[thisStringLength]), other.getString(), stringLength);
+					newString[thisStringLength + stringLength] = 0;
+				}
+				clear();
+				mString = newString;
+				mCapacity = thisStringLength + stringLength + 1;
+			}
+		}
+		return *this;
+	}
 private:
-
 	_U * mString;
 	int mCapacity;
 };
@@ -317,633 +360,407 @@ typedef glString<wchar_t> glStringW;
 typedef glString<char> glStringA;
 
 template <typename _U>
-class glList
-{
+class glList {
 private:
-
-	class glNode
-	{
+	class glNode {
 	public:
-
-		glNode()
-		{
+		glNode() {
 			mNext = 0;
 			mPrev = 0;
 		}
-
-		glNode(const _U & data) : mData(data)
-		{
+		glNode(const _U & data) : mData(data) {
 			mNext = 0;
 			mPrev = 0;
 		}
-
-		virtual ~glNode()
-		{
+		virtual ~glNode() {
 
 		}
-
 	public:
-
 		_U mData;
 		glNode * mNext;
 		glNode * mPrev;
 	};
-
 public:
-
-	class glIterator
-	{
+	class glIterator {
 		friend class glList;
-
 	public:
-
-		glIterator()
-		{
+		glIterator() {
 			mNode = 0;
 		}
-
-		virtual ~glIterator()
-		{
+		virtual ~glIterator() {
 
 		}
-
 	protected:
-
-		glIterator(glNode * node)
-		{
+		glIterator(glNode * node) {
 			mNode = node;
 		}
-
 	public:
-
-		bool isValid(void) const
-		{
+		bool isValid(void) const {
 			return mNode ? true : false;
 		}
-
-		const _U & getData(void) const
-		{
+		const _U & getData(void) const {
 			return mNode->mData;
 		}
-
-		void moveNext(void)
-		{
-			if (mNode)
-			{
+		void moveNext(void) {
+			if (mNode) {
 				mNode = mNode->mNext;
 			}
 		}
-
-		void movePrev(void)
-		{
-			if (mNode)
-			{
+		void movePrev(void) {
+			if (mNode) {
 				mNode = mNode->mPrev;
 			}
 		}
-
 	private:
-
 		glNode * mNode;
 	};
-
 public:
-
-	glList()
-	{
+	glList() {
 		mNodeCount = 0;
 		mHead = 0;
 		mTail = 0;
 	}
-
-	glList(const glList & other)
-	{
+	glList(const glList & other) {
 		mNodeCount = 0;
 		mHead = 0;
 		mTail = 0;
-
 		glIterator iter = other.begin();
-		while (iter.isValid())
-		{
+		while (iter.isValid()) {
 			pushBack(iter.getData());
 			iter.moveNext();
 		}
 	}
-
-	virtual ~glList()
-	{
+	virtual ~glList() {
 		clear();
 	}
-
 public:
-
-	void clear(void)
-	{
+	void clear(void) {
 		glNode * node = mHead;
-		while (node)
-		{
+		while (node) {
 			glNode * nextNode = node->mNext;
 			delete node;
 			node = nextNode;
 		}
-
 		mNodeCount = 0;
 		mHead = 0;
 		mTail = 0;
 	}
-
-	bool pushBack(const _U & data)
-	{
+	bool pushBack(const _U & data) {
 		glNode * newNode = new glNode(data);
-		if (newNode)
-		{
-			if (!mNodeCount)
-			{
+		if (newNode) {
+			if (!mNodeCount) {
 				mHead = mTail = newNode;
 			}
-			else
-			{
+			else {
 				newNode->mPrev = mTail;
 				mTail->mNext = newNode;
 				mTail = newNode;
 			}
-
 			++mNodeCount;
-
 			return true;
 		}
-
 		return false;
 	}
-
-	bool pushFront(const _U & data)
-	{
+	bool pushFront(const _U & data) {
 		glNode * newNode = new glNode(data);
-		if (newNode)
-		{
-			if (!mNodeCount)
-			{
+		if (newNode) {
+			if (!mNodeCount) {
 				mHead = mTail = newNode;
 			}
-			else
-			{
+			else {
 				newNode->mNext = mHead;
 				mHead->mPrev = newNode;
 				mHead = newNode;
 			}
-
 			++mNodeCount;
-
 			return true;
 		}
-
 		return false;
 	}
-
-	bool popBack(void)
-	{
+	bool popBack(void) {
 		glNode * delNode = mTail;
-		if (delNode)
-		{
+		if (delNode) {
 			mTail = mTail->mPrev;
-			if (mTail)
-			{
+			if (mTail) {
 				mTail->mNext = 0;
 			}
-
 			delete delNode;
 			delNode = 0;
-
 			--mNodeCount;
-			if (mNodeCount <= 0)
-			{
+			if (mNodeCount <= 0) {
 				mHead = mTail = 0;
 			}
-
 			return true;
 		}
-
 		return false;
 	}
-
-	bool popFront(void)
-	{
+	bool popFront(void) {
 		glNode * delNode = mHead;
-		if (delNode)
-		{
+		if (delNode) {
 			mHead = mHead->mNext;
-			if (mHead)
-			{
+			if (mHead) {
 				mHead->mPrev = 0;
 			}
-
 			delete delNode;
 			delNode = 0;
-
 			--mNodeCount;
-			if (mNodeCount <= 0)
-			{
+			if (mNodeCount <= 0) {
 				mHead = mTail = 0;
 			}
-
 			return true;
 		}
-
 		return false;
 	}
-
-	int getNodeCount(void) const
-	{
+	int getNodeCount(void) const {
 		return mNodeCount;
 	}
-
-	glIterator begin(void) const
-	{
+	glIterator begin(void) const {
 		return glIterator(mHead);
 	}
-
-	glIterator end(void) const
-	{
+	glIterator end(void) const {
 		return glIterator(mTail);
 	}
-
-	bool insertBefore(glIterator & pos, const _U & data)
-	{
+	bool insertBefore(glIterator & pos, const _U & data) {
 		assert(contain(data));
-
 		glNode * node = pos.mNode;
-		if (node)
-		{
+		if (node) {
 			glNode * newNode = new glNode(data);
-			if (newNode)
-			{
+			if (newNode) {
 				glNode * prevNode = node->mPrev;
-				if (prevNode)
-				{
+				if (prevNode) {
 					prevNode->mNext = newNode;
 				}
-
 				newNode->mPrev = prevNode;
 				newNode->mNext = node;
 				node->mPrev = newNode;
-
-				if (mHead == node)
-				{
+				if (mHead == node) {
 					mHead = newNode;
 				}
-
 				++mNodeCount;
-
 				return true;
 			}
 		}
-
 		return false;
 	}
-
-	bool insertAfter(glIterator & pos, const _U & data)
-	{
+	bool insertAfter(glIterator & pos, const _U & data)	{
 		assert(contain(data));
-
 		glNode * node = pos.mNode;
-		if (node)
-		{
+		if (node) {
 			glNode * newNode = new glNode(data);
-			if (newNode)
-			{
+			if (newNode) {
 				glNode * nextNode = node->mNext;
-				if (nextNode)
-				{
+				if (nextNode) {
 					nextNode->mPrev = newNode;
 				}
-
 				newNode->mNext = nextNode;
 				newNode->mPrev = node;
 				node->mNext = newNode;
-
-				if (mTail == node)
-				{
+				if (mTail == node) {
 					mTail = newNode;
 				}
-
 				++mNodeCount;
-
 				return true;
 			}
 		}
-
 		return false;
 	}
-
-	bool remove(glIterator & pos)
-	{
+	bool remove(glIterator & pos) {
 		assert(contain(pos));
-
 		glNode * delNode = pos.mNode;
-		if (delNode)
-		{
+		if (delNode) {
 			glNode * prevNode = delNode->mPrev;
 			glNode * nextNode = delNode->mNext;
-
-			if (prevNode)
-			{
+			if (prevNode) {
 				prevNode->mNext = nextNode;
 			}
-
-			if (nextNode)
-			{
+			if (nextNode) {
 				nextNode->mPrev = prevNode;
 			}
-
-			if (mHead == delNode)
-			{
+			if (mHead == delNode) {
 				mHead = nextNode;
-				if (mHead)
-				{
+				if (mHead) {
 					mHead->mPrev = 0;
 				}
 			}
-			else if (mTail == delNode)
-			{
+			else if (mTail == delNode) {
 				mTail = prevNode;
-				if (mTail)
-				{
+				if (mTail) {
 					mTail->mNext = 0;
 				}
 			}
-
 			pos.mNode = nextNode;
-
 			delete delNode;
 			delNode = 0;
-
 			--mNodeCount;
-			if (mNodeCount <= 0)
-			{
+			if (mNodeCount <= 0) {
 				mHead = mTail = 0;
 			}
-
 			return true;
 		}
-
 		return false;
 	}
-
-	glIterator find(const _U & data) const
-	{
+	glIterator find(const _U & data) const {
 		glNode * node = mHead;
-		while (node)
-		{
-			if (data == node->mData)
-			{
+		while (node) {
+			if (data == node->mData) {
 				return glIterator(node);
 			}
-
 			node = node->mNext;
 		}
-
 		return glIterator();
 	}
-
-	bool remove(const _U & data)
-	{
+	bool remove(const _U & data) {
 		assert(contain(data));
-
 		glIterator iter = find(data);
-		if (iter.isValid())
-		{
+		if (iter.isValid()) {
 			return remove(iter);
 		}
-
 		return false;
 	}
-
-	bool contain(const _U & data) const
-	{
+	bool contain(const _U & data) const {
 		return find(data).isValid();
 	}
-
-	bool contain(const glIterator & iter) const
-	{
+	bool contain(const glIterator & iter) const {
 		return iter.isValid() && contain(iter.getData());
 	}
-
 public:
-
-	glList & operator = (const glList & other)
-	{
-		if (this != &other)
-		{
+	glList & operator = (const glList & other) {
+		if (this != &other) {
 			clear();
-
 			glIterator iter = other.begin();
-			while (iter.isValid())
-			{
+			while (iter.isValid()) {
 				pushBack(iter.getData());
 				iter.moveNext();
 			}
 		}
-
 		return *this;
 	}
-
 private:
-
 	int mNodeCount;
 	glNode * mHead;
 	glNode * mTail;
 };
 
 template <typename _U>
-class glArray
-{
+class glArray {
 public:
-
 	static const int defaultGrowUnits = 16;
-
 public:
-
-	glArray()
-	{
+	glArray() {
 		mArray = 0;
 		mCapacity = 0;
 		mItems = 0;
 		mGrowUnits = defaultGrowUnits;
 	}
-
-	glArray(const int capacity)
-	{
+	glArray(const int capacity) {
 		mArray = 0;
 		mCapacity = 0;
 		mItems = 0;
 		mGrowUnits = defaultGrowUnits;
-
 		resize(capacity);
 	}
-
-	glArray(const int capacity, const _U & data)
-	{
+	glArray(const int capacity, const _U & data) {
 		mArray = 0;
 		mCapacity = 0;
 		mItems = 0;
 		mGrowUnits = defaultGrowUnits;
-
 		resize(capacity, data);
 	}
-
-	glArray(const glArray & other)
-	{
+	glArray(const glArray & other) {
 		mArray = 0;
 		mCapacity = 0;
 		mItems = 0;
 		mGrowUnits = defaultGrowUnits;
-
-		if (resize(other.getCapacity()))
-		{
-			for (int i = 0; i < other.getCapacity(); ++i)
-			{
+		if (resize(other.getCapacity())) {
+			for (int i = 0; i < other.getCapacity(); ++i) {
 				mArray[i] = other.getAt(i);
 			}
 		}
 	}
-
-	virtual ~glArray()
-	{
+	virtual ~glArray() {
 		clear();
 	}
-
 public:
-
-	void clear(void)
-	{
-		if (mArray)
-		{
-			for (int i = 0; i < mCapacity; ++i)
-			{
+	void clear(void) {
+		if (mArray) {
+			for (int i = 0; i < mCapacity; ++i) {
 				mArray[i].~_U();
 			}
-
 			free(mArray);
 		}
-
 		mArray = 0;
 		mCapacity = 0;
 		mItems = 0;
 		mGrowUnits = defaultGrowUnits;
 	}
-
-	bool resize(const int capacity)
-	{
+	bool resize(const int capacity) {
 		clear();
-
-		if (capacity > 0)
-		{
+		if (capacity > 0) {
 			mArray = (_U *)malloc(sizeof(_U)* capacity);
-			if (mArray)
-			{
-				for (int i = 0; i < capacity; ++i)
-				{
+			if (mArray) {
+				for (int i = 0; i < capacity; ++i) {
 					new (&mArray[i]) _U;
 				}
-
 				mCapacity = capacity;
-
 				return true;
 			}
 		}
-
 		return false;
 	}
-
-	bool resize(const int capacity, const _U & data)
-	{
-		if (resize(capacity))
-		{
-			for (int i = 0; i < capacity; ++i)
-			{
+	bool resize(const int capacity, const _U & data) {
+		if (resize(capacity)) {
+			for (int i = 0; i < capacity; ++i) {
 				mArray[i] = data;
 			}
-
 			return true;
 		}
-
 		return false;
 	}
-
-	bool add(const _U & data)
-	{
+	bool add(const _U & data) {
 		const int newCapacity = mCapacity + defaultGrowUnits;
 		_U * newArray = 0;
-
-		if (!mArray || mItems >= mCapacity)
-		{
+		if (!mArray || mItems >= mCapacity) {
 			newArray = (_U *)realloc(mArray, sizeof(_U) * newCapacity);
-			if (newArray)
-			{
-				for (int i = mItems; i < newCapacity; ++i)
-				{
+			if (newArray) {
+				for (int i = mItems; i < newCapacity; ++i) {
 					new &(newCapacity[i]) _U;
 				}
-
 				mArray = newArray;
 				mCapacity = newCapacity;
 			}
 		}
-
-		if (mArray && mItems < mCapacity)
-		{
+		if (mArray && mItems < mCapacity) {
 			mArray[mItems] = data;
 			++mItems;
-
 			return true;
 		}
-
 		return false;
 	}
-
-	const _U * getArray(void) const
-	{
+	const _U * getArray(void) const {
 		return mArray;
 	}
-
-	int getCapacity(void) const
-	{
+	int getCapacity(void) const {
 		return mCapacity;
 	}
-
-	int getItems(void) const
-	{
+	int getItems(void) const {
 		return mItems;
 	}
-
-	const _U & getAt(const int index) const
-	{
+	const _U & getAt(const int index) const {
 		assert(mArray && index >= 0 && index < mCapacity);
-
 		return mArray[index];
 	}
-
-	_U & getAtRef(const int index)
-	{
+	_U & getAtRef(const int index) {
 		assert(mArray && index >= 0 && index < mCapacity);
-
 		return mArray[index];
 	}
-
-	bool setAt(const int index, const _U & data)
-	{
-		if (mArray && index >= 0 && index < mCapacity)
-		{
+	bool setAt(const int index, const _U & data) {
+		if (mArray && index >= 0 && index < mCapacity) {
 			mArray[index] = data;
-
 			return true;
 		}
-
 		return false;
 	}
-
 private:
-
 	_U * mArray;
 	int mCapacity;
 	int mItems;
@@ -951,28 +768,22 @@ private:
 };
 
 template <typename _U>
-bool sgeReadFile(glFile & file, _U & value)
-{
+bool glReadFile(glFile & file, _U & value) {
 	return file.read(&value, sizeof(_U));
 }
 
 template <typename _U>
-bool sgeWriteFile(glFile & file, const _U & value)
-{
+bool glWriteFile(glFile & file, const _U & value) {
 	return file.write(&value, sizeof(_U));
 }
 
 template <typename _U>
-void sgePushNewGameState(void)
-{
+void glPushNewGameState(void) {
 	glEngine * engine = glEngine::get();
-	if (engine)
-	{
+	if (engine) {
 		glGameState * gameState = new _U();
-		if (gameState)
-		{
+		if (gameState) {
 			engine->pushGameState(gameState);
-
 			gameState->release();
 			gameState = 0;
 		}

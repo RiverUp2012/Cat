@@ -185,46 +185,34 @@ bool glBatchPrimitive::paintRectangle(
 	const glPoint<float> & pos,
 	const glSize<float> & size,
 	const unsigned int color,
-	const bool solid)
-{
+	const bool solid) {
 	const glPoint<float> & pt1 = pos;
 	const glPoint<float> & pt2 = glPoint<float>(pos.mX + size.mWidth, pos.mY);
 	const glPoint<float> & pt3 = glPoint<float>(pos.mX, pos.mY + size.mHeight);
 	const glPoint<float> & pt4 = glPoint<float>(pos.mX + size.mWidth, pos.mY + size.mHeight);
-
-	if (solid)
-	{
+	if (solid) {
 		if (paintTriangle(pt1, pt2, pt3, color, solid) &&
-			paintTriangle(pt2, pt4, pt3, color, solid))
-		{
+			paintTriangle(pt2, pt4, pt3, color, solid)) {
 			return true;
 		}
 	}
-	else
-	{
+	else {
 		if (paintLine(pt1, pt2, color) &&
 			paintLine(pt2, pt4, color) &&
 			paintLine(pt4, pt3, color) &&
-			paintLine(pt3, pt1, color))
-		{
+			paintLine(pt3, pt1, color)) {
 			return true;
 		}
 	}
-
 	return false;
 }
 
-void glBatchPrimitive::lockVertexBuffer(void)
-{
-	if (mVertexBuffer.isAlready() && !mVertexList)
-	{
+void glBatchPrimitive::lockVertexBuffer(void) {
+	if (mVertexBuffer.isAlready() && !mVertexList) {
 		mVertexList = (glPrimitiveVertex *)mVertexBuffer.lock();
-		if (mVertexList)
-		{
-			if (1.0f != mVertexList[0].rhw)
-			{
-				for (int i = 0; i < GL_MAX_PRIMITIVE_VERTEX; ++i)
-				{
+		if (mVertexList) {
+			if (1.0f != mVertexList[0].rhw) {
+				for (int i = 0; i < GL_MAX_PRIMITIVE_VERTEX; ++i) {
 					mVertexList[i].rhw = 1.0f;
 					mVertexList[i].z = 0.0f;
 				}
@@ -233,12 +221,9 @@ void glBatchPrimitive::lockVertexBuffer(void)
 	}
 }
 
-void glBatchPrimitive::unlockVertexBuffer(void)
-{
-	if (mVertexBuffer.isAlready() && mVertexList)
-	{
-		if (mVertexBuffer.unlock())
-		{
+void glBatchPrimitive::unlockVertexBuffer(void) {
+	if (mVertexBuffer.isAlready() && mVertexList) {
+		if (mVertexBuffer.unlock()) {
 			mVertexList = 0;
 		}
 	}
