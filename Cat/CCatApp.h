@@ -8,7 +8,7 @@
 //
 // @brief 应用程序类
 //
-class CCatApp : public CWinApp {
+class CCatApp : public CWinApp, public glSingleAppInstance {
 public:
 
 	virtual BOOL InitInstance();

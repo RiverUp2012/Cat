@@ -477,7 +477,7 @@ public:
 	glSingleAppInstance();
 	virtual ~glSingleAppInstance();
 public:
-	bool checkW(const wchar_t * appInstanceName);
+	bool checkSingleAppInstanceW(const wchar_t * appInstanceName);
 private:
 	glEvent mEvent;
 };
@@ -649,3 +649,43 @@ private:
 	bool mClientSocket;
 	bool mServerSocket;
 };
+
+//
+// @brief 命令行类
+//
+class glCmdLine {
+public:
+	static bool getParamByIndexW(const int index, glStringW & param);
+	static bool isParamExistW(const wchar_t * param, int * index);
+	static bool getSwitchValueW(const wchar_t * switchName, glStringW & value);
+};
+
+//
+// @brief 单元测试函数
+//
+typedef void(*glUnitTestProc)(void);
+
+//
+// @brief 单元测试类
+//
+class glUnitTest {
+public:
+	static void pushUnitTestProc(glUnitTestProc testProc);
+	static void runAllTestProc(void);
+};
+
+//
+// @brief 创建单元测试
+//
+#define GL_TEST_CASE(_CaseName) \
+extern void GL_TEST_PROC_##_CaseName(); \
+class glTestRunner_##_CaseName \
+{ \
+public: \
+glTestRunner_##_CaseName() \
+{ \
+glUnitTest::pushUnitTestProc(GL_TEST_PROC_##_CaseName); \
+} \
+}; \
+static glTestRunner_##_CaseName gTestRunner; \
+void GL_TEST_PROC_##_CaseName()

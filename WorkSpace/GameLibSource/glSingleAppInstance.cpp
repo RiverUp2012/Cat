@@ -9,7 +9,7 @@ glSingleAppInstance::~glSingleAppInstance() {
 	mEvent.destroy();
 }
 
-bool glSingleAppInstance::checkW(const wchar_t * appInstanceName) {
+bool glSingleAppInstance::checkSingleAppInstanceW(const wchar_t * appInstanceName) {
 	if (appInstanceName) {
 		if (mEvent.openW(appInstanceName)) {
 			return true;

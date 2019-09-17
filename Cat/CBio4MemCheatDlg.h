@@ -21,9 +21,8 @@ protected:
 	afx_msg void OnBnClickedBtnAddHp();
 	afx_msg void OnBnClickedBtnAddCurrentGunBullet();
 	afx_msg void OnBnClickedBtnAddPtas();
+	afx_msg void OnSysCommand(UINT nID, LPARAM lParam);
 private:
 	HICON m_hIcon;
 	CComboBox mCBBio4Ver; // 游戏版本下拉列表
-public:
-	afx_msg void OnSysCommand(UINT nID, LPARAM lParam);
 };

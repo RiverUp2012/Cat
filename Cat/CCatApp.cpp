@@ -9,13 +9,12 @@
 #endif
 
 static CCatApp gApp;
-static glSingleAppInstance gSingleAppInstance;
 
 BOOL CCatApp::InitInstance() {
 
 	// 防止多重实例启动
 
-	if (gSingleAppInstance.checkW(L"CatInstanceName")) {
+	if (checkSingleAppInstanceW(L"CatInstanceName")) {
 		return TRUE;
 	}
 

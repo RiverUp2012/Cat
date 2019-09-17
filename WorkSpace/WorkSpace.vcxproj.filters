@@ -163,5 +163,11 @@
     <ClCompile Include="GameLibSource\glSocket.cpp">
       <Filter>GameLibSource</Filter>
     </ClCompile>
+    <ClCompile Include="GameLibSource\glCmdLine.cpp">
+      <Filter>GameLibSource</Filter>
+    </ClCompile>
+    <ClCompile Include="GameLibSource\glUnitTest.cpp">
+      <Filter>GameLibSource</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

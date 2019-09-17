@@ -21,6 +21,7 @@
     <ClCompile Include="GameLibSource\glAsyncTaskCompleteCallbackResourcePool.cpp" />
     <ClCompile Include="GameLibSource\glBatchPrimitive.cpp" />
     <ClCompile Include="GameLibSource\glBatchSprite.cpp" />
+    <ClCompile Include="GameLibSource\glCmdLine.cpp" />
     <ClCompile Include="GameLibSource\glEngine.cpp" />
     <ClCompile Include="GameLibSource\glEvent.cpp" />
     <ClCompile Include="GameLibSource\glException.cpp" />
@@ -50,6 +51,7 @@
     <ClCompile Include="GameLibSource\glThread.cpp" />
     <ClCompile Include="GameLibSource\glTimer.cpp" />
     <ClCompile Include="GameLibSource\glTimerSystem.cpp" />
+    <ClCompile Include="GameLibSource\glUnitTest.cpp" />
     <ClCompile Include="GameLibSource\glVertexBuffer.cpp" />
     <ClCompile Include="GameLibSource\glVideoDevice.cpp" />
     <ClCompile Include="GameLibSource\glWaitableTimer.cpp" />
