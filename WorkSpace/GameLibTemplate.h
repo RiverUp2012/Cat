@@ -817,6 +817,14 @@ public:
 		mItemArray.clear();
 	}
 public:
+	void clear(void) {
+		for (int i = 0; i < mItemArray.getCapacity(); ++i) {
+			glItem & item = mItemArray.getAtRef(i);
+			item.mID = 0;
+			item.mInUse = false;
+		}
+		mNextItemID = 1;
+	}
 	bool insertResource(const _U & resource, int & id) {
 		if (mNextItemID < 0xFFFFFFFF) {
 			for (int i = 0; i < mItemArray.getCapacity(); ++i) {
@@ -850,7 +858,18 @@ public:
 	bool markResourceUnuse(const int id) {
 		for (int i = 0; i < mItemArray.getCapacity(); ++i) {
 			glItem & item = mItemArray.getAtRef(i);
-			if (id == item.mID) {
+			if (item.mInUse && id == item.mID) {
+				item.mInUse = false;
+				item.mID = 0;
+				return true;
+			}
+		}
+		return false;
+	}
+	bool markResourceUnuse(const _U & resource) {
+		for (int i = 0; i < mItemArray.getCapacity(); ++i) {
+			glItem & item = mItemArray.getAtRef(i);
+			if (item.mInUse && resource == item.mResource) {
 				item.mInUse = false;
 				item.mID = 0;
 				return true;

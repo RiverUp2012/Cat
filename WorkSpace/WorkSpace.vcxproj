@@ -18,10 +18,12 @@
     <ClInclude Include="WinLib.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="GameLibSource\glAsyncTaskCompleteCallbackResourcePool.cpp" />
     <ClCompile Include="GameLibSource\glBatchPrimitive.cpp" />
     <ClCompile Include="GameLibSource\glBatchSprite.cpp" />
     <ClCompile Include="GameLibSource\glEngine.cpp" />
     <ClCompile Include="GameLibSource\glEvent.cpp" />
+    <ClCompile Include="GameLibSource\glException.cpp" />
     <ClCompile Include="GameLibSource\glFile.cpp" />
     <ClCompile Include="GameLibSource\glFileHelper.cpp" />
     <ClCompile Include="GameLibSource\glFont.cpp" />
@@ -32,6 +34,7 @@
     <ClCompile Include="GameLibSource\glLog.cpp" />
     <ClCompile Include="GameLibSource\glModule.cpp" />
     <ClCompile Include="GameLibSource\glMutex.cpp" />
+    <ClCompile Include="GameLibSource\glNetDevice.cpp" />
     <ClCompile Include="GameLibSource\glNonCopyable.cpp" />
     <ClCompile Include="GameLibSource\glPaintObject.cpp" />
     <ClCompile Include="GameLibSource\glPathHelper.cpp" />

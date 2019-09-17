@@ -5,7 +5,7 @@
 wlGDIPWindow::wlGDIPWindow() {
 	mGraphics = 0;
 	mWndHandle = 0;
-	wlGDIPStartup::startup();
+	wlGDIPStartup::create();
 }
 
 wlGDIPWindow::~wlGDIPWindow() {

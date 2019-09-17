@@ -20,6 +20,7 @@ bool glModule::createW(const wchar_t * moduleFileName) {
 		if (mModuleHandle) {
 			return true;
 		}
+		throw glException(GetLastError());
 	}
 	return false;
 }

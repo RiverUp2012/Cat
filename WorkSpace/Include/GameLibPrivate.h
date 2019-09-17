@@ -1,21 +1,21 @@
 
 #pragma once
 
-#include "../GameLib.h"
-
-#define WIN32_LEAN_AND_MEAN
+//#define WIN32_LEAN_AND_MEAN
 #define INITGUID
 
 #include <Windows.h>
+//#include <WinSock2.h>
 #include <MMSystem.h>
+#include <TlHelp32.h>
 #include <stdio.h>
 #include <memory.h>
 #include <string.h>
 #include <wchar.h>
-
 #include "../DependLib/D3D9/d3d9.h"
 #include "../DependLib/D3D9/d3dx9.h"
 #include "../DependLib/DS8/dsound.h"
+#include "../GameLib.h"
 
 enum glPrimitiveType {
 	glPrimitiveTypeUnknown,
@@ -35,6 +35,9 @@ struct glPrimitiveVertex {
 	unsigned int diffuse;
 };
 
+//
+// @brief 顶点缓冲区类
+//
 class glVertexBuffer : public glNonCopyable {
 public:
 	glVertexBuffer();
@@ -50,6 +53,9 @@ private:
 	IDirect3DVertexBuffer9 * mD3DVB9;
 };
 
+//
+// @brief 批量精灵渲染类
+//
 class glBatchSprite : public glNonCopyable {
 public:
 	glBatchSprite();
@@ -69,6 +75,9 @@ private:
 	int mSpriteCount;
 };
 
+//
+// @brief 批量图元渲染类
+//
 class glBatchPrimitive : public glNonCopyable {
 public:
 	glBatchPrimitive();
@@ -105,6 +114,9 @@ private:
 	glPrimitiveType mPrimitiveType;
 };
 
+//
+// @brief 窗口类
+//
 class glWindow : public glNonCopyable {
 public:
 	glWindow();
@@ -121,6 +133,9 @@ private:
 	void * mWindowHandle;
 };
 
+//
+// @brief 视频设备类
+//
 class glVideoDevice : public glNonCopyable {
 public:
 	glVideoDevice();
@@ -141,6 +156,9 @@ private:
 	IDirect3DDevice9 * mD3DDev9;
 };
 
+//
+// @brief 声音设备类
+//
 class glSoundDevice : public glNonCopyable {
 public:
 	glSoundDevice();
@@ -157,6 +175,9 @@ private:
 	IDirectSoundBuffer * mDSBuf;
 };
 
+//
+// @brief wave 读取类
+//
 class glWaveReader : public glNonCopyable {
 public:
 	glWaveReader();
@@ -178,6 +199,9 @@ private:
 	unsigned int mPCMDataSize;
 };
 
+//
+// @brief 性能计数器类
+//
 class glPerformanceCounter {
 public:
 	glPerformanceCounter();
@@ -189,6 +213,15 @@ private:
 	long long int mFrequency;
 	long long int mTimeLastTick;
 	long long int mElapse;
+};
+
+//
+// @brief 网络设备类
+//
+class glNetDevice {
+public:
+	static bool create(void);
+	static void destroy(void);
 };
 
 extern glWindow gWindow;

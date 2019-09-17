@@ -2,9 +2,7 @@
 #pragma once
 
 #include <Windows.h>
-#include <TlHelp32.h>
 #include <gdiplus.h>
-#include <stdio.h>
 
 //
 // @brief GDI+ ∆Ù∂Ø¿‡
@@ -12,6 +10,6 @@
 //
 class wlGDIPStartup {
 public:
-	static void startup(void);
-	static void shutdown(void);
+	static void create(void);
+	static void destroy(void);
 };

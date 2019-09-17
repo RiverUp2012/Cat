@@ -4,7 +4,7 @@
 
 wlGDIPImage::wlGDIPImage() {
 	mImage = 0;
-	wlGDIPStartup::startup();
+	wlGDIPStartup::create();
 }
 
 wlGDIPImage::~wlGDIPImage() {

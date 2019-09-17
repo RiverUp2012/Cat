@@ -31,7 +31,7 @@ bool glThread::create(const bool runNow) {
 			&mThreadID);
 		if (mThreadHandle) {
 			if (runNow) {
-				if (ResumeThread((HANDLE)mThreadHandle)) {
+				if (-1 != ResumeThread((HANDLE)mThreadHandle)) {
 					ret = true;
 				}
 			}
@@ -49,6 +49,18 @@ void glThread::destroy(const int waitTimeout) {
 		CloseHandle((HANDLE)mThreadHandle);
 		mThreadHandle = 0;
 	}
+	mThreadID = 0;
+}
+
+bool glThread::wait(const int waitTimeout) {
+	DWORD waitRet = 0;
+	if (mThreadHandle) {
+		waitRet = WaitForSingleObject((HANDLE)mThreadHandle, waitTimeout);
+		if (WAIT_OBJECT_0 == waitRet || WAIT_TIMEOUT == waitRet) {
+			return true;
+		}
+	}
+	return false;
 }
 
 bool glThread::isAlready(void) const {
@@ -58,4 +70,8 @@ bool glThread::isAlready(void) const {
 		}
 	}
 	return false;
+}
+
+void glThread::sleep(const int sleepTimeOut) {
+	Sleep(sleepTimeOut);
 }

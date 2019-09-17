@@ -142,5 +142,14 @@
     <ClCompile Include="GameLibSource\glAsyncTaskQueue.cpp">
       <Filter>GameLibSource</Filter>
     </ClCompile>
+    <ClCompile Include="GameLibSource\glNetDevice.cpp">
+      <Filter>GameLibSource</Filter>
+    </ClCompile>
+    <ClCompile Include="GameLibSource\glException.cpp">
+      <Filter>GameLibSource</Filter>
+    </ClCompile>
+    <ClCompile Include="GameLibSource\glAsyncTaskCompleteCallbackResourcePool.cpp">
+      <Filter>GameLibSource</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

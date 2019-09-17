@@ -1,63 +1,79 @@
 
 #include "../GameLib.h"
+#include "../Include/GameLibPrivate.h"
 
 namespace {
-	static glList<glAsyncTask *> gAsyncTaskList;
-	static glMutex gAsyncTaskListLock;
-	static bool gQuitFlag = false;
-
 	class glAsyncTaskThread : public glThread {
 	public:
+		glAsyncTaskThread() {
+			mQuitFlag = false;
+		}
+	public:
+		void postTask(glAsyncTask * task) {
+			glMutexGuard mutexGuard(&mAsyncTaskListLock);
+			if (task) {
+				task->addRef();
+				mAsyncTaskList.pushBack(task);
+				mQuitFlag = false;
+				if (!isAlready()) {
+					create(true);
+				}
+			}
+		}
+		void quit(void) {
+			glMutexGuard mutexGuard(&mAsyncTaskListLock);
+			mQuitFlag = true;
+			wait(-1);
+			for (glList<glAsyncTask *>::glIterator iter = mAsyncTaskList.begin();
+				iter.isValid();
+				iter.moveNext()) {
+				glAsyncTask * task = iter.getData();
+				if (task) {
+					task->release();
+					task = 0;
+				}
+			}
+			mAsyncTaskList.clear();
+			destroy();
+		}
+	private:
 		virtual void onThreadRun(void) override {
-			while (!gQuitFlag) {
+			while (!mQuitFlag) {
 				glAsyncTask * task = popAsyncTask();
 				if (task) {
 					task->onAsyncTaskRun();
 					task->release();
 					task = 0;
 				}
+				else {
+					sleep(1);
+				}
 			}
 		}
 	private:
 		glAsyncTask * popAsyncTask(void) {
-			glMutexGuard mutexGuard(&gAsyncTaskListLock);
-			glList<glAsyncTask *>::glIterator iter = gAsyncTaskList.begin();
+			glMutexGuard mutexGuard(&mAsyncTaskListLock);
+			glList<glAsyncTask *>::glIterator iter = mAsyncTaskList.begin();
 			if (iter.isValid()) {
 				glAsyncTask * task = iter.getData();
-				gAsyncTaskList.remove(iter);
+				mAsyncTaskList.remove(iter);
 				return task;
 			}
 			return 0;
 		}
+	private:
+		glList<glAsyncTask *> mAsyncTaskList;
+		glMutex mAsyncTaskListLock;
+		bool mQuitFlag;
 	};
 
 	static glAsyncTaskThread gAsyncTaskThread;
 }
 
 void glAsyncTaskQueue::postTask(glAsyncTask * task) {
-	glMutexGuard mutexGuard(&gAsyncTaskListLock);
-	if (task) {
-		task->addRef();
-		gAsyncTaskList.pushBack(task);
-		gQuitFlag = false;
-		if (!gAsyncTaskThread.isAlready()) {
-			gAsyncTaskThread.create(true);
-		}
-	}
+	gAsyncTaskThread.postTask(task);
 }
 
 void glAsyncTaskQueue::quit(void) {
-	glMutexGuard mutexGuard(&gAsyncTaskListLock);
-	gQuitFlag = true;
-	gAsyncTaskThread.destroy(-1);
-	for (glList<glAsyncTask *>::glIterator iter = gAsyncTaskList.begin();
-		iter.isValid();
-		iter.moveNext()) {
-		glAsyncTask * task = iter.getData();
-		if (task) {
-			task->release();
-			task = 0;
-		}
-	}
-	gAsyncTaskList.clear();
+	gAsyncTaskThread.quit();
 }
