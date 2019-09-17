@@ -424,6 +424,32 @@ private:
 };
 
 //
+// @brief 定时器接口类
+//
+class glTimer {
+public:
+	glTimer();
+	virtual ~glTimer();
+public:
+	bool registerTimer(const int timerID, const int duration);
+	bool unregisterTimer(const int timerID);
+	bool unregisterTimer(void);
+public:
+	virtual void onTimer(const int timerID) = 0;
+};
+
+//
+// @brief 定时器系统类
+//
+class glTimerSystem {
+public:
+	static bool registerTimer(glTimer * timer, const int timerID, const int duration);
+	static bool unregisterTimer(glTimer * timer, const int timerID);
+	static bool unregisterTimer(glTimer * timer);
+	static void quit(void);
+};
+
+//
 // @brief 线程类
 //
 class glThread : public glNonCopyable {

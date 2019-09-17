@@ -23,7 +23,7 @@ namespace {
 		void quit(void) {
 			glMutexGuard mutexGuard(&mAsyncTaskListLock);
 			mQuitFlag = true;
-			wait(-1);
+			wait(1000);
 			for (glList<glAsyncTask *>::glIterator iter = mAsyncTaskList.begin();
 				iter.isValid();
 				iter.moveNext()) {

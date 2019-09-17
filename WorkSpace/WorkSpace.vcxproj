@@ -47,8 +47,11 @@
     <ClCompile Include="GameLibSource\glStringHelper.cpp" />
     <ClCompile Include="GameLibSource\glTexture.cpp" />
     <ClCompile Include="GameLibSource\glThread.cpp" />
+    <ClCompile Include="GameLibSource\glTimer.cpp" />
+    <ClCompile Include="GameLibSource\glTimerSystem.cpp" />
     <ClCompile Include="GameLibSource\glVertexBuffer.cpp" />
     <ClCompile Include="GameLibSource\glVideoDevice.cpp" />
+    <ClCompile Include="GameLibSource\glWaitableTimer.cpp" />
     <ClCompile Include="GameLibSource\glWaveReader.cpp" />
     <ClCompile Include="GameLibSource\glWindow.cpp" />
     <ClCompile Include="WinLibSource\wlGDIBitmap.cpp" />

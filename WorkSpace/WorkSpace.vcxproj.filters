@@ -151,5 +151,14 @@
     <ClCompile Include="GameLibSource\glAsyncTaskCompleteCallbackResourcePool.cpp">
       <Filter>GameLibSource</Filter>
     </ClCompile>
+    <ClCompile Include="GameLibSource\glWaitableTimer.cpp">
+      <Filter>GameLibSource</Filter>
+    </ClCompile>
+    <ClCompile Include="GameLibSource\glTimerSystem.cpp">
+      <Filter>GameLibSource</Filter>
+    </ClCompile>
+    <ClCompile Include="GameLibSource\glTimer.cpp">
+      <Filter>GameLibSource</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

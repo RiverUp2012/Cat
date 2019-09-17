@@ -367,6 +367,9 @@ public:
 		}
 		return *this;
 	}
+	operator const _U * (void) const {
+		return getString();
+	}
 private:
 	_U * mString;
 	int mCapacity;
@@ -418,6 +421,9 @@ public:
 			return mNode ? true : false;
 		}
 		const _U & getData(void) const {
+			return mNode->mData;
+		}
+		_U & getDataRef(void) {
 			return mNode->mData;
 		}
 		void moveNext(void) {

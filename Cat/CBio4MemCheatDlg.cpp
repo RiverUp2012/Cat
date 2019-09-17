@@ -33,9 +33,9 @@ BOOL CBio4MemCheatDlg::OnInitDialog(void) {
 	SetIcon(m_hIcon, FALSE);
 	if (CMFCHelper::attachDialogControl(this, &mCBBio4Ver, IDC_CB_BIO4_VERSION)) {
 		mCBBio4Ver.InsertString(-1, _TEXT("老版本 欧版 v1.0"));
-		mCBBio4Ver.InsertString(-1, _TEXT("老版本 欧版 v1.1"));
-		mCBBio4Ver.InsertString(-1, _TEXT("老版本 亚版 v1.0"));
-		mCBBio4Ver.InsertString(-1, _TEXT("老版本 亚版 v1.1"));
+		mCBBio4Ver.InsertString(-1, _TEXT("[未支持] 老版本 欧版 v1.1"));
+		mCBBio4Ver.InsertString(-1, _TEXT("[未支持] 老版本 亚版 v1.0"));
+		mCBBio4Ver.InsertString(-1, _TEXT("[未支持] 老版本 亚版 v1.1"));
 		mCBBio4Ver.InsertString(-1, _TEXT("终极高清版 v1.06"));
 		mCBBio4Ver.SetCurSel(0);
 	}
