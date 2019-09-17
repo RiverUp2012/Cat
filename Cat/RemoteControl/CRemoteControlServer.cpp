@@ -3,8 +3,7 @@
 #include "CRemoteControlServer.h"
 #include "RemoteControlCommon.h"
 
-namespace
-{
+namespace {
 
 }
 

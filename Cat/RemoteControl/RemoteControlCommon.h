@@ -21,8 +21,7 @@
 //
 // 一种协议，相当于一种类型的网络请求
 //
-enum
-{
+enum {
 	// 哨兵
 	PROTOCOL_FIRST,
 	// 客户端向服务端请求用户名称
@@ -36,8 +35,7 @@ enum
 //
 // 网络数据包头
 //
-struct SPackHeader
-{
+struct SPackHeader {
 	// 包签名
 	unsigned char mSig[4];
 	// 包版本号
@@ -53,8 +51,7 @@ struct SPackHeader
 //
 // 网络数据包
 //
-struct SPack : public SPackHeader
-{
+struct SPack : public SPackHeader {
 	// 包体数据
 	// 根据不同的协议类型，包体数据所包含的内容各异
 	void * mData;

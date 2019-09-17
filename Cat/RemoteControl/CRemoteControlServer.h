@@ -6,12 +6,10 @@
 //
 class CRemoteControlServer {
 public:
-
 	//
 	// Æô¶¯
 	//
 	static void startup(void);
-
 	//
 	// ¹Ø±Õ
 	//
