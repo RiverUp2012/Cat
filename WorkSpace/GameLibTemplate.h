@@ -16,6 +16,9 @@
 class glFile;
 class glGameState;
 
+//
+// @brief 点模板类
+//
 template <typename _U>
 class glPoint {
 public:
@@ -72,6 +75,9 @@ public:
 	_U mY;
 };
 
+//
+// @brief 尺寸模板类
+//
 template <typename _U>
 class glSize {
 public:
@@ -105,6 +111,9 @@ public:
 	_U mHeight;
 };
 
+//
+// @brief 矩形模板类
+//
 template <typename _U>
 class glRect : public glPoint<_U>, public glSize<_U> {
 public:
@@ -146,6 +155,9 @@ public:
 	}
 };
 
+//
+// @brief 字符串模板类
+//
 template <typename _U>
 class glString {
 public:
@@ -238,6 +250,10 @@ public:
 		return false;
 	}
 	const _U & getAt(const int index) const {
+		assert(mString && index >= 0 && index < mCapacity);
+		return mString[index];
+	}
+	_U & getAtRef(const int index) {
 		assert(mString && index >= 0 && index < mCapacity);
 		return mString[index];
 	}
@@ -359,6 +375,9 @@ private:
 typedef glString<wchar_t> glStringW;
 typedef glString<char> glStringA;
 
+//
+// @brief 链表模板类
+//
 template <typename _U>
 class glList {
 private:
@@ -641,6 +660,9 @@ private:
 	glNode * mTail;
 };
 
+//
+// @brief 数组模板类
+//
 template <typename _U>
 class glArray {
 public:
@@ -767,16 +789,88 @@ private:
 	int mGrowUnits;
 };
 
+//
+// @brief 资源池模板类
+//
+template <typename _U>
+class glResourcePool {
+private:
+	struct glItem {
+		_U mResource;
+		int mID;
+		bool mInUse;
+	};
+public:
+	glResourcePool(const int capacity = 64) {
+		if (capacity > 0) {
+			if (mItemArray.resize(capacity)) {
+				for (int i = 0; i < mItemArray.getCapacity(); ++i) {
+					glItem & item = mItemArray.getAtRef(i);
+					item.mID = 0;
+					item.mInUse = false;
+				}
+			}
+		}
+		mNextItemID = 1;
+	}
+	virtual ~glResourcePool() {
+		mItemArray.clear();
+	}
+public:
+	bool insertResource(const _U & resource, int & id) {
+		if (mNextItemID < 0xFFFFFFFF) {
+			for (int i = 0; i < mItemArray.getCapacity(); ++i) {
+				glItem & item = mItemArray.getAtRef(i);
+				if (!item.mInUse) {
+					item.mResource = resource;
+					item.mID = mNextItemID;
+					item.mInUse = true;
+					++mNextItemID;
+					id = item.mID;
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	bool getResource(const int id, _U & resource, const bool markResourceUnuse = true) const {
+		for (int i = 0; i < mItemArray.getCapacity(); ++i) {
+			const glItem & item = mItemArray.getAt(i);
+			if (item.mInUse && id == item.mID) {
+				resource = item.mResource;
+				if (markResourceUnuse) {
+					item.mInUse = false;
+					item.mID = 0;
+				}
+				return true;
+			}
+		}
+		return false;
+	}
+private:
+	glArray<glItem> mItemArray;
+	int mNextItemID;
+};
+
+//
+// @brief 从文件中读取数据
+//
 template <typename _U>
 bool glReadFile(glFile & file, _U & value) {
 	return file.read(&value, sizeof(_U));
 }
 
+//
+// @brief 将数据写入文件
+//
 template <typename _U>
 bool glWriteFile(glFile & file, const _U & value) {
 	return file.write(&value, sizeof(_U));
 }
 
+//
+// @brief 压入新的游戏状态
+//
 template <typename _U>
 void glPushNewGameState(void) {
 	glEngine * engine = glEngine::get();

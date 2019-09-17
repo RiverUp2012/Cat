@@ -454,3 +454,20 @@ class glFileHelper {
 public:
 	static bool deleteFileW(const wchar_t * fileName);
 };
+
+//
+// @brief 异步任务接口类
+//
+class glAsyncTask : public glRefCounter {
+public:
+	virtual void onAsyncTaskRun(void) = 0;
+};
+
+//
+// @brief 异步任务队列类
+//
+class glAsyncTaskQueue {
+public:
+	static void postTask(glAsyncTask * task);
+	static void quit(void);
+};

@@ -26,6 +26,7 @@
     <ClCompile Include="GameLibSource\glFileHelper.cpp" />
     <ClCompile Include="GameLibSource\glFont.cpp" />
     <ClCompile Include="GameLibSource\glGameState.cpp" />
+    <ClCompile Include="GameLibSource\glAsyncTaskQueue.cpp" />
     <ClCompile Include="GameLibSource\glGlobalData.cpp" />
     <ClCompile Include="GameLibSource\glInputHandler.cpp" />
     <ClCompile Include="GameLibSource\glLog.cpp" />

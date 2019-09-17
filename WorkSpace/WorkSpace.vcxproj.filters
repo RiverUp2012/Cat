@@ -139,5 +139,8 @@
     <ClCompile Include="GameLibSource\glFileHelper.cpp">
       <Filter>GameLibSource</Filter>
     </ClCompile>
+    <ClCompile Include="GameLibSource\glAsyncTaskQueue.cpp">
+      <Filter>GameLibSource</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
