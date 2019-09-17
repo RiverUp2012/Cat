@@ -13,6 +13,7 @@
 
 BEGIN_MESSAGE_MAP(CMainDlg, CDialogEx)
 	ON_WM_NCHITTEST()
+	ON_WM_SYSCOMMAND()
 END_MESSAGE_MAP()
 
 CMainDlg::CMainDlg(CWnd* pParent) : CDialogEx(IDD_DLG_MAIN, pParent) {
@@ -42,10 +43,25 @@ BOOL CMainDlg::OnInitDialog() {
 	return TRUE;
 }
 
+void CMainDlg::OnOK(void) {
+
+}
+
+void CMainDlg::OnCancel(void) {
+
+}
+
 LRESULT CMainDlg::OnNcHitTest(CPoint point) {
 	return HTCAPTION;
 }
 
 void CMainDlg::adjustWindowPosToDesktopBottomRight(void) {
 
+}
+
+void CMainDlg::OnSysCommand(UINT nID, LPARAM lParam) {
+	if (SC_CLOSE == nID) {
+		EndDialog(0);
+	}
+	__super::OnSysCommand(nID, lParam);
 }

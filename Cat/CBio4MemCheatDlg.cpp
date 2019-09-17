@@ -17,6 +17,7 @@ BEGIN_MESSAGE_MAP(CBio4MemCheatDlg, CDialogEx)
 	ON_BN_CLICKED(IDC_BTN_ADD_HP, &CBio4MemCheatDlg::OnBnClickedBtnAddHp)
 	ON_BN_CLICKED(IDC_BTN_ADD_CURRENT_GUN_BULLET, &CBio4MemCheatDlg::OnBnClickedBtnAddCurrentGunBullet)
 	ON_BN_CLICKED(IDC_BTN_ADD_PTAS, &CBio4MemCheatDlg::OnBnClickedBtnAddPtas)
+	ON_WM_SYSCOMMAND()
 END_MESSAGE_MAP()
 
 CBio4MemCheatDlg::CBio4MemCheatDlg(CWnd* pParent) : CDialogEx(IDD_DLG_BIO4_MEM_CHEAT, pParent) {
@@ -40,6 +41,14 @@ BOOL CBio4MemCheatDlg::OnInitDialog(void) {
 		mCBBio4Ver.SetCurSel(0);
 	}
 	return TRUE;
+}
+
+void CBio4MemCheatDlg::OnOK(void) {
+
+}
+
+void CBio4MemCheatDlg::OnCancel(void) {
+
 }
 
 void CBio4MemCheatDlg::OnBnClickedBtnHowTo() {
@@ -71,6 +80,10 @@ void CBio4MemCheatDlg::OnBnClickedBtnShutdown() {
 	CBio4MemCheat::shutdown();
 }
 
+void CBio4MemCheatDlg::OnCbnSelchangeCbBio4Version() {
+
+}
+
 void CBio4MemCheatDlg::OnBnClickedBtnAddCurrentItemCount() {
 	CBio4MemCheat::addCurrentItemCount(16);
 }
@@ -91,4 +104,11 @@ void CBio4MemCheatDlg::OnBnClickedBtnAddPtas() {
 	if (CBio4MemCheat::queryLeonPTAS(ptas)) {
 		CBio4MemCheat::setLeonPTAS(ptas + 10000);
 	}
+}
+
+void CBio4MemCheatDlg::OnSysCommand(UINT nID, LPARAM lParam) {
+	if (SC_CLOSE == nID) {
+		EndDialog(0);
+	}
+	CDialogEx::OnSysCommand(nID, lParam);
 }
