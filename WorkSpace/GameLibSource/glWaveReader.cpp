@@ -64,6 +64,20 @@ bool glWaveReader::createFromFileW(const wchar_t * fileName) {
 	return ret;
 }
 
+bool glWaveReader::createFromMemory(const void * buffer, const int bufferSize) {
+	bool ret = false;
+	glWaveChunkHeader chkHdr = { 0 };
+	WAVEFORMATEX wavFmt = { 0 };
+	destroy();
+	if (buffer && bufferSize > 0) {
+		// todo
+	}
+	if (!ret) {
+		destroy();
+	}
+	return ret;
+}
+
 void glWaveReader::destroy(void) {
 	mWaveFile.close();
 	mChannels = 0;

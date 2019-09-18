@@ -71,6 +71,16 @@ struct glTime {
 };
 
 //
+// @brief 内存信息结构体
+//
+struct glMemoryInfo {
+	unsigned long long int mPhysTotal;
+	unsigned long long int mPhysAvail;
+	unsigned long long int mVirtualTotal;
+	unsigned long long int mVirtualAvail;
+};
+
+//
 // @brief 异常类
 //
 class glException {
@@ -536,6 +546,7 @@ public:
 	static bool getDriveW(const wchar_t * path, glStringW & drive);
 	static bool getAppPathW(glStringW & appPath);
 	static void pathAppendSlashW(glStringW & path);
+	static void createPathW(const wchar_t * path);
 };
 
 //
@@ -734,12 +745,12 @@ typedef void(*glUnitTestProc)(void);
 //
 class glUnitTest {
 public:
-	static void pushUnitTestProc(glUnitTestProc testProc);
+	static void pushUnitTestProcW(const wchar_t * caseName, glUnitTestProc testProc);
 	static void runAllTestCase(void);
 };
 
 //
-// @brief 创建单元测试
+// @brief 创建单元测试分支
 //
 #define GL_TEST_CASE(_CaseName) \
 extern void GL_TEST_PROC_##_CaseName(); \
@@ -748,7 +759,7 @@ class glTestRunner_##_CaseName \
 public: \
 glTestRunner_##_CaseName() \
 { \
-glUnitTest::pushUnitTestProc(GL_TEST_PROC_##_CaseName); \
+glUnitTest::pushUnitTestProcW(L#_CaseName, GL_TEST_PROC_##_CaseName); \
 } \
 }; \
 static glTestRunner_##_CaseName gTestRunner; \
@@ -797,4 +808,13 @@ public:
 	static bool getSystemDirectoryW(glStringW & systemDir);
 	static bool getWindowDirectoryW(glStringW & windowDir);
 	static bool getComputerNameW(glStringW & computerName);
+	static bool getMemoryInfo(glMemoryInfo & memoryInfo);
+};
+
+//
+// @brief 驱动器助手类
+//
+class glDriveHelper {
+public:
+	static void getDriveNameListW(glArray<glStringW> & driveNameArray);
 };

@@ -184,6 +184,7 @@ public:
 	virtual ~glWaveReader();
 public:
 	bool createFromFileW(const wchar_t * fileName);
+	bool createFromMemory(const void * buffer, const int bufferSize);
 	void destroy(void);
 	unsigned short getChannels(void) const;
 	unsigned short getBitsPerSample(void) const;

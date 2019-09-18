@@ -181,5 +181,8 @@
     <ClCompile Include="GameLibSource\glSingleAppInstanceChecker.cpp">
       <Filter>GameLibSource</Filter>
     </ClCompile>
+    <ClCompile Include="GameLibSource\glDriveHelper.cpp">
+      <Filter>GameLibSource</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

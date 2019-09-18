@@ -51,3 +51,19 @@ bool glSystemHelper::getComputerNameW(glStringW & computerName) {
 	}
 	return false;
 }
+
+bool glSystemHelper::getMemoryInfo(glMemoryInfo & memoryInfo) {
+	MEMORYSTATUSEX memStatusEx = { 0 };
+	memStatusEx.dwLength = sizeof(memStatusEx);
+	if (GlobalMemoryStatusEx(&memStatusEx)) {
+		memoryInfo.mPhysTotal = memStatusEx.ullTotalPhys;
+		memoryInfo.mPhysAvail = memStatusEx.ullAvailPhys;
+		memoryInfo.mVirtualTotal = memStatusEx.ullTotalVirtual;
+		memoryInfo.mVirtualAvail = memStatusEx.ullAvailVirtual;
+		return true;
+	}
+	else {
+		throw glWin32APIException(L"GlobalMemoryStatusEx", GetLastError());
+	}
+	return false;
+}

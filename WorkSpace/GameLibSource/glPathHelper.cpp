@@ -64,3 +64,22 @@ void glPathHelper::pathAppendSlashW(glStringW & path) {
 		}
 	}
 }
+
+void glPathHelper::createPathW(const wchar_t * path) {
+	const int pathLength = path ? glStringW::getLength(path) : 0;
+	glStringW pathTemp;
+	if (path && pathLength > 0 && pathTemp.resize(pathLength + 1)) {
+		for (int i = 0; i < pathLength; ++i) {
+			pathTemp.setAt(i, path[i]);
+			if (L'\\' == path[i] || L'/' == path[i]) {
+				pathTemp.setAt(i + 1, L'\0');
+				if (0 == CreateDirectoryW(pathTemp, 0)) {
+					const DWORD lastError = GetLastError();
+					if (ERROR_ALREADY_EXISTS != lastError) {
+						throw glWin32APIException(L"CreateDirectoryW", lastError);
+					}
+				}
+			}
+		}
+	}
+}

@@ -23,6 +23,7 @@
     <ClCompile Include="GameLibSource\glBatchSprite.cpp" />
     <ClCompile Include="GameLibSource\glCmdLine.cpp" />
     <ClCompile Include="GameLibSource\glDesktopHelper.cpp" />
+    <ClCompile Include="GameLibSource\glDriveHelper.cpp" />
     <ClCompile Include="GameLibSource\glEngine.cpp" />
     <ClCompile Include="GameLibSource\glEvent.cpp" />
     <ClCompile Include="GameLibSource\glException.cpp" />
