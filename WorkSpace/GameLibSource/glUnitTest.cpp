@@ -34,9 +34,9 @@ void glUnitTest::runAllTestCase(void) {
 	glUnitTestInfo * testInfo = gTestProcList;
 	while (testInfo) {
 		glUnitTestInfo * nextTestInfo = testInfo->mNext;
-		OutputDebugStringW(L"Run Test Case : ");
+		OutputDebugStringW(L"------ Run Test Case : ");
 		OutputDebugStringW(testInfo->mCaseName);
-		OutputDebugStringW(L"\r\n");
+		OutputDebugStringW(L" ------\r\n");
 		if (testInfo->mTestProc) {
 			testInfo->mTestProc();
 		}

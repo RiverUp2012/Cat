@@ -36,9 +36,9 @@ void glFileHelper::enumFileW(
 	bool isDirectory = false;
 	if (path && fileExt && enumHandler) {
 		pathForFind = path;
-		glPathHelper::getAppPathW(pathForFind);
+		glPathHelper::pathAppendSlashW(pathForFind);
 		pathForFindWithFileExt = pathForFind + fileExt;
-		findHandle = FindFirstFileW(pathForFind, &wfd);
+		findHandle = FindFirstFileW(pathForFindWithFileExt, &wfd);
 		if (INVALID_HANDLE_VALUE != findHandle) {
 			do
 			{
