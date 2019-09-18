@@ -34,10 +34,16 @@ bool glThread::create(const bool runNow) {
 				if (-1 != ResumeThread((HANDLE)mThreadHandle)) {
 					ret = true;
 				}
+				else {
+					throw glWin32APIException(L"ResumeThread", GetLastError());
+				}
 			}
 			else {
 				ret = true;
 			}
+		}
+		else {
+			throw glWin32APIException(L"CreateThread", GetLastError());
 		}
 	}
 	return ret;
@@ -58,6 +64,9 @@ bool glThread::wait(const int waitTimeout) {
 		waitRet = WaitForSingleObject((HANDLE)mThreadHandle, waitTimeout);
 		if (WAIT_OBJECT_0 == waitRet || WAIT_TIMEOUT == waitRet) {
 			return true;
+		}
+		else {
+			throw glWin32APIException(L"WaitForSingleObject", GetLastError());
 		}
 	}
 	return false;

@@ -21,6 +21,12 @@ bool glNetDevice::create(void) {
 				gCreateFlag = true;
 				return true;
 			}
+			else {
+				throw glWin32APIException(L"WSAStartup", WSAGetLastError());
+			}
+		}
+		else {
+			throw glWin32APIException(L"WSAStartup", WSAGetLastError());
 		}
 	}
 	return false;

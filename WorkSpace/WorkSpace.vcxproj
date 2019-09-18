@@ -22,6 +22,7 @@
     <ClCompile Include="GameLibSource\glBatchPrimitive.cpp" />
     <ClCompile Include="GameLibSource\glBatchSprite.cpp" />
     <ClCompile Include="GameLibSource\glCmdLine.cpp" />
+    <ClCompile Include="GameLibSource\glDesktopHelper.cpp" />
     <ClCompile Include="GameLibSource\glEngine.cpp" />
     <ClCompile Include="GameLibSource\glEvent.cpp" />
     <ClCompile Include="GameLibSource\glException.cpp" />
@@ -34,6 +35,7 @@
     <ClCompile Include="GameLibSource\glInputHandler.cpp" />
     <ClCompile Include="GameLibSource\glLog.cpp" />
     <ClCompile Include="GameLibSource\glModule.cpp" />
+    <ClCompile Include="GameLibSource\glModuleResourceHelper.cpp" />
     <ClCompile Include="GameLibSource\glMutex.cpp" />
     <ClCompile Include="GameLibSource\glNetDevice.cpp" />
     <ClCompile Include="GameLibSource\glNonCopyable.cpp" />
@@ -41,14 +43,16 @@
     <ClCompile Include="GameLibSource\glPathHelper.cpp" />
     <ClCompile Include="GameLibSource\glPerformanceCounter.cpp" />
     <ClCompile Include="GameLibSource\glRefCounter.cpp" />
-    <ClCompile Include="GameLibSource\glSingleAppInstance.cpp" />
+    <ClCompile Include="GameLibSource\glSingleAppInstanceChecker.cpp" />
     <ClCompile Include="GameLibSource\glSocket.cpp" />
     <ClCompile Include="GameLibSource\glSound.cpp" />
     <ClCompile Include="GameLibSource\glSoundDevice.cpp" />
     <ClCompile Include="GameLibSource\glSprite.cpp" />
     <ClCompile Include="GameLibSource\glStringHelper.cpp" />
+    <ClCompile Include="GameLibSource\glSystemHelper.cpp" />
     <ClCompile Include="GameLibSource\glTexture.cpp" />
     <ClCompile Include="GameLibSource\glThread.cpp" />
+    <ClCompile Include="GameLibSource\glTimeHelper.cpp" />
     <ClCompile Include="GameLibSource\glTimer.cpp" />
     <ClCompile Include="GameLibSource\glTimerSystem.cpp" />
     <ClCompile Include="GameLibSource\glUnitTest.cpp" />

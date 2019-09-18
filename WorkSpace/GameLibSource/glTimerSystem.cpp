@@ -29,8 +29,8 @@ namespace {
 			glTimerInfo timerInfo = { 0 };
 			if (timer) {
 				timerInfo.mTimer = timer;
-				timerInfo.mDuration = duration;
 				timerInfo.mTimerID = timerID;
+				timerInfo.mDuration = duration;
 				mTimerInfoList.pushBack(timerInfo);
 				mQuitFlag = false;
 				if (!mWaitableTimer.isAlready()) {

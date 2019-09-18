@@ -32,8 +32,8 @@ public:
 	wlProcess();
 	virtual ~wlProcess();
 public:
-	bool openByProcessID(const unsigned long processID, const int features = 0);
-	void close(void);
+	bool createByProcessID(const unsigned long processID, const int features = 0);
+	void destroy(void);
 	bool terminate(void);
 	bool getImageFileNameW(glStringW & imageFileName);
 	bool vmRead(const void * vmAddress, void * buffer, const int bytesToRead);
@@ -130,6 +130,7 @@ public:
 	virtual ~wlGDIBitmap();
 public:
 	bool createEmpty(const int width, const int height, const int bitCount);
+	bool createFromFileW(const wchar_t * fileName);
 	void destroy(void);
 	const void * getHBITMAP(void) const;
 private:
@@ -148,8 +149,12 @@ public:
 	bool createFromDC(const wlGDIDC & dc);
 	bool createFromHWND(const void * wndHandle);
 	void destroy(void);
-	void selectBitmap(wlGDIBitmap & bitmap);
+	void selectBitmap(const wlGDIBitmap & bitmap);
 	const void * getHDC(void) const;
+	bool drawFromDC(
+		const wlGDIDC & dc,
+		const glRect<int> & destRect,
+		const glPoint<int> & srcPos);
 private:
 	void * mWndHandle;
 	void * mDCHandle;
@@ -191,21 +196,4 @@ private:
 	void * mGraphics;
 	void * mWndHandle;
 	wlGDIDC mClientDC;
-};
-
-class wlInputHandler {
-public:
-	virtual bool onMouseMove(const int mouseX, const int mouseY) { return true; }
-	virtual bool onKeyUp(const int keyCode) { return true; }
-	virtual bool onKeyDown(const int keyCode) { return true; }
-	virtual bool onMouseWhellUp(void) { return true; }
-	virtual bool onMouseWhellDown(void) { return true; }
-};
-
-class wlGDIPUIWindows : public wlInputHandler, public wlGDIPWindow {
-public:
-	wlGDIPUIWindows();
-	virtual ~wlGDIPUIWindows();
-public:
-private:
 };

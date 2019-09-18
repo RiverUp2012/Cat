@@ -861,7 +861,7 @@ public:
 		}
 		return false;
 	}
-	bool markResourceUnuse(const int id) {
+	bool markResourceUnuseByID(const int id) {
 		for (int i = 0; i < mItemArray.getCapacity(); ++i) {
 			glItem & item = mItemArray.getAtRef(i);
 			if (item.mInUse && id == item.mID) {
@@ -872,7 +872,7 @@ public:
 		}
 		return false;
 	}
-	bool markResourceUnuse(const _U & resource) {
+	bool markResourceUnuseByID(const _U & resource) {
 		for (int i = 0; i < mItemArray.getCapacity(); ++i) {
 			glItem & item = mItemArray.getAtRef(i);
 			if (item.mInUse && resource == item.mResource) {

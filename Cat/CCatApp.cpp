@@ -20,9 +20,9 @@ BOOL CCatApp::InitInstance() {
 
 	// 启动日志
 
-	glStringW logFileName;
-	glPathHelper::getAppPathW(logFileName);
-	glLog::createW(logFileName + L"Cat.log");
+	glStringW appPath;
+	glPathHelper::getAppPathW(appPath);
+	glLog::createW(appPath + L"Cat.log");
 	glLog::setOutputDebugView(true);
 
 	// 启动 App

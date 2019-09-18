@@ -34,6 +34,11 @@ typedef HRESULT (WINAPI * glD3DXCreateTextureFromFileInMemoryEx)(
 	PALETTEENTRY*             pPalette,
 	LPDIRECT3DTEXTURE9*       ppTexture);
 
+namespace {
+	static glD3DXCreateTextureFromFileExW gD3DXCreateTextureFromFileExW = 0;
+	static glD3DXCreateTextureFromFileInMemoryEx gD3DXCreateTextureFromFileInMemoryEx = 0;
+}
+
 glTexture::glTexture() {
 	mD3DTex9 = 0;
 }
@@ -48,14 +53,67 @@ bool glTexture::createFromFileW(
 	D3DXIMAGE_INFO imgInfo = { 0 };
 	D3DSURFACE_DESC surfDesc;
 	IDirect3DTexture9 * d3dTex9 = 0;
+	HRESULT comRet = S_OK;
 	destroy();
 	IDirect3DDevice9 * d3dDev9 = gVideoDevice.getIDirect3DDevice9();
-	glD3DXCreateTextureFromFileExW d3dXCreateTextureFromFileExW = (glD3DXCreateTextureFromFileExW)
-		gModuleD3DX9.getProcAddressA("D3DXCreateTextureFromFileExW");
-	if (d3dDev9 && fileName && d3dXCreateTextureFromFileExW) {
-		if (SUCCEEDED(d3dXCreateTextureFromFileExW(
+	if (!gD3DXCreateTextureFromFileExW) {
+		gD3DXCreateTextureFromFileExW = (glD3DXCreateTextureFromFileExW)
+			gModuleD3DX9.getProcAddressA("D3DXCreateTextureFromFileExW");
+	}
+	if (d3dDev9 && fileName && gD3DXCreateTextureFromFileExW) {
+		comRet = gD3DXCreateTextureFromFileExW(
 			d3dDev9,
 			fileName,
+			D3DX_DEFAULT,
+			D3DX_DEFAULT,
+			1,
+			0,
+			D3DFMT_UNKNOWN,
+			D3DPOOL_DEFAULT,
+			D3DX_FILTER_NONE,
+			D3DX_FILTER_NONE,
+			colorKey,
+			&imgInfo,
+			0,
+			&d3dTex9);
+		if (SUCCEEDED(comRet)) {
+			mImageSize = glSize<float>((float)imgInfo.Width, (float)imgInfo.Height);
+			comRet = d3dTex9->GetLevelDesc(0, &surfDesc);
+			if (SUCCEEDED(comRet)) {
+				mSurfaceSize = glSize<float>((float)surfDesc.Width, (float)surfDesc.Height);
+				mImageFileName = fileName;
+				mD3DTex9 = (void *)d3dTex9;
+				return true;
+			}
+			else {
+				throw glCOMAPIException(L"IDirect3DTexture9::GetLevelDesc", comRet);
+			}
+		}
+		else {
+			throw glCOMAPIException(L"D3DXCreateTextureFromFileExW", comRet);
+		}
+	}
+	return false;
+}
+
+bool glTexture::createFromMemory(
+	const void * buffer,
+	const unsigned int bufferSize,
+	const unsigned int colorKey) {
+	D3DXIMAGE_INFO imgInfo = { 0 };
+	D3DSURFACE_DESC surfDesc;
+	IDirect3DTexture9 * d3dTex9 = 0;
+	destroy();
+	IDirect3DDevice9 * d3dDev9 = gVideoDevice.getIDirect3DDevice9();
+	if (!gD3DXCreateTextureFromFileInMemoryEx) {
+		gD3DXCreateTextureFromFileInMemoryEx = (glD3DXCreateTextureFromFileInMemoryEx)
+			gModuleD3DX9.getProcAddressA("D3DXCreateTextureFromFileInMemoryEx");
+	}
+	if (d3dDev9 && buffer && bufferSize > 0 && gD3DXCreateTextureFromFileInMemoryEx) {
+		if (SUCCEEDED(gD3DXCreateTextureFromFileInMemoryEx(
+			d3dDev9,
+			buffer,
+			bufferSize,
 			D3DX_DEFAULT,
 			D3DX_DEFAULT,
 			1,
@@ -71,7 +129,6 @@ bool glTexture::createFromFileW(
 			mImageSize = glSize<float>((float)imgInfo.Width, (float)imgInfo.Height);
 			if (SUCCEEDED(d3dTex9->GetLevelDesc(0, &surfDesc))) {
 				mSurfaceSize = glSize<float>((float)surfDesc.Width, (float)surfDesc.Height);
-				mImageFileName = fileName;
 				mD3DTex9 = (void *)d3dTex9;
 				return true;
 			}

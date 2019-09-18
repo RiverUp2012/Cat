@@ -16,6 +16,9 @@ bool glWaitableTimer::create(void) {
 		if (mTimerHandle) {
 			return true;
 		}
+		else {
+			throw glWin32APIException(L"CreateWaitableTimerW", GetLastError());
+		}
 	}
 	return false;
 }
@@ -39,6 +42,12 @@ bool glWaitableTimer::wait(const int timeOut) {
 			if (WAIT_OBJECT_0 == WaitForSingleObject((HANDLE)mTimerHandle, INFINITE)) {
 				return true;
 			}
+			else {
+				throw glWin32APIException(L"WaitForSingleObject", GetLastError());
+			}
+		}
+		else {
+			throw glWin32APIException(L"SetWaitableTimer", GetLastError());
 		}
 	}
 	return false;

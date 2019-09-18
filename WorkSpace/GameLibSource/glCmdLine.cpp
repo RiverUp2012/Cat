@@ -19,10 +19,16 @@ namespace {
 						gParamArray.setAt(i, paramArray[i]);
 					}
 				}
+				else {
+					throw glWin32APIException(L"CommandLineToArgvW", GetLastError());
+				}
 				if (paramArray) {
 					LocalFree(paramArray);
 					paramArray = 0;
 				}
+			}
+			else {
+				throw glWin32APIException(L"GetCommandLineW", GetLastError());
 			}
 			gInitFlag = true;
 		}

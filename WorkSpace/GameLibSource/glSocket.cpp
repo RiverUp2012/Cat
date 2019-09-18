@@ -74,3 +74,37 @@ bool glSocket::connectToServerA(const char * ipV4, const short int port) {
 	}
 	return false;
 }
+
+bool glSocket::sendData(const void * buffer, const int bytesToSend, int * bytesSended) {
+	int ret = 0;
+	if (mSocket && buffer && bytesToSend > 0) {
+		ret = send((SOCKET)mSocket, (const char *)buffer, bytesToSend, 0);
+		if (SOCKET_ERROR != ret) {
+			if (bytesSended) {
+				*bytesSended = ret;
+			}
+			else {
+				throw glWin32APIException(L"send", WSAGetLastError());
+			}
+			return true;
+		}
+	}
+	return false;
+}
+
+bool glSocket::recvData(void * buffer, const int bytesToRecv, int * bytesRecved) {
+	int ret = 0;
+	if (mSocket && buffer && bytesToRecv > 0) {
+		ret = recv((SOCKET)mSocket, (char *)buffer, bytesToRecv, 0);
+		if (SOCKET_ERROR != ret) {
+			if (bytesRecved) {
+				*bytesRecved = ret;
+			}
+			return true;
+		}
+		else {
+			throw glWin32APIException(L"send", WSAGetLastError());
+		}
+	}
+	return false;
+}

@@ -14,6 +14,7 @@ private:
 	virtual void OnCancel(void);
 	afx_msg LRESULT OnNcHitTest(CPoint point);
 	afx_msg void OnSysCommand(UINT nID, LPARAM lParam);
+	afx_msg BOOL OnDeviceChange(UINT nEventType, DWORD_PTR dwData);
 private:
 	//
 	// @brief 令窗口向桌面右下角靠拢

@@ -19,7 +19,7 @@ namespace {
 				pecw.enumProcess();
 				for (auto iter = pecw.getProcessInfoList().begin(); iter.isValid(); iter.moveNext()) {
 					wlProcess process;
-					if (process.openByProcessID(
+					if (process.createByProcessID(
 						iter.getData().mProcessID,
 						WL_PROCESS_FEATURE_QUERY_INFO | WL_PROCESS_FEATURE_QUERY_INFO)) {
 						glStringW imageFileName;
@@ -31,7 +31,7 @@ namespace {
 								}
 							}
 						}
-						process.close();
+						process.destroy();
 					}
 				}
 				Sleep(gCleanupTimeInterval);

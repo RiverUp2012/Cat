@@ -34,6 +34,9 @@ bool wlGDIPWindow::createFromHWND(const void * wndHandle) {
 				}
 			}
 		}
+		else {
+			throw glWin32APIException(L"GetClientRect", GetLastError());
+		}
 	}
 	return ret;
 }
@@ -80,6 +83,12 @@ bool wlGDIPWindow::present(void) {
 				ULW_ALPHA)) {
 				return true;
 			}
+			else {
+				throw glWin32APIException(L"UpdateLayeredWindow", GetLastError());
+			}
+		}
+		else {
+			throw glWin32APIException(L"GetClientRect", GetLastError());
 		}
 	}
 	return false;

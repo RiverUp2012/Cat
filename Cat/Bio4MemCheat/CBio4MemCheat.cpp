@@ -12,7 +12,7 @@ namespace {
 bool CBio4MemCheat::setup(const Bio4Ver & ver) {
 	shutdown();
 	// 打开当前进程
-	if (mProcessThis.openByProcessID(
+	if (mProcessThis.createByProcessID(
 		GetCurrentProcessId(),
 		WL_PROCESS_FEATURE_QUERY_INFO)) {
 		// 启用 Debug 特权
@@ -49,7 +49,7 @@ void CBio4MemCheat::shutdown(void) {
 		delete gBio4MemCheat;
 		gBio4MemCheat = 0;
 	}
-	mProcessThis.close();
+	mProcessThis.destroy();
 }
 
 bool CBio4MemCheat::queryLeonHP(int & hp) {

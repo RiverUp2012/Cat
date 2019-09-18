@@ -14,6 +14,7 @@
 BEGIN_MESSAGE_MAP(CMainDlg, CDialogEx)
 	ON_WM_NCHITTEST()
 	ON_WM_SYSCOMMAND()
+	ON_WM_DEVICECHANGE()
 END_MESSAGE_MAP()
 
 CMainDlg::CMainDlg(CWnd* pParent) : CDialogEx(IDD_DLG_MAIN, pParent) {
@@ -21,7 +22,6 @@ CMainDlg::CMainDlg(CWnd* pParent) : CDialogEx(IDD_DLG_MAIN, pParent) {
 }
 
 BOOL CMainDlg::OnInitDialog() {
-	glStringW imageFileName;
 	glStringW appPath;
 
 	CDialogEx::OnInitDialog();
@@ -33,8 +33,7 @@ BOOL CMainDlg::OnInitDialog() {
 	glPathHelper::getAppPathW(appPath);
 
 	if (createFromHWND(GetSafeHwnd())) {
-		imageFileName = appPath + L"Cat\\Image\\Cat.png";
-		if (mImgBK.createFromFileW(imageFileName)) {
+		if (mImgBK.createFromFileW(appPath + L"Cat\\Image\\Cat.png")) {
 			drawImage(mImgBK, 0, 0, mImgBK.getWidth(), mImgBK.getHeight());
 			present();
 		}
@@ -64,4 +63,9 @@ void CMainDlg::OnSysCommand(UINT nID, LPARAM lParam) {
 		EndDialog(0);
 	}
 	__super::OnSysCommand(nID, lParam);
+}
+
+BOOL CMainDlg::OnDeviceChange(UINT nEventType, DWORD_PTR dwData) {
+	// 有硬件设备产生改变
+	return __super::OnDeviceChange(nEventType, dwData);
 }

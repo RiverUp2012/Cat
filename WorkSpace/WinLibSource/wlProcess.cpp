@@ -23,28 +23,34 @@ wlProcess::wlProcess() {
 }
 
 wlProcess::~wlProcess() {
-	close();
+	destroy();
 }
 
-bool wlProcess::openByProcessID(const unsigned long processID, const int features) {
+bool wlProcess::createByProcessID(const unsigned long processID, const int features) {
 	DWORD desiredAccess = 0;
 	if (!mProcessHandle) {
-		if (features & WL_PROCESS_FEATURE_TERMINATE) desiredAccess |= PROCESS_TERMINATE;
-		if (features & WL_PROCESS_FEATURE_QUERY_INFO) desiredAccess |= PROCESS_QUERY_INFORMATION;
-		if (features & WL_PROCESS_FEATURE_VM_OPERATION) desiredAccess |= (PROCESS_VM_OPERATION | PROCESS_VM_READ | PROCESS_VM_WRITE);
+		if (features & WL_PROCESS_FEATURE_TERMINATE) {
+			desiredAccess |= PROCESS_TERMINATE;
+		}
+		if (features & WL_PROCESS_FEATURE_QUERY_INFO) {
+			desiredAccess |= PROCESS_QUERY_INFORMATION;
+		}
+		if (features & WL_PROCESS_FEATURE_VM_OPERATION) {
+			desiredAccess |= (PROCESS_VM_OPERATION | PROCESS_VM_READ | PROCESS_VM_WRITE);
+		}
 		mProcessHandle = (void *)OpenProcess(desiredAccess, FALSE, processID);
 		if (mProcessHandle) {
 			mProcessID = processID;
 			return true;
 		}
 		else {
-			throw glException(L"OpenProcess", GetLastError());
+			throw glWin32APIException(L"OpenProcess", GetLastError());
 		}
 	}
 	return false;
 }
 
-void wlProcess::close(void) {
+void wlProcess::destroy(void) {
 	if (mProcessHandle) {
 		CloseHandle((HANDLE)mProcessHandle);
 		mProcessHandle = 0;
@@ -60,7 +66,7 @@ bool wlProcess::terminate(void) {
 			ret = true;
 		}
 		else {
-			throw glException(L"TerminateProcess", GetLastError());
+			throw glWin32APIException(L"TerminateProcess", GetLastError());
 		}
 	}
 	return ret;
@@ -86,7 +92,7 @@ bool wlProcess::getImageFileNameW(glStringW & imageFileName) {
 				return true;
 			}
 			else {
-				throw glException(L"QueryFullProcessImageNameW", GetLastError());
+				throw glWin32APIException(L"QueryFullProcessImageNameW", GetLastError());
 			}
 		}
 		if (!gModulePsapi.isAlready()) {
@@ -105,7 +111,7 @@ bool wlProcess::getImageFileNameW(glStringW & imageFileName) {
 				return true;
 			}
 			else {
-				throw glException(L"GetModuleFileNameExW", GetLastError());
+				throw glWin32APIException(L"GetModuleFileNameExW", GetLastError());
 			}
 		}
 	}
@@ -124,7 +130,7 @@ bool wlProcess::vmRead(const void * vmAddress, void * buffer, const int bytesToR
 			return true;
 		}
 		else {
-			throw glException(L"ReadProcessMemory", GetLastError());
+			throw glWin32APIException(L"ReadProcessMemory", GetLastError());
 		}
 	}
 	return false;
@@ -142,7 +148,7 @@ bool wlProcess::vmWrite(void * vmAddress, const void * buffer, const int bytesTo
 			return true;
 		}
 		else {
-			throw glException(L"WriteProcessMemory", GetLastError());
+			throw glWin32APIException(L"WriteProcessMemory", GetLastError());
 		}
 	}
 	return false;
@@ -173,17 +179,17 @@ bool wlProcess::setPrivilegeW(const wchar_t * privilegeName, const bool enableOr
 					ret = true;
 				}
 				else {
-					throw glException(L"AdjustTokenPrivileges", GetLastError());
+					throw glWin32APIException(L"AdjustTokenPrivileges", GetLastError());
 				}
 			}
 			else {
-				throw glException(L"LookupPrivilegeValueW", GetLastError());
+				throw glWin32APIException(L"LookupPrivilegeValueW", GetLastError());
 			}
 			CloseHandle(tokenHandle);
 			tokenHandle = 0;
 		}
 		else {
-			throw glException(L"OpenProcessToken", GetLastError());
+			throw glWin32APIException(L"OpenProcessToken", GetLastError());
 		}
 	}
 	return ret;

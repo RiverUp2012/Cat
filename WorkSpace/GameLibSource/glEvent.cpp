@@ -20,6 +20,9 @@ bool glEvent::createW(const wchar_t * eventName, const bool manualReset, const b
 		if (mEventHandle) {
 			return true;
 		}
+		else {
+			throw glWin32APIException(L"CreateEventW", GetLastError());
+		}
 	}
 	return false;
 }

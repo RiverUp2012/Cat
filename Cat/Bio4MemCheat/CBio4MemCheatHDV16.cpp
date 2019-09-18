@@ -17,7 +17,7 @@ bool CBio4MemCheatHDV16::setup(void) {
 	for (auto iter = pecw.getProcessInfoList().begin(); iter.isValid(); iter.moveNext()) {
 		const auto & processInfo = iter.getData();
 		if (0 == _wcsicmp(L"bio4.exe", processInfo.mExeFileName)) {
-			if (mBio4Process.openByProcessID(
+			if (mBio4Process.createByProcessID(
 				processInfo.mProcessID,
 				WL_PROCESS_FEATURE_VM_OPERATION)) {
 				//
@@ -42,7 +42,7 @@ bool CBio4MemCheatHDV16::setup(void) {
 }
 
 void CBio4MemCheatHDV16::shutdown(void) {
-	mBio4Process.close();
+	mBio4Process.destroy();
 	mBio4ModuleBaseAddress = 0;
 }
 

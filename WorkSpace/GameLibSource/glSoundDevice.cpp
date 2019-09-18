@@ -9,14 +9,20 @@ typedef HRESULT (WINAPI * glDirectSoundCreate8)(
 typedef HWND(WINAPI * glGetDesktopWindow)(
 	VOID);
 
-static glDirectSoundCreate8 gDirectSoundCreate8 = 0;
-static glGetDesktopWindow gGetDesktopWindow = 0;
+namespace {
+	static glDirectSoundCreate8 gDirectSoundCreate8 = 0;
+	static glGetDesktopWindow gGetDesktopWindow = 0;
+}
 
 glSoundDevice::glSoundDevice() {
-	gDirectSoundCreate8 = (glDirectSoundCreate8)
-		gModuleDSound.getProcAddressA("DirectSoundCreate8");
-	gGetDesktopWindow = (glGetDesktopWindow)
-		gModuleUser32.getProcAddressA("GetDesktopWindow");
+	if (!gDirectSoundCreate8) {
+		gDirectSoundCreate8 = (glDirectSoundCreate8)
+			gModuleDSound.getProcAddressA("DirectSoundCreate8");
+	}
+	if (!gGetDesktopWindow) {
+		gGetDesktopWindow = (glGetDesktopWindow)
+			gModuleUser32.getProcAddressA("GetDesktopWindow");
+	}
 	mDS8 = 0;
 	mDSBuf = 0;
 }
@@ -30,24 +36,41 @@ bool glSoundDevice::create(glWindow & window) {
 	HWND wndHandle = 0;
 	DSBUFFERDESC dsBufDesc = { 0 };
 	WAVEFORMATEX wavFmt = { 0 };
+	HRESULT comRet = S_OK;
 	if (!mDS8 && !mDSBuf && gDirectSoundCreate8 && gGetDesktopWindow) {
 		wndHandle = window.isAlready() ? (HWND)window.getHandle() : gGetDesktopWindow();
-		if (SUCCEEDED(gDirectSoundCreate8(0, &mDS8, 0))) {
-			if (SUCCEEDED(mDS8->SetCooperativeLevel(wndHandle, DSSCL_PRIORITY))) {
+		comRet = gDirectSoundCreate8(0, &mDS8, 0);
+		if (SUCCEEDED(comRet)) {
+			comRet = mDS8->SetCooperativeLevel(wndHandle, DSSCL_PRIORITY);
+			if (SUCCEEDED(comRet)) {
 				dsBufDesc.dwSize = sizeof(dsBufDesc);
 				dsBufDesc.dwFlags = DSBCAPS_CTRLVOLUME | DSBCAPS_PRIMARYBUFFER;
-				if (SUCCEEDED(mDS8->CreateSoundBuffer(&dsBufDesc, &mDSBuf, 0))) {
+				comRet = mDS8->CreateSoundBuffer(&dsBufDesc, &mDSBuf, 0);
+				if (SUCCEEDED(comRet)) {
 					wavFmt.wFormatTag = WAVE_FORMAT_PCM;
 					wavFmt.nChannels = 2;
 					wavFmt.nSamplesPerSec = 44100;
 					wavFmt.wBitsPerSample = 16;
 					wavFmt.nBlockAlign = wavFmt.nChannels * wavFmt.wBitsPerSample / 8;
 					wavFmt.nAvgBytesPerSec = wavFmt.nBlockAlign * wavFmt.nSamplesPerSec;
-					if (SUCCEEDED(mDSBuf->SetFormat(&wavFmt))) {
+					comRet = mDSBuf->SetFormat(&wavFmt);
+					if (SUCCEEDED(comRet)) {
 						ret = true;
 					}
+					else {
+						throw glCOMAPIException(L"IDirectSoundBuffer::SetFormat", comRet);
+					}
+				}
+				else {
+					throw glCOMAPIException(L"IDirectSound8::CreateSoundBuffer", comRet);
 				}
 			}
+			else {
+				throw glCOMAPIException(L"IDirectSound8::SetCooperativeLevel", comRet);
+			}
+		}
+		else {
+			throw glCOMAPIException(L"DirectSoundCreate8", comRet);
 		}
 	}
 	return true;

@@ -153,7 +153,16 @@ bool glWindow::createW(
 			if (gIsWindow((HWND)mWindowHandle)) {
 				ret = true;
 			}
+			else {
+				throw glWin32APIException(L"CreateWindowExW", GetLastError());
+			}
 		}
+		else {
+			throw glWin32APIException(L"AdjustWindowRectEx", GetLastError());
+		}
+	}
+	else {
+		throw glWin32APIException(L"RegisterClassExW", GetLastError());
 	}
 	return ret;
 }
@@ -161,9 +170,9 @@ bool glWindow::createW(
 void glWindow::destroy(void) {
 	if (gIsWindow((HWND)mWindowHandle)) {
 		gDestroyWindow((HWND)mWindowHandle);
-		mWindowHandle = 0;
 	}
 	gUnregisterClassW(GL_WINDOW_CLASS_NAME, GL_APP_INSTANCE);
+	mWindowHandle = 0;
 }
 
 bool glWindow::isAlready(void) const {

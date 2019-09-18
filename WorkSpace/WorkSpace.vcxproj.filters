@@ -130,9 +130,6 @@
     <ClCompile Include="GameLibSource\glThread.cpp">
       <Filter>GameLibSource</Filter>
     </ClCompile>
-    <ClCompile Include="GameLibSource\glSingleAppInstance.cpp">
-      <Filter>GameLibSource</Filter>
-    </ClCompile>
     <ClCompile Include="GameLibSource\glPathHelper.cpp">
       <Filter>GameLibSource</Filter>
     </ClCompile>
@@ -167,6 +164,21 @@
       <Filter>GameLibSource</Filter>
     </ClCompile>
     <ClCompile Include="GameLibSource\glUnitTest.cpp">
+      <Filter>GameLibSource</Filter>
+    </ClCompile>
+    <ClCompile Include="GameLibSource\glModuleResourceHelper.cpp">
+      <Filter>GameLibSource</Filter>
+    </ClCompile>
+    <ClCompile Include="GameLibSource\glDesktopHelper.cpp">
+      <Filter>GameLibSource</Filter>
+    </ClCompile>
+    <ClCompile Include="GameLibSource\glTimeHelper.cpp">
+      <Filter>GameLibSource</Filter>
+    </ClCompile>
+    <ClCompile Include="GameLibSource\glSystemHelper.cpp">
+      <Filter>GameLibSource</Filter>
+    </ClCompile>
+    <ClCompile Include="GameLibSource\glSingleAppInstanceChecker.cpp">
       <Filter>GameLibSource</Filter>
     </ClCompile>
   </ItemGroup>

@@ -48,7 +48,20 @@ bool glFile::openW(
 
 			}
 			else if (forWrite) {
-
+				if (ERROR_FILE_EXISTS == lastError) {
+					creationDisposition = OPEN_ALWAYS;
+				}
+			}
+			mFileHandle = (void *)CreateFileW(
+				fileName,
+				desiredAccess,
+				0,
+				0,
+				creationDisposition,
+				0,
+				0);
+			if (INVALID_HANDLE_VALUE == (HANDLE)mFileHandle) {
+				throw glWin32APIException(L"CreateFileW", GetLastError());
 			}
 		}
 		else {
@@ -80,12 +93,38 @@ bool glFile::isAlready(void) const {
 	return mFileHandle ? true : false;
 }
 
+bool glFile::isEndOfFile(bool & endOfFile) {
+	LARGE_INTEGER fileSize = { 0 };
+	LARGE_INTEGER toPos = { 0 };
+	LARGE_INTEGER newPos = { 0 };
+	if (mFileHandle) {
+		if (GetFileSizeEx((HANDLE)mFileHandle, &fileSize)) {
+			if (SetFilePointerEx((HANDLE)mFileHandle, toPos, &newPos, FILE_CURRENT)) {
+				if (newPos.QuadPart >= fileSize.QuadPart) {
+					endOfFile = true;
+				}
+				return true;
+			}
+			else {
+				throw glWin32APIException(L"SetFilePointerEx", GetLastError());
+			}
+		}
+		else {
+			throw glWin32APIException(L"GetFileSizeEx", GetLastError());
+		}
+	}
+	return false;
+}
+
 bool glFile::seekToBegin(void) {
 	LARGE_INTEGER toPos = { 0 };
 	LARGE_INTEGER newPos = { 0 };
 	if (mFileHandle) {
 		if (SetFilePointerEx((HANDLE)mFileHandle, toPos, &newPos, FILE_BEGIN)) {
 			return true;
+		}
+		else {
+			throw glWin32APIException(L"SetFilePointerEx", GetLastError());
 		}
 	}
 	return false;
@@ -97,6 +136,9 @@ bool glFile::seekToEnd(void) {
 	if (mFileHandle) {
 		if (SetFilePointerEx((HANDLE)mFileHandle, toPos, &newPos, FILE_END)) {
 			return true;
+		}
+		else {
+			throw glWin32APIException(L"SetFilePointerEx", GetLastError());
 		}
 	}
 	return false;
@@ -110,6 +152,9 @@ bool glFile::seekTo(const long long int pos) {
 		if (SetFilePointerEx((HANDLE)mFileHandle, toPos, &newPos, FILE_BEGIN)) {
 			return true;
 		}
+		else {
+			throw glWin32APIException(L"SetFilePointerEx", GetLastError());
+		}
 	}
 	return false;
 }
@@ -121,6 +166,9 @@ bool glFile::seekOffset(const long long int offset) {
 		offsetTemp.QuadPart = offset;
 		if (SetFilePointerEx((HANDLE)mFileHandle, offsetTemp, &newPos, FILE_CURRENT)) {
 			return true;
+		}
+		else {
+			throw glWin32APIException(L"SetFilePointerEx", GetLastError());
 		}
 	}
 	return false;
@@ -134,6 +182,9 @@ bool glFile::getPointer(long long int & pointer) {
 			pointer = newPos.QuadPart;
 			return true;
 		}
+		else {
+			throw glWin32APIException(L"SetFilePointerEx", GetLastError());
+		}
 	}
 	return false;
 }
@@ -145,6 +196,9 @@ bool glFile::getFileSize(long long int & fileSize) {
 			fileSize = fileSizeTemp.QuadPart;
 			return true;
 		}
+		else {
+			throw glWin32APIException(L"GetFileSizeEx", GetLastError());
+		}
 	}
 	return false;
 }
@@ -155,6 +209,9 @@ bool glFile::write(const void * data, const int bytesToWrite) {
 		if (WriteFile((HANDLE)mFileHandle, data, bytesToWrite, &bytesWrited, 0)) {
 			return true;
 		}
+		else {
+			throw glWin32APIException(L"WriteFile", GetLastError());
+		}
 	}
 	return false;
 }
@@ -164,6 +221,9 @@ bool glFile::read(void * data, const int bytesToRead) {
 	if (mFileHandle && data && bytesToRead > 0) {
 		if (ReadFile((HANDLE)mFileHandle, data, bytesToRead, &bytesReaded, 0)) {
 			return true;
+		}
+		else {
+			throw glWin32APIException(L"ReadFile", GetLastError());
 		}
 	}
 	return false;

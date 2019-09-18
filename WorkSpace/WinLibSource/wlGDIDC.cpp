@@ -17,6 +17,9 @@ bool wlGDIDC::createFromHDC(const void * dcHandle) {
 	if (mDCHandle) {
 		return true;
 	}
+	else {
+		throw glWin32APIException(L"CreateCompatibleDC", GetLastError());
+	}
 	return false;
 }
 
@@ -25,6 +28,9 @@ bool wlGDIDC::createFromDC(const wlGDIDC & dc) {
 	mDCHandle = (void *)CreateCompatibleDC((HDC)dc.getHDC());
 	if (mDCHandle) {
 		return true;
+	}
+	else {
+		throw glWin32APIException(L"CreateCompatibleDC", GetLastError());
 	}
 	return false;
 }
@@ -36,6 +42,9 @@ bool wlGDIDC::createFromHWND(const void * wndHandle) {
 		if (mDCHandle) {
 			mWndHandle = (void *)wndHandle;
 			return true;
+		}
+		else {
+			throw glWin32APIException(L"GetDC", GetLastError());
 		}
 	}
 	return false;
@@ -54,7 +63,7 @@ void wlGDIDC::destroy(void) {
 	}
 }
 
-void wlGDIDC::selectBitmap(wlGDIBitmap & bitmap) {
+void wlGDIDC::selectBitmap(const wlGDIBitmap & bitmap) {
 	if (mDCHandle && bitmap.getHBITMAP()) {
 		SelectObject((HDC)mDCHandle, (HBITMAP)bitmap.getHBITMAP());
 	}
@@ -62,4 +71,28 @@ void wlGDIDC::selectBitmap(wlGDIBitmap & bitmap) {
 
 const void * wlGDIDC::getHDC(void) const {
 	return mDCHandle;
+}
+
+bool wlGDIDC::drawFromDC(
+	const wlGDIDC & dc,
+	const glRect<int> & destRect,
+	const glPoint<int> & srcPos) {
+	if (mDCHandle) {
+		if (BitBlt(
+			(HDC)mDCHandle,
+			destRect.mX,
+			destRect.mY,
+			destRect.mWidth,
+			destRect.mHeight,
+			(HDC)dc.getHDC(),
+			srcPos.mX,
+			srcPos.mY,
+			SRCCOPY)) {
+			return true;
+		}
+		else {
+			throw glWin32APIException(L"BitBlt", GetLastError());
+		}
+	}
+	return false;
 }

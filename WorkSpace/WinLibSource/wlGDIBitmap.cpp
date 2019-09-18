@@ -23,6 +23,29 @@ bool wlGDIBitmap::createEmpty(const int width, const int height, const int bitCo
 	if (mBitmapHandle) {
 		return true;
 	}
+	else {
+		throw glWin32APIException(L"CreateDIBSection", GetLastError());
+	}
+	return false;
+}
+
+bool wlGDIBitmap::createFromFileW(const wchar_t * fileName) {
+	destroy();
+	if (fileName) {
+		mBitmapHandle = (void *)LoadImageW(
+			0,
+			fileName,
+			IMAGE_BITMAP,
+			0,
+			0,
+			LR_LOADFROMFILE | LR_CREATEDIBSECTION);
+		if (mBitmapHandle) {
+			return true;
+		}
+		else {
+			throw glWin32APIException(L"LoadImageW", GetLastError());
+		}
+	}
 	return false;
 }
 

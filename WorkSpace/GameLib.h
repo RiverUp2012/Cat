@@ -58,19 +58,58 @@ enum glInputType {
 };
 
 //
+// @brief 时间结构体
+//
+struct glTime {
+	unsigned int mYear;
+	unsigned int mMonth;
+	unsigned int mDay;
+	unsigned int mHour;
+	unsigned int mMinute;
+	unsigned int mSecond;
+	unsigned int mMilliseconds;
+};
+
+//
 // @brief 异常类
 //
 class glException {
 public:
+	glException();
 	glException(const wchar_t * message);
-	glException(const wchar_t * win32APIName, const unsigned int win32LastError);
 	virtual ~glException();
 public:
 	const wchar_t * getMessage(void) const;
-	unsigned int getWin32LastError(void) const;
-private:
+protected:
 	wchar_t mMessage[520];
+};
+
+//
+// @brief Win32 API 异常类
+//
+class glWin32APIException : public glException {
+public:
+	glWin32APIException();
+	glWin32APIException(const wchar_t * win32APIName, const unsigned int win32LastError);
+	virtual ~glWin32APIException();
+public:
+	unsigned int getWin32LastError(void) const;
+protected:
 	unsigned int mWin32LastError;
+};
+
+//
+// @brief COM API 异常类
+//
+class glCOMAPIException : public glException {
+public:
+	glCOMAPIException();
+	glCOMAPIException(const wchar_t * comAPIName, const long comRet);
+	virtual ~glCOMAPIException();
+public:
+	long getComRet(void) const;
+protected:
+	long mComRet;
 };
 
 //
@@ -150,10 +189,11 @@ public:
 	void setHandleInputEvent(const bool handleInputEvent);
 	bool getHandleInputEvent(void) const;
 public:
-	virtual bool handleInput(
-		const glInputType inputType,
-		const glPoint<int> & mousePos,
-		const int keyCode);
+	virtual bool onMouseMove(const int mouseX, const int mouseY);
+	virtual bool onKeyUp(const int keyCode);
+	virtual bool onKeyDown(const int keyCode);
+	virtual bool onMouseWhellUp(void);
+	virtual bool onMouseWhellDown(void);
 private:
 	bool mHandleInputEvent;
 };
@@ -168,6 +208,10 @@ public:
 public:
 	bool createFromFileW(
 		const wchar_t * fileName,
+		const unsigned int colorKey = 0);
+	bool createFromMemory(
+		const void * buffer,
+		const unsigned int bufferSize,
 		const unsigned int colorKey = 0);
 	void destroy(void);
 	bool isAlready(void) const;
@@ -278,6 +322,7 @@ public:
 		const bool forWrite);
 	void close(void);
 	bool isAlready(void) const;
+	bool isEndOfFile(bool & endOfFile);
 	bool seekToBegin(void);
 	bool seekToEnd(void);
 	bool seekTo(const long long int pos);
@@ -472,10 +517,10 @@ private:
 //
 // @brief 用于保证应用程序只有一个实例正在运行的类
 //
-class glSingleAppInstance : public glNonCopyable {
+class glSingleAppInstanceChecker : public glNonCopyable {
 public:
-	glSingleAppInstance();
-	virtual ~glSingleAppInstance();
+	glSingleAppInstanceChecker();
+	virtual ~glSingleAppInstanceChecker();
 public:
 	bool checkSingleAppInstanceW(const wchar_t * appInstanceName);
 private:
@@ -488,7 +533,20 @@ private:
 class glPathHelper {
 public:
 	static bool getFileNameWithExtW(const wchar_t * path, glStringW & fileNameWithExt);
+	static bool getDriveW(const wchar_t * path, glStringW & drive);
 	static bool getAppPathW(glStringW & appPath);
+	static void pathAppendSlashW(glStringW & path);
+};
+
+//
+// @brief 文件枚举处理类
+//
+class glFileEnumHandler {
+public:
+	virtual bool onFileEnumW(
+		const wchar_t * filePath,
+		const wchar_t * fileName,
+		const bool isDirectory) = 0;
 };
 
 //
@@ -497,6 +555,10 @@ public:
 class glFileHelper {
 public:
 	static bool deleteFileW(const wchar_t * fileName);
+	static void enumFileW(
+		const wchar_t * path,
+		const wchar_t * fileExt,
+		glFileEnumHandler * enumHandler);
 };
 
 //
@@ -644,6 +706,8 @@ public:
 	bool createForServerA(const char * ipV4, const short int port);
 	void destroy(void);
 	bool connectToServerA(const char * ipV4, const short int port);
+	bool sendData(const void * buffer, const int bytesToSend, int * bytesSended);
+	bool recvData(void * buffer, const int bytesToRecv, int * bytesRecved);
 private:
 	int mSocket;
 	bool mClientSocket;
@@ -689,3 +753,48 @@ glUnitTest::pushUnitTestProc(GL_TEST_PROC_##_CaseName); \
 }; \
 static glTestRunner_##_CaseName gTestRunner; \
 void GL_TEST_PROC_##_CaseName()
+
+//
+// @brief 模块资源助手类
+//
+class glModuleResourceHelper {
+public:
+	struct glResourceInfo {
+		void * mData;
+		int mSize;
+	};
+public:
+	static bool getResourceW(
+		const int resourceID,
+		const wchar_t * resourceType,
+		glResourceInfo & resourceInfo);
+};
+
+//
+// @brief 桌面助手类
+//
+class glDesktopHelper {
+public:
+	static bool getDesktopSize(glSize<int> & size);
+};
+
+//
+// @brief 时间助手类
+//
+class glTimeHelper {
+public:
+	static bool getTimeElapseFromSystemStartup(unsigned int & timeElapse);
+	static bool getTimeElapseFromSystemStartup64(unsigned long long int & timeElapse);
+	static bool getLocalTime(glTime & localTime);
+};
+
+//
+// @brief 系统助手类
+//
+class glSystemHelper {
+public:
+	static bool getCurrentUserNameW(glStringW & userName);
+	static bool getSystemDirectoryW(glStringW & systemDir);
+	static bool getWindowDirectoryW(glStringW & windowDir);
+	static bool getComputerNameW(glStringW & computerName);
+};

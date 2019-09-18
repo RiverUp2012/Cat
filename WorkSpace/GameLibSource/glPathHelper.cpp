@@ -19,6 +19,28 @@ bool glPathHelper::getFileNameWithExtW(const wchar_t * path, glStringW & fileNam
 	return false;
 }
 
+bool glPathHelper::getDriveW(const wchar_t * path, glStringW & drive) {
+	const int pathLength = path ? glStringW::getLength(path) : 0;
+	if (path && pathLength > 2 && drive.resize(4)) {
+		if ((path[0] >= L'A' && path[0] <= L'Z') ||
+			(path[0] >= L'a' && path[0] <= L'z')) {
+			if (L':' == path[1]) {
+				if (2 == pathLength) {
+					glStringW::copy(drive.getBuffer(), path, 2);
+					drive.setAt(2, L'\0');
+					return true;
+				}
+				else if (L'\\' == path[2] || L'/' == path[2]) {
+					glStringW::copy(drive.getBuffer(), path, 3);
+					drive.setAt(3, L'\0');
+					return true;
+				}
+			}
+		}
+	}
+	return false;
+}
+
 bool glPathHelper::getAppPathW(glStringW & appPath) {
 	wchar_t appPathTemp[520] = { 0 };
 	if (GetModuleFileNameW(0, appPathTemp, _countof(appPathTemp))) {
@@ -31,4 +53,14 @@ bool glPathHelper::getAppPathW(glStringW & appPath) {
 		}
 	}
 	return false;
+}
+
+void glPathHelper::pathAppendSlashW(glStringW & path) {
+	const int pathLength = path.getLength();
+	if (pathLength > 0) {
+		const wchar_t & lastChar = path.getAt(pathLength - 1);
+		if (L'\\' != lastChar && L'/' != lastChar) {
+			path += L"\\";
+		}
+	}
 }
