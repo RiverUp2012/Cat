@@ -146,6 +146,9 @@
     <Image Include="res\Cat.ico">
       <Filter>Resource</Filter>
     </Image>
+    <Image Include="res\Image\Cat.png">
+      <Filter>Resource</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Text Include="History.txt" />

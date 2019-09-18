@@ -94,7 +94,7 @@ bool wlGDIPWindow::present(void) {
 	return false;
 }
 
-bool wlGDIPWindow::drawImage(wlGDIPImage & image, const int x, const int y, const int width, const int height) {
+bool wlGDIPWindow::drawImage(const wlGDIPImage & image, const int x, const int y, const int width, const int height) {
 	Gdiplus::Graphics * graphicsTemp = (Gdiplus::Graphics *)mGraphics;
 	Gdiplus::Image * imageTemp = (Gdiplus::Image *)image.getImage();
 	if (graphicsTemp && imageTemp) {

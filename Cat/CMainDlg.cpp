@@ -33,7 +33,7 @@ BOOL CMainDlg::OnInitDialog() {
 	glPathHelper::getAppPathW(appPath);
 
 	if (createFromHWND(GetSafeHwnd())) {
-		if (mImgBK.createFromFileW(appPath + L"Cat\\Image\\Cat.png")) {
+		if (mImgBK.createFromResourceW(IDB_PNG_CAT, L"PNG")) {
 			drawImage(mImgBK, 0, 0, mImgBK.getWidth(), mImgBK.getHeight());
 			present();
 		}

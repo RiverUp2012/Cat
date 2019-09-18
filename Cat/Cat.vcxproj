@@ -143,6 +143,7 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\Cat.ico" />
+    <Image Include="res\Image\Cat.png" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Doc\C++ 命令行编译信息.txt" />

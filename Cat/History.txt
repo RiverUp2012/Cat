@@ -42,3 +42,7 @@
 		一些有用的 URL.txt
 	* 新增 CMFCHelper 类
 
+* 2019-09-18
+
+	* 猫猫背景图像 Cat/Image/Cat.png 不再单独保存在应用程序外部，而是作为资源编译到 exe 文件内部
+	* 新增 UnitTest 项目，用于进行单元测试
