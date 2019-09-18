@@ -671,7 +671,7 @@ typedef void(*glUnitTestProc)(void);
 class glUnitTest {
 public:
 	static void pushUnitTestProc(glUnitTestProc testProc);
-	static void runAllTestProc(void);
+	static void runAllTestCase(void);
 };
 
 //

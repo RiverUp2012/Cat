@@ -1,7 +1,5 @@
 
-#include "../WorkSpace/WinLib.h"
 #include "../WorkSpace/GameLib.h"
-#include <Windows.h>
 
 #if defined WIN64 || defined _WIN64
 #	if defined DEBUG || defined _DEBUG
@@ -17,11 +15,7 @@
 #	endif
 #endif
 
-GL_TEST_CASE(TestCase) {
-	OutputDebugStringA("TestCase \r\n");
-}
-
 int main(int argc, char * argv[]) {
-	glUnitTest::runAllTestProc();
+	glUnitTest::runAllTestCase();
 	return 0;
 }

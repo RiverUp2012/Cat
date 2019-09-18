@@ -2,20 +2,36 @@
 #include "../GameLib.h"
 
 namespace {
-	static glList<glUnitTestProc> gTestProcList;
+	struct glUnitTestInfo {
+		glUnitTestProc mTestProc;
+		glUnitTestInfo * mNext;
+	};
+	static glUnitTestInfo * gTestProcList = 0;
 }
 
 void glUnitTest::pushUnitTestProc(glUnitTestProc testProc) {
 	if (testProc) {
-		gTestProcList.pushBack(testProc);
+		glUnitTestInfo * testInfo = new glUnitTestInfo();
+		testInfo->mTestProc = testProc;
+		testInfo->mNext = 0;
+		if (!gTestProcList) {
+			gTestProcList = testInfo;
+		}
+		else {
+			testInfo->mNext = gTestProcList;
+			gTestProcList = testInfo;
+		}
 	}
 }
 
-void glUnitTest::runAllTestProc(void) {
-	for (glList<glUnitTestProc>::glIterator iter = gTestProcList.begin(); iter.isValid(); iter.moveNext()) {
-		glUnitTestProc testProc = iter.getData();
-		if (testProc) {
-			testProc();
+void glUnitTest::runAllTestCase(void) {
+	glUnitTestInfo * testInfo = gTestProcList;
+	while (testInfo) {
+		glUnitTestInfo * nextTestInfo = testInfo->mNext;
+		if (testInfo->mTestProc) {
+			testInfo->mTestProc();
 		}
+		delete testInfo;
+		testInfo = nextTestInfo;
 	}
 }
