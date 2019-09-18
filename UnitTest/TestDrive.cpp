@@ -1,6 +1,5 @@
 
-#include "../WorkSpace/GameLib.h"
-#include <Windows.h>
+#include "CompileConfig.h"
 
 GL_TEST_CASE(TestDrive) {
 	glArray<glStringW> driveNameArray;

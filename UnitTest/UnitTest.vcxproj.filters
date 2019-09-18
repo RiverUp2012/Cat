@@ -20,5 +20,13 @@
     <ClCompile Include="TestFileEnum.cpp">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="TestException.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="CompileConfig.h">
+      <Filter>Include</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

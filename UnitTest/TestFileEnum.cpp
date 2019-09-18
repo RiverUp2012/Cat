@@ -1,6 +1,5 @@
 
-#include "../WorkSpace/GameLib.h"
-#include <Windows.h>
+#include "CompileConfig.h"
 
 class MyFileEnumHandler : public glFileEnumHandler {
 public:
