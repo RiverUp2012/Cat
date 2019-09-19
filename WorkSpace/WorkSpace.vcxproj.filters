@@ -239,6 +239,9 @@
     <ClInclude Include="GameLibInclude\glGlobalData.h">
       <Filter>GameLibInclude</Filter>
     </ClInclude>
+    <ClInclude Include="GameLibInclude\glMemoryHelper.h">
+      <Filter>GameLibInclude</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinLibSource\wlGDIPStartup.cpp">
@@ -404,6 +407,9 @@
       <Filter>GameLibSource</Filter>
     </ClCompile>
     <ClCompile Include="GameLibSource\glMutexGuard.cpp">
+      <Filter>GameLibSource</Filter>
+    </ClCompile>
+    <ClCompile Include="GameLibSource\glMemoryHelper.cpp">
       <Filter>GameLibSource</Filter>
     </ClCompile>
   </ItemGroup>

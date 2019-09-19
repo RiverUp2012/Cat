@@ -17,4 +17,6 @@ public:
 	static bool formatA(glStringA & string, const char * format, ...);
 	static bool formatW(const wchar_t * format, const va_list & vl, glStringW & string);
 	static bool formatA(const char * format, const va_list & vl, glStringA & string);
+	static int toIntW(const wchar_t * string);
+	static int toIntA(const char * string);
 };

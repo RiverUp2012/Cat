@@ -121,6 +121,15 @@ public:
 	bool right(const int length, glString & subString) const {
 		return sub(getLength() - length, length, subString);
 	}
+	void replaceChar(const _U & srcChar, const _U & destChar) {
+		if (mString) {
+			for (int i = 0; i < getLength(); ++i) {
+				if (srcChar == mString[i]) {
+					mString[i] = destChar;
+				}
+			}
+		}
+	}
 public:
 	glString & operator = (const _U string[]) {
 		if (mString != string) {

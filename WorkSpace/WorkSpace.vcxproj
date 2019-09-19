@@ -36,6 +36,7 @@
     <ClInclude Include="GameLibInclude\glInputHandler.h" />
     <ClInclude Include="GameLibInclude\glList.h" />
     <ClInclude Include="GameLibInclude\glLog.h" />
+    <ClInclude Include="GameLibInclude\glMemoryHelper.h" />
     <ClInclude Include="GameLibInclude\glModule.h" />
     <ClInclude Include="GameLibInclude\glModuleResourceHelper.h" />
     <ClInclude Include="GameLibInclude\glMutex.h" />
@@ -106,6 +107,7 @@
     <ClCompile Include="GameLibSource\glHashHelper.cpp" />
     <ClCompile Include="GameLibSource\glInputHandler.cpp" />
     <ClCompile Include="GameLibSource\glLog.cpp" />
+    <ClCompile Include="GameLibSource\glMemoryHelper.cpp" />
     <ClCompile Include="GameLibSource\glModule.cpp" />
     <ClCompile Include="GameLibSource\glModuleResourceHelper.cpp" />
     <ClCompile Include="GameLibSource\glMutex.cpp" />

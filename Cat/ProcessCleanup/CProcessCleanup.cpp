@@ -8,9 +8,14 @@
 namespace {
 	// 每隔多少毫秒清理一次进程
 	static int gCleanupTimeInterval = DEFAULT_CLEANUP_TIME_INTERVAL;
+	// 要清理的进程数组
 	static std::vector<std::wstring> gProcessExeFileNameArray;
+	// 资源锁
 	static glMutex gProcessExeFileNameArrayLock;
 
+	//
+	// @brief 后台清理线程
+	//
 	class MyThread : public glThread {
 	public:
 		void onThreadRun(void) override {

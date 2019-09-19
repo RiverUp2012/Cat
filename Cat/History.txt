@@ -3,31 +3,15 @@
 	Cat History
 ----------------------------------------------------------------------------
 
-* 2019-09-02
+* 2019-09-19
 
-	* 新增 ProcessCleanup 目录，用于存放进程清理模块相关源代码文件
-	* 新增 CProcessCleanup 类，用于定时清理进程
-	* 新增 CProcessCleanupConfigFile 类，用于操作进程清理配置文件
-	* 新增 Cat/Config 目录，用于存放程序中需要用到的配置文件
-	* 新增 Cat/Image 目录，用于存放程序中需要用到的图像文件
-	* 新增 Cat/Config/ProcessCleanup.ini 配置文件，用于存放进程清理配置信息
-	* 新增 Cat/Image/Cat.png 图像文件，用作主对话框的背景
-	* 新增 GDIPlus 目录，用于存放 GDI+ 相关源代码文件
-	* 新增 CGDIPStartup 类，用于启动和关闭 GDI+ 库
-	* 增加防止多重实例启动的代码
+	* 新增 CMFCDialogTemplate 类，用作以后快速新建 MFC 对话框类
+	
+* 2019-09-18
 
-* 2019-09-12
-
-	* 移除 GDIPlus 目录及其内容
-	* 移除对 TurboLib 库的引用
-	* 新增对 WinLib 库的引用
-	* 移除 RemoteControl 模块的实现代码，将来基于 WinLib 重写实现代码
-
-* 2019-09-14
-
-	* 移除对 WinLib 库的引用
-	* 新增对 WorkSpace 库的引用
-
+	* 猫猫背景图像 Cat/Image/Cat.png 不再单独保存在应用程序外部，而是作为资源编译到 exe 文件内部
+	* 新增 UnitTest 项目，用于进行单元测试
+	
 * 2019-09-15
 
 	* 新增 Bio4MemCheat 生化危机 4 内存修改模块，包含下述内容：
@@ -42,7 +26,27 @@
 		一些有用的 URL.txt
 	* 新增 CMFCHelper 类
 
-* 2019-09-18
+* 2019-09-14
 
-	* 猫猫背景图像 Cat/Image/Cat.png 不再单独保存在应用程序外部，而是作为资源编译到 exe 文件内部
-	* 新增 UnitTest 项目，用于进行单元测试
+	* 移除对 WinLib 库的引用
+	* 新增对 WorkSpace 库的引用
+
+* 2019-09-12
+
+	* 移除 GDIPlus 目录及其内容
+	* 移除对 TurboLib 库的引用
+	* 新增对 WinLib 库的引用
+	* 移除 RemoteControl 模块的实现代码，将来基于 WinLib 重写实现代码
+
+* 2019-09-02
+
+	* 新增 ProcessCleanup 目录，用于存放进程清理模块相关源代码文件
+	* 新增 CProcessCleanup 类，用于定时清理进程
+	* 新增 CProcessCleanupConfigFile 类，用于操作进程清理配置文件
+	* 新增 Cat/Config 目录，用于存放程序中需要用到的配置文件
+	* 新增 Cat/Image 目录，用于存放程序中需要用到的图像文件
+	* 新增 Cat/Config/ProcessCleanup.ini 配置文件，用于存放进程清理配置信息
+	* 新增 Cat/Image/Cat.png 图像文件，用作主对话框的背景
+	* 新增 GDIPlus 目录，用于存放 GDI+ 相关源代码文件
+	* 新增 CGDIPStartup 类，用于启动和关闭 GDI+ 库
+	* 增加防止多重实例启动的代码

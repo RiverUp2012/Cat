@@ -112,6 +112,26 @@ bool glStringHelper::formatA(glStringA & string, const char * format, ...) {
 	return ret;
 }
 
+int glStringHelper::toIntW(const wchar_t * string) {
+	if (string) {
+		return _wtoi(string);
+	}
+	else {
+		throw glException(L"invalid param");
+	}
+	return 0;
+}
+
+int glStringHelper::toIntA(const char * string) {
+	if (string) {
+		return atoi(string);
+	}
+	else {
+		throw glException(L"invalid param");
+	}
+	return 0;
+}
+
 bool glStringHelper::formatW(const wchar_t * format, const va_list & vl, glStringW & string) {
 	int stringLength = 0;
 	if (format && vl) {
