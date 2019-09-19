@@ -46,6 +46,38 @@ if (_Format) \
 }
 
 //
+// @brief 将 TCHAR 字符串转换为 char 字符串
+//
+#if defined UNICODE || defined _UNICODE
+#define GL_T2A(_StringT, _StringA, _Ret) \
+{ \
+	_Ret = glStringHelper::w2a(_StringT, _StringA); \
+}
+#else
+#define GL_T2A(_StringT, _StringA, _Ret) \
+{ \
+	_StringT = _StringA; \
+	_Ret = true; \
+}
+#endif
+
+//
+// @brief 将 TCHAR 字符串转换为 wchar_t 字符串
+//
+#if defined UNICODE || defined _UNICODE
+#define GL_T2W(_StringT, _StringW, _Ret) \
+{ \
+	_StringW = _StringT; \
+	_Ret = true; \
+}
+#else
+#define GL_T2W(_StringT, _StringW, _Ret) \
+{ \
+	_Ret = glStringHelper::a2w(_StringT, _StringW); \
+}
+#endif
+
+//
 // @brief 输入类型枚举体
 //
 enum glInputType {
@@ -333,6 +365,8 @@ public:
 	void close(void);
 	bool isAlready(void) const;
 	bool isEndOfFile(bool & endOfFile);
+	bool isForRead(void) const;
+	bool isForWrite(void) const;
 	bool seekToBegin(void);
 	bool seekToEnd(void);
 	bool seekTo(const long long int pos);
@@ -341,8 +375,13 @@ public:
 	bool getFileSize(long long int & fileSize);
 	bool write(const void * data, const int bytesToWrite);
 	bool read(void * data, const int bytesToRead);
+	const unsigned char * getViewPointer(void) const;
 private:
 	void * mFileHandle;
+	void * mMappingHandle;
+	bool mForRead;
+	bool mForWrite;
+	unsigned char * mView;
 };
 
 //
@@ -420,6 +459,8 @@ public:
 	static bool w2a(const wchar_t * stringW, glStringA & stringA, const bool toUTF8 = false);
 	static int findA(const char * string, const char * subString);
 	static int findW(const wchar_t * string, const wchar_t * subString);
+	static bool formatW(glStringW & string, const wchar_t * format, ...);
+	static bool formatA(glStringA & string, const char * format, ...);
 	static bool formatW(const wchar_t * format, const va_list & vl, glStringW & string);
 	static bool formatA(const char * format, const va_list & vl, glStringA & string);
 };
@@ -762,7 +803,7 @@ glTestRunner_##_CaseName() \
 glUnitTest::pushUnitTestProcW(L#_CaseName, GL_TEST_PROC_##_CaseName); \
 } \
 }; \
-static glTestRunner_##_CaseName gTestRunner; \
+static glTestRunner_##_CaseName gTestRunner##_CaseName; \
 void GL_TEST_PROC_##_CaseName()
 
 //

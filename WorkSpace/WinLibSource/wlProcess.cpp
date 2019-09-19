@@ -158,32 +158,36 @@ bool wlProcess::setPrivilegeW(const wchar_t * privilegeName, const bool enableOr
 	bool ret = false;
 	HANDLE tokenHandle = 0;
 	TOKEN_PRIVILEGES tokenPrivileges = { 0 };
+	glStringW seDebugNameW;
 	if (mProcessHandle) {
 		if (OpenProcessToken(
 			(HANDLE)mProcessHandle,
 			TOKEN_ADJUST_PRIVILEGES,
 			&tokenHandle)) {
 			tokenPrivileges.PrivilegeCount = 1;
-			if (LookupPrivilegeValueW(
-				0,
-				SE_DEBUG_NAME,
-				&tokenPrivileges.Privileges[0].Luid)) {
-				tokenPrivileges.Privileges[0].Attributes = enableOrDisable ? SE_PRIVILEGE_ENABLED : SE_PRIVILEGE_REMOVED;
-				if (AdjustTokenPrivileges(
-					tokenHandle,
-					FALSE,
-					&tokenPrivileges,
-					sizeof(tokenPrivileges),
+			GL_T2W(SE_DEBUG_NAME, seDebugNameW, ret);
+			if (ret) {
+				if (LookupPrivilegeValueW(
 					0,
-					0)) {
-					ret = true;
+					seDebugNameW,
+					&tokenPrivileges.Privileges[0].Luid)) {
+					tokenPrivileges.Privileges[0].Attributes = enableOrDisable ? SE_PRIVILEGE_ENABLED : SE_PRIVILEGE_REMOVED;
+					if (AdjustTokenPrivileges(
+						tokenHandle,
+						FALSE,
+						&tokenPrivileges,
+						sizeof(tokenPrivileges),
+						0,
+						0)) {
+						ret = true;
+					}
+					else {
+						throw glWin32APIException(L"AdjustTokenPrivileges", GetLastError());
+					}
 				}
 				else {
-					throw glWin32APIException(L"AdjustTokenPrivileges", GetLastError());
+					throw glWin32APIException(L"LookupPrivilegeValueW", GetLastError());
 				}
-			}
-			else {
-				throw glWin32APIException(L"LookupPrivilegeValueW", GetLastError());
 			}
 			CloseHandle(tokenHandle);
 			tokenHandle = 0;

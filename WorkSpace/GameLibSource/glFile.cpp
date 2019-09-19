@@ -4,6 +4,10 @@
 
 glFile::glFile() {
 	mFileHandle = 0;
+	mMappingHandle = 0;
+	mForRead = false;
+	mForWrite = false;
+	mView = 0;
 }
 
 glFile::~glFile() {
@@ -17,6 +21,7 @@ bool glFile::openW(
 	DWORD desiredAccess = 0;
 	DWORD creationDisposition = 0;
 	DWORD lastError = 0;
+	LARGE_INTEGER fileSize = { 0 };
 	close();
 	if (fileName) {
 		if (forRead && forWrite) {
@@ -25,7 +30,7 @@ bool glFile::openW(
 		}
 		else if (forRead) {
 			desiredAccess = GENERIC_READ;
-			creationDisposition = OPEN_ALWAYS;
+			creationDisposition = OPEN_EXISTING;
 		}
 		else if (forWrite) {
 			desiredAccess = GENERIC_WRITE;
@@ -42,14 +47,34 @@ bool glFile::openW(
 		if (INVALID_HANDLE_VALUE == (HANDLE)mFileHandle) {
 			lastError = GetLastError();
 			if (forRead && forWrite) {
-
+				if (ERROR_FILE_EXISTS == lastError) {
+					// 如果以 CREATE_NEW 标志打开一个已经存在的文件，并且打开失败时，
+					// 尝试使用 OPEN_ALWAYS 标志再次打开
+					creationDisposition = OPEN_ALWAYS;
+				}
+				else {
+					throw glWin32APIException(L"CreateFileW", lastError);
+					return false;
+				}
 			}
 			else if (forRead) {
-
+				if (ERROR_FILE_NOT_FOUND == lastError) {
+					// 如果尝试以只读的模式打开一个不存在的文件，打开必然失败，但不属于异常
+					return false;
+				}
+				else {
+					throw glWin32APIException(L"CreateFileW", lastError);
+				}
 			}
 			else if (forWrite) {
 				if (ERROR_FILE_EXISTS == lastError) {
+					// 如果以 CREATE_NEW 标志打开一个已经存在的文件，并且打开失败时，
+					// 尝试使用 OPEN_ALWAYS 标志再次打开
 					creationDisposition = OPEN_ALWAYS;
+				}
+				else {
+					throw glWin32APIException(L"CreateFileW", lastError);
+					return false;
 				}
 			}
 			mFileHandle = (void *)CreateFileW(
@@ -60,12 +85,53 @@ bool glFile::openW(
 				creationDisposition,
 				0,
 				0);
-			if (INVALID_HANDLE_VALUE == (HANDLE)mFileHandle) {
-				throw glWin32APIException(L"CreateFileW", GetLastError());
+		}
+		if (INVALID_HANDLE_VALUE != (HANDLE)mFileHandle) {
+			if (forRead && !forWrite) {
+				// 对于以只读模式打开的文件，尝试使用文件映射的方式来优化文件读取性能
+				mMappingHandle = (void *)CreateFileMappingW(
+					(HANDLE)mFileHandle,
+					0,
+					PAGE_READONLY,
+					0,
+					0,
+					0);
+				if (mMappingHandle) {
+					mView = (unsigned char *)MapViewOfFile(
+						(HANDLE)mMappingHandle,
+						FILE_MAP_READ,
+						0,
+						0,
+						0);
+					if (mView) {
+						return true;
+					}
+					else {
+						throw glWin32APIException(L"MapViewOfFile", GetLastError());
+					}
+				}
+				else {
+					lastError = GetLastError();
+					if (GetFileSizeEx((HANDLE)mFileHandle, &fileSize)) {
+						if (0 == fileSize.QuadPart) {
+							// 对于以只读模式打开的文件，若文件大小为 0 时，创建文件映射必然失败，但不属于异常
+							return false;
+						}
+						else {
+							throw glWin32APIException(L"CreateFileMappingW", lastError);
+						}
+					}
+					else {
+						throw glWin32APIException(L"GetFileSizeEx", GetLastError());
+					}
+				}
+			}
+			else {
+				return true;
 			}
 		}
 		else {
-			return true;
+			throw glWin32APIException(L"CreateFileW", GetLastError());
 		}
 	}
 	return false;
@@ -83,10 +149,20 @@ bool glFile::openA(
 }
 
 void glFile::close(void) {
+	if (mView) {
+		UnmapViewOfFile(mView);
+		mView = 0;
+	}
+	if (mMappingHandle) {
+		CloseHandle((HANDLE)mMappingHandle);
+		mMappingHandle = 0;
+	}
 	if (mFileHandle) {
 		CloseHandle((HANDLE)mFileHandle);
 		mFileHandle = 0;
 	}
+	mForRead = false;
+	mForWrite = false;
 }
 
 bool glFile::isAlready(void) const {
@@ -114,6 +190,14 @@ bool glFile::isEndOfFile(bool & endOfFile) {
 		}
 	}
 	return false;
+}
+
+bool glFile::isForRead(void) const {
+	return mForRead;
+}
+
+bool glFile::isForWrite(void) const {
+	return mForWrite;
 }
 
 bool glFile::seekToBegin(void) {
@@ -227,4 +311,8 @@ bool glFile::read(void * data, const int bytesToRead) {
 		}
 	}
 	return false;
+}
+
+const unsigned char * glFile::getViewPointer(void) const {
+	return mView;
 }

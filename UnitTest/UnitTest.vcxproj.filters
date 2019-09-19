@@ -23,6 +23,9 @@
     <ClCompile Include="TestException.cpp">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="TestFile.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CompileConfig.h">

@@ -13,16 +13,23 @@ bool glStringHelper::a2w(const char * stringA, glStringW & stringW, const bool t
 			stringALength,
 			0,
 			0);
-		if (stringWLength > 0 && stringW.resize(stringWLength + 1)) {
-			MultiByteToWideChar(
+		if (0 == stringWLength) {
+			throw glWin32APIException(L"MultiByteToWideChar", GetLastError());
+		}
+		else if (stringWLength > 0 && stringW.resize(stringWLength + 1)) {
+			if (0 == MultiByteToWideChar(
 				toUTF8 ? CP_UTF8 : CP_ACP,
 				0,
 				stringA,
 				stringALength,
 				stringW.getBuffer(),
-				stringW.getCapacity());
-			stringW.setAt(stringWLength, stringW.getNullChar());
-			return true;
+				stringW.getCapacity())) {
+				throw glWin32APIException(L"MultiByteToWideChar", GetLastError());
+			}
+			else {
+				stringW.setAt(stringWLength, stringW.getNullChar());
+				return true;
+			}
 		}
 	}
 	return false;
@@ -41,8 +48,11 @@ bool glStringHelper::w2a(const wchar_t * stringW, glStringA & stringA, const boo
 			0,
 			0,
 			0);
-		if (stringALength > 0 && stringA.resize(stringALength + 1)) {
-			WideCharToMultiByte(
+		if (0 == stringALength) {
+			throw glWin32APIException(L"WideCharToMultiByte", GetLastError());
+		}
+		else if (stringALength > 0 && stringA.resize(stringALength + 1)) {
+			if (0 == WideCharToMultiByte(
 				toUTF8 ? CP_UTF8 : CP_ACP,
 				0,
 				stringW,
@@ -50,9 +60,13 @@ bool glStringHelper::w2a(const wchar_t * stringW, glStringA & stringA, const boo
 				stringA.getBuffer(),
 				stringA.getCapacity(),
 				0,
-				0);
-			stringA.setAt(stringALength, stringA.getNullChar());
-			return true;
+				0)) {
+				throw glWin32APIException(L"WideCharToMultiByte", GetLastError());
+			}
+			else {
+				stringA.setAt(stringALength, stringA.getNullChar());
+				return true;
+			}
 		}
 	}
 	return false;
@@ -76,6 +90,24 @@ int glStringHelper::findW(const wchar_t * string, const wchar_t * subString) {
 		}
 	}
 	return -1;
+}
+
+bool glStringHelper::formatW(glStringW & string, const wchar_t * format, ...) {
+	bool ret = false;
+	va_list vl = { 0 };
+	va_start(vl, format);
+	ret = formatW(format, vl, string);
+	va_end(vl);
+	return ret;
+}
+
+bool glStringHelper::formatA(glStringA & string, const char * format, ...) {
+	bool ret = false;
+	va_list vl = { 0 };
+	va_start(vl, format);
+	ret = formatA(format, vl, string);
+	va_end(vl);
+	return ret;
 }
 
 bool glStringHelper::formatW(const wchar_t * format, const va_list & vl, glStringW & string) {
