@@ -17,6 +17,15 @@ Cat 是我（@NekoMasutaDev）与我的兄弟（@RiverUp2012）一同协作编�
 * UnitTest 项目，单元测试程序，用于测试你的代码  
 * WorkSpace 项目，通用代码库，存放一些通用代码  
 
+# 开发环境  
+
+IDE：Microsoft Visual Studio 2013  
+语言：C++  
+
+# 如何编译  
+
+安装好 Visual Studio 2013，双击 Cat.sln 解决方案文件，按下键盘上的 F5 按键，开始爽。  
+
 # 联系方式
 
 NekoMasutaDev  
