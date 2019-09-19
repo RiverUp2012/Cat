@@ -1,6 +1,8 @@
 
-#include "../GameLib.h"
-#include "../Include/GameLibPrivate.h"
+#include "../GameLibInclude/glException.h"
+#include "../GameLibInclude/glString.h"
+#include "../GameLibInclude/glDefine.h"
+#include "../GameLibInclude/glPrivate.h"
 
 glException::glException() {
 	mMessage[0] = L'\0';

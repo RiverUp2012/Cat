@@ -1,6 +1,9 @@
 
-#include "../GameLib.h"
-#include "../Include/GameLibPrivate.h"
+#include "../GameLibInclude/glFile.h"
+#include "../GameLibInclude/glException.h"
+#include "../GameLibInclude/glPrivate.h"
+#include "../GameLibInclude/glString.h"
+#include "../GameLibInclude/glStringHelper.h"
 
 glFile::glFile() {
 	mFileHandle = 0;

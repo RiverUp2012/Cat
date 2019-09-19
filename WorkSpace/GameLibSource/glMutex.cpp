@@ -1,6 +1,6 @@
 
-#include "../GameLib.h"
-#include "../Include/GameLibPrivate.h"
+#include "../GameLibInclude/glMutex.h"
+#include "../GameLibInclude/glPrivate.h"
 
 glMutex::glMutex() {
 	mCriticalSection = new CRITICAL_SECTION();
@@ -20,12 +20,4 @@ void glMutex::lock(void) {
 
 void glMutex::unlock(void) {
 	LeaveCriticalSection((CRITICAL_SECTION *)mCriticalSection);
-}
-
-glMutexGuard::glMutexGuard(glMutex * mutex) : mMutex(mutex) {
-	if (mMutex) mMutex->lock();
-}
-
-glMutexGuard::~glMutexGuard() {
-	if (mMutex) mMutex->unlock();
 }

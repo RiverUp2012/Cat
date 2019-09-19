@@ -1,6 +1,8 @@
 
-#include "../GameLib.h"
-#include "../Include/GameLibPrivate.h"
+#include "../GameLibInclude/glStringHelper.h"
+#include "../GameLibInclude/glString.h"
+#include "../GameLibInclude/glException.h"
+#include "../GameLibInclude/glPrivate.h"
 
 bool glStringHelper::a2w(const char * stringA, glStringW & stringW, const bool toUTF8) {
 	int stringALength = stringA ? glStringA::getLength(stringA) : 0;

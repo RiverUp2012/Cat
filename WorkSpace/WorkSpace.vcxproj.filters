@@ -1,10 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Include">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
-    </Filter>
     <Filter Include="WinLibSource">
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
@@ -12,16 +8,236 @@
     <Filter Include="GameLibSource">
       <UniqueIdentifier>{b05f0f47-37ca-43a6-986a-3cbb661b3d2d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="WinLibInclude">
+      <UniqueIdentifier>{1005bf4d-4ef4-47a5-9d15-341f38343e1a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameLibInclude">
+      <UniqueIdentifier>{a20d74d3-b80e-4fbb-bbbb-90529df012bb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="WinLib.h" />
-    <ClInclude Include="Include\WinLibPrivate.h">
-      <Filter>Include</Filter>
+    <ClInclude Include="WorkSpace.h" />
+    <ClInclude Include="GameLibInclude\glRect.h">
+      <Filter>GameLibInclude</Filter>
     </ClInclude>
-    <ClInclude Include="GameLib.h" />
-    <ClInclude Include="GameLibTemplate.h" />
-    <ClInclude Include="Include\GameLibPrivate.h">
-      <Filter>Include</Filter>
+    <ClInclude Include="GameLibInclude\glSize.h">
+      <Filter>GameLibInclude</Filter>
+    </ClInclude>
+    <ClInclude Include="GameLibInclude\glString.h">
+      <Filter>GameLibInclude</Filter>
+    </ClInclude>
+    <ClInclude Include="GameLibInclude\glArray.h">
+      <Filter>GameLibInclude</Filter>
+    </ClInclude>
+    <ClInclude Include="GameLibInclude\glList.h">
+      <Filter>GameLibInclude</Filter>
+    </ClInclude>
+    <ClInclude Include="GameLibInclude\glPoint.h">
+      <Filter>GameLibInclude</Filter>
+    </ClInclude>
+    <ClInclude Include="GameLibInclude\glResourcePool.h">
+      <Filter>GameLibInclude</Filter>
+    </ClInclude>
+    <ClInclude Include="GameLibInclude\glDefine.h">
+      <Filter>GameLibInclude</Filter>
+    </ClInclude>
+    <ClInclude Include="GameLibInclude\glTemplate.h">
+      <Filter>GameLibInclude</Filter>
+    </ClInclude>
+    <ClInclude Include="GameLibInclude\glEnum.h">
+      <Filter>GameLibInclude</Filter>
+    </ClInclude>
+    <ClInclude Include="GameLibInclude\glStruct.h">
+      <Filter>GameLibInclude</Filter>
+    </ClInclude>
+    <ClInclude Include="GameLibInclude\glException.h">
+      <Filter>GameLibInclude</Filter>
+    </ClInclude>
+    <ClInclude Include="GameLibInclude\glNonCopyable.h">
+      <Filter>GameLibInclude</Filter>
+    </ClInclude>
+    <ClInclude Include="GameLibInclude\glRefCounter.h">
+      <Filter>GameLibInclude</Filter>
+    </ClInclude>
+    <ClInclude Include="GameLibInclude\glGameState.h">
+      <Filter>GameLibInclude</Filter>
+    </ClInclude>
+    <ClInclude Include="GameLibInclude\glPaintObject.h">
+      <Filter>GameLibInclude</Filter>
+    </ClInclude>
+    <ClInclude Include="GameLibInclude\glInputHandler.h">
+      <Filter>GameLibInclude</Filter>
+    </ClInclude>
+    <ClInclude Include="GameLibInclude\glTexture.h">
+      <Filter>GameLibInclude</Filter>
+    </ClInclude>
+    <ClInclude Include="GameLibInclude\glSprite.h">
+      <Filter>GameLibInclude</Filter>
+    </ClInclude>
+    <ClInclude Include="GameLibInclude\glFont.h">
+      <Filter>GameLibInclude</Filter>
+    </ClInclude>
+    <ClInclude Include="GameLibInclude\glSound.h">
+      <Filter>GameLibInclude</Filter>
+    </ClInclude>
+    <ClInclude Include="GameLibInclude\glFile.h">
+      <Filter>GameLibInclude</Filter>
+    </ClInclude>
+    <ClInclude Include="GameLibInclude\glModule.h">
+      <Filter>GameLibInclude</Filter>
+    </ClInclude>
+    <ClInclude Include="GameLibInclude\glEngine.h">
+      <Filter>GameLibInclude</Filter>
+    </ClInclude>
+    <ClInclude Include="GameLibInclude\glStringHelper.h">
+      <Filter>GameLibInclude</Filter>
+    </ClInclude>
+    <ClInclude Include="GameLibInclude\glLog.h">
+      <Filter>GameLibInclude</Filter>
+    </ClInclude>
+    <ClInclude Include="GameLibInclude\glMutex.h">
+      <Filter>GameLibInclude</Filter>
+    </ClInclude>
+    <ClInclude Include="GameLibInclude\glMutexGuard.h">
+      <Filter>GameLibInclude</Filter>
+    </ClInclude>
+    <ClInclude Include="GameLibInclude\glEvent.h">
+      <Filter>GameLibInclude</Filter>
+    </ClInclude>
+    <ClInclude Include="GameLibInclude\glTimer.h">
+      <Filter>GameLibInclude</Filter>
+    </ClInclude>
+    <ClInclude Include="GameLibInclude\glTimerSystem.h">
+      <Filter>GameLibInclude</Filter>
+    </ClInclude>
+    <ClInclude Include="GameLibInclude\glThread.h">
+      <Filter>GameLibInclude</Filter>
+    </ClInclude>
+    <ClInclude Include="GameLibInclude\glSingleAppInstanceChecker.h">
+      <Filter>GameLibInclude</Filter>
+    </ClInclude>
+    <ClInclude Include="GameLibInclude\glPathHelper.h">
+      <Filter>GameLibInclude</Filter>
+    </ClInclude>
+    <ClInclude Include="GameLibInclude\glFileEnumHandler.h">
+      <Filter>GameLibInclude</Filter>
+    </ClInclude>
+    <ClInclude Include="GameLibInclude\glFileHelper.h">
+      <Filter>GameLibInclude</Filter>
+    </ClInclude>
+    <ClInclude Include="GameLibInclude\glAsyncTask.h">
+      <Filter>GameLibInclude</Filter>
+    </ClInclude>
+    <ClInclude Include="GameLibInclude\glAsyncTaskCompleteCallback.h">
+      <Filter>GameLibInclude</Filter>
+    </ClInclude>
+    <ClInclude Include="GameLibInclude\glAsyncTaskCompleteCallbackResourcePool.h">
+      <Filter>GameLibInclude</Filter>
+    </ClInclude>
+    <ClInclude Include="GameLibInclude\glAsyncTaskQueue.h">
+      <Filter>GameLibInclude</Filter>
+    </ClInclude>
+    <ClInclude Include="GameLibInclude\glSocket.h">
+      <Filter>GameLibInclude</Filter>
+    </ClInclude>
+    <ClInclude Include="GameLibInclude\glCmdLine.h">
+      <Filter>GameLibInclude</Filter>
+    </ClInclude>
+    <ClInclude Include="GameLibInclude\glUnitTest.h">
+      <Filter>GameLibInclude</Filter>
+    </ClInclude>
+    <ClInclude Include="GameLibInclude\glModuleResourceHelper.h">
+      <Filter>GameLibInclude</Filter>
+    </ClInclude>
+    <ClInclude Include="GameLibInclude\glDesktopHelper.h">
+      <Filter>GameLibInclude</Filter>
+    </ClInclude>
+    <ClInclude Include="GameLibInclude\glTimeHelper.h">
+      <Filter>GameLibInclude</Filter>
+    </ClInclude>
+    <ClInclude Include="GameLibInclude\glSystemHelper.h">
+      <Filter>GameLibInclude</Filter>
+    </ClInclude>
+    <ClInclude Include="GameLibInclude\glDriveHelper.h">
+      <Filter>GameLibInclude</Filter>
+    </ClInclude>
+    <ClInclude Include="GameLibInclude\glHashHelper.h">
+      <Filter>GameLibInclude</Filter>
+    </ClInclude>
+    <ClInclude Include="GameLibInclude\glPrivate.h">
+      <Filter>GameLibInclude</Filter>
+    </ClInclude>
+    <ClInclude Include="WinLibInclude\wlPrivate.h">
+      <Filter>WinLibInclude</Filter>
+    </ClInclude>
+    <ClInclude Include="WinLibInclude\wlEnum.h">
+      <Filter>WinLibInclude</Filter>
+    </ClInclude>
+    <ClInclude Include="WinLibInclude\wlProcess.h">
+      <Filter>WinLibInclude</Filter>
+    </ClInclude>
+    <ClInclude Include="WinLibInclude\wlProcessEnumCallback.h">
+      <Filter>WinLibInclude</Filter>
+    </ClInclude>
+    <ClInclude Include="WinLibInclude\wlModuleEnumCallback.h">
+      <Filter>WinLibInclude</Filter>
+    </ClInclude>
+    <ClInclude Include="WinLibInclude\wlProcessHelper.h">
+      <Filter>WinLibInclude</Filter>
+    </ClInclude>
+    <ClInclude Include="WinLibInclude\wlProcessEnumCallbackWarpper.h">
+      <Filter>WinLibInclude</Filter>
+    </ClInclude>
+    <ClInclude Include="WinLibInclude\wlModuleEnumCallbackWarpper.h">
+      <Filter>WinLibInclude</Filter>
+    </ClInclude>
+    <ClInclude Include="WinLibInclude\wlGDIBitmap.h">
+      <Filter>WinLibInclude</Filter>
+    </ClInclude>
+    <ClInclude Include="WinLibInclude\wlGDIDC.h">
+      <Filter>WinLibInclude</Filter>
+    </ClInclude>
+    <ClInclude Include="WinLibInclude\wlGDIPImage.h">
+      <Filter>WinLibInclude</Filter>
+    </ClInclude>
+    <ClInclude Include="WinLibInclude\wlGDIPWindow.h">
+      <Filter>WinLibInclude</Filter>
+    </ClInclude>
+    <ClInclude Include="WinLibInclude\wlGDIPStartup.h">
+      <Filter>WinLibInclude</Filter>
+    </ClInclude>
+    <ClInclude Include="GameLibInclude\glVertexBuffer.h">
+      <Filter>GameLibInclude</Filter>
+    </ClInclude>
+    <ClInclude Include="GameLibInclude\glBatchSprite.h">
+      <Filter>GameLibInclude</Filter>
+    </ClInclude>
+    <ClInclude Include="GameLibInclude\glBatchPrimitive.h">
+      <Filter>GameLibInclude</Filter>
+    </ClInclude>
+    <ClInclude Include="GameLibInclude\glWindow.h">
+      <Filter>GameLibInclude</Filter>
+    </ClInclude>
+    <ClInclude Include="GameLibInclude\glVideoDevice.h">
+      <Filter>GameLibInclude</Filter>
+    </ClInclude>
+    <ClInclude Include="GameLibInclude\glSoundDevice.h">
+      <Filter>GameLibInclude</Filter>
+    </ClInclude>
+    <ClInclude Include="GameLibInclude\glWaveReader.h">
+      <Filter>GameLibInclude</Filter>
+    </ClInclude>
+    <ClInclude Include="GameLibInclude\glPerformanceCounter.h">
+      <Filter>GameLibInclude</Filter>
+    </ClInclude>
+    <ClInclude Include="GameLibInclude\glNetDevice.h">
+      <Filter>GameLibInclude</Filter>
+    </ClInclude>
+    <ClInclude Include="GameLibInclude\glWaitableTimer.h">
+      <Filter>GameLibInclude</Filter>
+    </ClInclude>
+    <ClInclude Include="GameLibInclude\glGlobalData.h">
+      <Filter>GameLibInclude</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -182,6 +398,12 @@
       <Filter>GameLibSource</Filter>
     </ClCompile>
     <ClCompile Include="GameLibSource\glDriveHelper.cpp">
+      <Filter>GameLibSource</Filter>
+    </ClCompile>
+    <ClCompile Include="GameLibSource\glHashHelper.cpp">
+      <Filter>GameLibSource</Filter>
+    </ClCompile>
+    <ClCompile Include="GameLibSource\glMutexGuard.cpp">
       <Filter>GameLibSource</Filter>
     </ClCompile>
   </ItemGroup>

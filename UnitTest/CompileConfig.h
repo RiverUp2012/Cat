@@ -1,8 +1,7 @@
 
 #pragma once
 
-#include "../WorkSpace/GameLib.h"
-#include "../WorkSpace/WinLib.h"
+#include "../WorkSpace/WorkSpace.h"
 #include <Windows.h>
 
 #if defined WIN64 || defined _WIN64

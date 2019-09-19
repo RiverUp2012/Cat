@@ -1,9 +1,6 @@
 
 #pragma once
 
-#include <Windows.h>
-#include <gdiplus.h>
-
 //
 // @brief GDI+ 启动类
 // @desc 用于自动启动与关闭 GDI+ 库

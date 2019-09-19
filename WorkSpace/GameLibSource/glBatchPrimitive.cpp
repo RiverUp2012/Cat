@@ -1,6 +1,8 @@
 
-#include "../GameLib.h"
-#include "../Include/GameLibPrivate.h"
+#include "../GameLibInclude/glBatchPrimitive.h"
+#include "../GameLibInclude/glPrivate.h"
+#include "../GameLibInclude/glStruct.h"
+#include "../GameLibInclude/glGlobalData.h"
 
 #define GL_PRIMITIVE_VERTEX_SIZE (sizeof(glPrimitiveVertex))
 #define GL_PRIMITIVE_VERTEX_FVF (D3DFVF_XYZRHW | D3DFVF_DIFFUSE)

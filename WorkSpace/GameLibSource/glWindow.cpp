@@ -1,6 +1,8 @@
 
-#include "../GameLib.h"
-#include "../Include/GameLibPrivate.h"
+#include "../GameLibInclude/glWindow.h"
+#include "../GameLibInclude/glPrivate.h"
+#include "../GameLibInclude/glException.h"
+#include "../GameLibInclude/glGlobalData.h"
 
 #define GL_WINDOW_CLASS_NAME (L"glWndCls")
 #define GL_APP_INSTANCE (gGetModuleHandleW ? gGetModuleHandleW(0) : 0)
@@ -49,18 +51,20 @@ typedef BOOL(WINAPI * glUnregisterClassW)(
 	LPCWSTR lpClassName,
 	HINSTANCE hInstance);
 
-static glGetModuleHandleW gGetModuleHandleW = 0;
-static glPostQuitMessage gPostQuitMessage = 0;
-static glDefWindowProcW gDefWindowProcW = 0;
-static glGetSystemMetrics gGetSystemMetrics = 0;
-static glGetStockObject gGetStockObject = 0;
-static glLoadCursorW gLoadCursorW = 0;
-static glAdjustWindowRectEx gAdjustWindowRectEx = 0;
-static glRegisterClassExW gRegisterClassExW = 0;
-static glIsWindow gIsWindow = 0;
-static glDestroyWindow gDestroyWindow = 0;
-static glCreateWindowExW gCreateWindowExW = 0;
-static glUnregisterClassW gUnregisterClassW = 0;
+namespace {
+	static glGetModuleHandleW gGetModuleHandleW = 0;
+	static glPostQuitMessage gPostQuitMessage = 0;
+	static glDefWindowProcW gDefWindowProcW = 0;
+	static glGetSystemMetrics gGetSystemMetrics = 0;
+	static glGetStockObject gGetStockObject = 0;
+	static glLoadCursorW gLoadCursorW = 0;
+	static glAdjustWindowRectEx gAdjustWindowRectEx = 0;
+	static glRegisterClassExW gRegisterClassExW = 0;
+	static glIsWindow gIsWindow = 0;
+	static glDestroyWindow gDestroyWindow = 0;
+	static glCreateWindowExW gCreateWindowExW = 0;
+	static glUnregisterClassW gUnregisterClassW = 0;
+}
 
 static LRESULT CALLBACK glWndMsgProc(
 	HWND wndHandle,

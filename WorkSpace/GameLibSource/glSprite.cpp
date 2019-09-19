@@ -1,6 +1,9 @@
 
-#include "../GameLib.h"
-#include "../Include/GameLibPrivate.h"
+#include "../GameLibInclude/glSprite.h"
+#include "../GameLibInclude/glTexture.h"
+#include "../GameLibInclude/glPrivate.h"
+#include "../GameLibInclude/glStruct.h"
+#include "../GameLibInclude/glGlobalData.h"
 
 glSprite::glSprite() {
 	mD3DTex9 = 0;

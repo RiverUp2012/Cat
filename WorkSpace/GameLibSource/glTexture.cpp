@@ -1,6 +1,9 @@
 
-#include "../GameLib.h"
-#include "../Include/GameLibPrivate.h"
+#include "../GameLibInclude/glTexture.h"
+#include "../GameLibInclude/glPrivate.h"
+#include "../GameLibInclude/glGlobalData.h"
+#include "../GameLibInclude/glException.h"
+#include "../GameLibInclude/glModuleResourceHelper.h"
 
 typedef HRESULT (WINAPI * glD3DXCreateTextureFromFileExW)(
 	LPDIRECT3DDEVICE9         pDevice,
@@ -96,6 +99,17 @@ bool glTexture::createFromFileW(
 	return false;
 }
 
+bool glTexture::createFromResourceW(
+	const int resourceID,
+	const wchar_t * resourceType,
+	const unsigned int colorKey) {
+	glModuleResourceHelper::glResourceInfo resInfo;
+	if (glModuleResourceHelper::getResourceW(resourceID, resourceType, resInfo)) {
+		return createFromMemory(resInfo.mData, resInfo.mSize, colorKey);
+	}
+	return false;
+}
+
 bool glTexture::createFromMemory(
 	const void * buffer,
 	const unsigned int bufferSize,
@@ -103,6 +117,7 @@ bool glTexture::createFromMemory(
 	D3DXIMAGE_INFO imgInfo = { 0 };
 	D3DSURFACE_DESC surfDesc;
 	IDirect3DTexture9 * d3dTex9 = 0;
+	HRESULT comRet = S_OK;
 	destroy();
 	IDirect3DDevice9 * d3dDev9 = gVideoDevice.getIDirect3DDevice9();
 	if (!gD3DXCreateTextureFromFileInMemoryEx) {
@@ -110,7 +125,7 @@ bool glTexture::createFromMemory(
 			gModuleD3DX9.getProcAddressA("D3DXCreateTextureFromFileInMemoryEx");
 	}
 	if (d3dDev9 && buffer && bufferSize > 0 && gD3DXCreateTextureFromFileInMemoryEx) {
-		if (SUCCEEDED(gD3DXCreateTextureFromFileInMemoryEx(
+		comRet = gD3DXCreateTextureFromFileInMemoryEx(
 			d3dDev9,
 			buffer,
 			bufferSize,
@@ -125,13 +140,21 @@ bool glTexture::createFromMemory(
 			colorKey,
 			&imgInfo,
 			0,
-			&d3dTex9))) {
+			&d3dTex9);
+		if (SUCCEEDED(comRet)) {
 			mImageSize = glSize<float>((float)imgInfo.Width, (float)imgInfo.Height);
-			if (SUCCEEDED(d3dTex9->GetLevelDesc(0, &surfDesc))) {
+			comRet = d3dTex9->GetLevelDesc(0, &surfDesc);
+			if (SUCCEEDED(comRet)) {
 				mSurfaceSize = glSize<float>((float)surfDesc.Width, (float)surfDesc.Height);
 				mD3DTex9 = (void *)d3dTex9;
 				return true;
 			}
+			else {
+				throw glCOMAPIException(L"IDirect3DTexture9::GetLevelDesc", comRet);
+			}
+		}
+		else {
+			throw glCOMAPIException(L"D3DXCreateTextureFromFileInMemoryEx", comRet);
 		}
 	}
 	return false;

@@ -1,6 +1,11 @@
 
-#include "../GameLib.h"
-#include "../Include/GameLibPrivate.h"
+#include "../GameLibInclude/glTimerSystem.h"
+#include "../GameLibInclude/glThread.h"
+#include "../GameLibInclude/glMutex.h"
+#include "../GameLibInclude/glMutexGuard.h"
+#include "../GameLibInclude/glList.h"
+#include "../GameLibInclude/glTimer.h"
+#include "../GameLibInclude/glWaitableTimer.h"
 
 namespace {
 	class glTimerThread : public glThread {

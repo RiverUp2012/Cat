@@ -1,6 +1,10 @@
 
-#include "../GameLib.h"
-#include "../Include/GameLibPrivate.h"
+#include "../GameLibInclude/glAsyncTaskQueue.h"
+#include "../GameLibInclude/glAsyncTask.h"
+#include "../GameLibInclude/glThread.h"
+#include "../GameLibInclude/glList.h"
+#include "../GameLibInclude/glMutex.h"
+#include "../GameLibInclude/glMutexGuard.h"
 
 namespace {
 	class glAsyncTaskThread : public glThread {
@@ -46,7 +50,7 @@ namespace {
 					task = 0;
 				}
 				else {
-					sleep(1);
+					sleepCurrentThread(1);
 				}
 			}
 		}

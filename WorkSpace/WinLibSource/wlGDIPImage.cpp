@@ -1,6 +1,9 @@
 
-#include "../WinLib.h"
-#include "../Include/WinLibPrivate.h"
+#include "../WinLibInclude/wlGDIPImage.h"
+#include "../WinLibInclude/wlGDIPStartup.h"
+#include "../WinLibInclude/wlPrivate.h"
+#include "../GameLibInclude/glModuleResourceHelper.h"
+#include "../GameLibInclude/glException.h"
 
 wlGDIPImage::wlGDIPImage() {
 	mImage = 0;

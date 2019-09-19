@@ -1,6 +1,10 @@
 
-#include "../GameLib.h"
-#include "../Include/GameLibPrivate.h"
+#include "../GameLibInclude/glEngine.h"
+#include "../GameLibInclude/glGlobalData.h"
+#include "../GameLibInclude/glGameState.h"
+#include "../GameLibInclude/glPrivate.h"
+#include "../GameLibInclude/glDefine.h"
+#include "../GameLibInclude/glPerformanceCounter.h"
 
 typedef BOOL(WINAPI * glGetKeyboardState)(
 	PBYTE lpKeyState);
@@ -15,11 +19,13 @@ typedef BOOL(WINAPI * glTranslateMessage)(
 typedef LRESULT(WINAPI * glDispatchMessageW)(
 	CONST MSG *lpMsg);
 
-static glEngine * gEngine = 0;
-static glGetKeyboardState gGetKeyboardState = 0;
-static glPeekMessageW gPeekMessageW = 0;
-static glTranslateMessage gTranslateMessage = 0;
-static glDispatchMessageW gDispatchMessageW = 0;
+namespace {
+	static glEngine * gEngine = 0;
+	static glGetKeyboardState gGetKeyboardState = 0;
+	static glPeekMessageW gPeekMessageW = 0;
+	static glTranslateMessage gTranslateMessage = 0;
+	static glDispatchMessageW gDispatchMessageW = 0;
+}
 
 glEngine * glEngine::get(void) {
 	return gEngine;
@@ -209,7 +215,7 @@ bool glEngine::paintRectangle(
 }
 
 bool glEngine::isKeyDown(const int keyCode) const {
-	assert(keyCode >= 0 && keyCode <= _countof(mKeysStateArray));
+	assert(keyCode >= 0 && keyCode <= GL_DIM(mKeysStateArray));
 	return mKeysStateArray[keyCode] & 0x80 ? true : false;
 }
 

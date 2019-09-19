@@ -52,8 +52,7 @@
 // WorkSpace œ‡πÿ≈‰÷√
 //-------------------------------------------------------------------------------
 
-#include "../WorkSpace/WinLib.h"
-#include "../WorkSpace/GameLib.h"
+#include "../WorkSpace/WorkSpace.h"
 
 #if defined WIN64 || defined _WIN64
 #	if defined DEBUG || defined _DEBUG

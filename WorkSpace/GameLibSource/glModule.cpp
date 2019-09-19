@@ -1,6 +1,9 @@
 
-#include "../GameLib.h"
-#include "../Include/GameLibPrivate.h"
+#include "../GameLibInclude/glModule.h"
+#include "../GameLibInclude/glPrivate.h"
+#include "../GameLibInclude/glException.h"
+#include "../GameLibInclude/glString.h"
+#include "../GameLibInclude/glStringHelper.h"
 
 glModule::glModule() {
 	mModuleHandle = 0;

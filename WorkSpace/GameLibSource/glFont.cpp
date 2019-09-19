@@ -1,6 +1,7 @@
 
-#include "../GameLib.h"
-#include "../Include/GameLibPrivate.h"
+#include "../GameLibInclude/glFont.h"
+#include "../GameLibInclude/glPrivate.h"
+#include "../GameLibInclude/glGlobalData.h"
 
 typedef HRESULT (WINAPI * glD3DXCreateFontW)(
 	LPDIRECT3DDEVICE9       pDevice,
@@ -15,6 +16,10 @@ typedef HRESULT (WINAPI * glD3DXCreateFontW)(
 	DWORD                   PitchAndFamily,
 	LPCWSTR                 pFaceName,
 	LPD3DXFONT*             ppFont);
+
+namespace {
+	static glD3DXCreateFontW gD3DXCreateFontW = 0;
+}
 
 glFont::glFont() {
 	mD3DXFont = 0;
@@ -31,10 +36,12 @@ bool glFont::createW(
 	ID3DXFont * d3dxFont = 0;
 	destroy();
 	IDirect3DDevice9 * d3dDev9 = gVideoDevice.getIDirect3DDevice9();
-	glD3DXCreateFontW d3dXCreateFontW = (glD3DXCreateFontW)
-		gModuleD3DX9.getProcAddressA("D3DXCreateFontW");
-	if (d3dDev9 && d3dXCreateFontW && fontName) {
-		if (SUCCEEDED(d3dXCreateFontW(
+	if (!gD3DXCreateFontW) {
+		gD3DXCreateFontW = (glD3DXCreateFontW)
+			gModuleD3DX9.getProcAddressA("D3DXCreateFontW");
+	}
+	if (d3dDev9 && gD3DXCreateFontW && fontName) {
+		if (SUCCEEDED(gD3DXCreateFontW(
 			d3dDev9,
 			fontHeight,
 			fontWidth,
@@ -72,11 +79,8 @@ bool glFont::paintTextW(
 	const unsigned int color) {
 	RECT textRect = { 0 };
 	ID3DXFont * d3dxFont = (ID3DXFont *)mD3DXFont;
-	glEngine * engine = glEngine::get();
-	if (engine) {
-		gBatchSprite.flush();
-		gBatchPrimitive.flush();
-	}
+	gBatchSprite.flush();
+	gBatchPrimitive.flush();
 	if (d3dxFont && text) {
 		textRect.left = paintRect.mX;
 		textRect.top = paintRect.mY;

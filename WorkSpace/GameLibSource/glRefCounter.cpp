@@ -1,35 +1,27 @@
 
-#include "../GameLib.h"
+#include "../GameLibInclude/glRefCounter.h"
 
-glRefCounter::glRefCounter()
-{
+glRefCounter::glRefCounter() {
 	mRefCount = 1;
 }
 
-glRefCounter::~glRefCounter()
-{
+glRefCounter::~glRefCounter() {
 
 }
 
-void glRefCounter::addRef(void)
-{
+void glRefCounter::addRef(void) {
 	++mRefCount;
 }
 
-bool glRefCounter::release(void)
-{
+bool glRefCounter::release(void) {
 	--mRefCount;
-
-	if (mRefCount <= 0)
-	{
+	if (mRefCount <= 0) {
 		delete this;
 		return true;
 	}
-
 	return false;
 }
 
-int glRefCounter::getRefCount(void) const
-{
+int glRefCounter::getRefCount(void) const {
 	return mRefCount;
 }

@@ -18,7 +18,7 @@ GL_TEST_CASE(TestWriteFile) {
 GL_TEST_CASE(TestReadFile) {
 	try {
 		glFile file;
-		char buffer[32] = { 0 };
+		char buffer[4] = { 0 };
 		if (file.openW(L"D:\\unexist-file.ext", true, false)) {
 			file.read(buffer, 3);
 		}
@@ -33,7 +33,7 @@ GL_TEST_CASE(TestReadFile) {
 GL_TEST_CASE(TestReadWriteFile) {
 	try {
 		glFile file;
-		char buffer[32] = { 0 };
+		char buffer[4] = { 0 };
 		if (file.openW(L"D:\\unexist-file.ext", true, true)) {
 			file.write("aaa", 3);
 			file.seekToBegin();

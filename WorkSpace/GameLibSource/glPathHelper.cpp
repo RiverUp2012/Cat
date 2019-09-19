@@ -1,6 +1,8 @@
 
-#include "../GameLib.h"
-#include "../Include/GameLibPrivate.h"
+#include "../GameLibInclude/glPathHelper.h"
+#include "../GameLibInclude/glString.h"
+#include "../GameLibInclude/glPrivate.h"
+#include "../GameLibInclude/glException.h"
 
 bool glPathHelper::getFileNameWithExtW(const wchar_t * path, glStringW & fileNameWithExt) {
 	int pathLength = path ? glStringW::getLength(path) : 0;

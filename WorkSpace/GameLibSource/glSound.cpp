@@ -1,6 +1,8 @@
 
-#include "../GameLib.h"
-#include "../Include/GameLibPrivate.h"
+#include "../GameLibInclude/glSound.h"
+#include "../GameLibInclude/glWaveReader.h"
+#include "../GameLibInclude/glPrivate.h"
+#include "../GameLibInclude/glGlobalData.h"
 
 glSound::glSound() {
 	mDSBuf8 = 0;
@@ -125,7 +127,6 @@ bool glSound::stop(void) {
 }
 
 bool glSound::setVolume(const float volume) {
-	glEngine * engine = glEngine::get();
 	LONG ds8Volume = gSoundDevice.engineVolumeToDS8Volume(volume);
 	IDirectSoundBuffer8 * dsBuf8 = (IDirectSoundBuffer8 *)mDSBuf8;
 	if (dsBuf8) {
@@ -137,7 +138,6 @@ bool glSound::setVolume(const float volume) {
 }
 
 bool glSound::getVolume(float & volume) {
-	glEngine * engine = glEngine::get();
 	LONG ds8Volume = 0;
 	IDirectSoundBuffer8 * dsBuf8 = (IDirectSoundBuffer8 *)mDSBuf8;
 	if (dsBuf8) {

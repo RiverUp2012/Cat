@@ -1,6 +1,6 @@
 
-#include "../GameLib.h"
-#include "../Include/GameLibPrivate.h"
+#include "../GameLibInclude/glTimer.h"
+#include "../GameLibInclude/glTimerSystem.h"
 
 glTimer::glTimer() {
 

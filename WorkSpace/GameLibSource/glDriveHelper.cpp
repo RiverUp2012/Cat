@@ -1,6 +1,6 @@
 
-#include "../GameLib.h"
-#include "../Include/GameLibPrivate.h"
+#include "../GameLibInclude/glDriveHelper.h"
+#include "../GameLibInclude/glPrivate.h"
 
 void glDriveHelper::getDriveNameListW(glArray<glStringW> & driveNameArray) {
 	const DWORD drives = GetLogicalDrives();

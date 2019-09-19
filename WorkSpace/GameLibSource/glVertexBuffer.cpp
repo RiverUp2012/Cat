@@ -1,6 +1,7 @@
 
-#include "../GameLib.h"
-#include "../Include/GameLibPrivate.h"
+#include "../GameLibInclude/glVertexBuffer.h"
+#include "../GameLibInclude/glPrivate.h"
+#include "../GameLibInclude/glGlobalData.h"
 
 glVertexBuffer::glVertexBuffer() {
 	mD3DVB9 = 0;

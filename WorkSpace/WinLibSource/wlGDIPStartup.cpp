@@ -1,5 +1,6 @@
 
-#include "../Include/WinLibPrivate.h"
+#include "../WinLibInclude/wlGDIPStartup.h"
+#include "../WinLibInclude/wlPrivate.h"
 
 namespace {
 	ULONG_PTR gToken = 0;

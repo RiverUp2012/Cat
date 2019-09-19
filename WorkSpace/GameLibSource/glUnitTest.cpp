@@ -1,6 +1,7 @@
 
-#include "../GameLib.h"
-#include "../Include/GameLibPrivate.h"
+#include "../GameLibInclude/glUnitTest.h"
+#include "../GameLibInclude/glPrivate.h"
+#include "../GameLibInclude/glString.h"
 
 namespace {
 	struct glUnitTestInfo {

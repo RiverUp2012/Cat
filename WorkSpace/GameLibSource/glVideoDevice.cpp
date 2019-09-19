@@ -1,6 +1,8 @@
 
-#include "../GameLib.h"
-#include "../Include/GameLibPrivate.h"
+#include "../GameLibInclude/glVideoDevice.h"
+#include "../GameLibInclude/glWindow.h"
+#include "../GameLibInclude/glPrivate.h"
+#include "../GameLibInclude/glGlobalData.h"
 
 typedef IDirect3D9 * (WINAPI * glDirect3DCreate9)(
 	UINT SDKVersion);

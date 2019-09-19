@@ -1,6 +1,12 @@
 
-#include "../GameLib.h"
-#include "../Include/GameLibPrivate.h"
+#include "../GameLibInclude/glLog.h"
+#include "../GameLibInclude/glMutex.h"
+#include "../GameLibInclude/glMutexGuard.h"
+#include "../GameLibInclude/glFile.h"
+#include "../GameLibInclude/glString.h"
+#include "../GameLibInclude/glStringHelper.h"
+#include "../GameLibInclude/glDefine.h"
+#include "../GameLibInclude/glPrivate.h"
 
 namespace {
 	static glMutex gMutex;

@@ -1,6 +1,7 @@
 
-#include "../GameLib.h"
-#include "../Include/GameLibPrivate.h"
+#include "../GameLibInclude/glWaveReader.h"
+#include "../GameLibInclude/glPrivate.h"
+#include "../GameLibInclude/glTemplate.h"
 
 struct glWaveChunkHeader {
 	unsigned char mSig[4];

@@ -1,6 +1,7 @@
 
-#include "../GameLib.h"
-#include "../Include/GameLibPrivate.h"
+#include "../GameLibInclude/glWaitableTimer.h"
+#include "../GameLibInclude/glPrivate.h"
+#include "../GameLibInclude/glException.h"
 
 glWaitableTimer::glWaitableTimer() {
 	mTimerHandle = 0;

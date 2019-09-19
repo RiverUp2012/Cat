@@ -1,6 +1,7 @@
 
-#include "../GameLib.h"
-#include "../Include/GameLibPrivate.h"
+#include "../GameLibInclude/glTimeHelper.h"
+#include "../GameLibInclude/glPrivate.h"
+#include "../GameLibInclude/glStruct.h"
 
 bool glTimeHelper::getTimeElapseFromSystemStartup(unsigned int & timeElapse) {
 	timeElapse = GetTickCount();

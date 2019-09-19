@@ -1,6 +1,9 @@
 
-#include "../WinLib.h"
-#include "../Include/WinLibPrivate.h"
+#include "../WinLibInclude/wlGDIPWindow.h"
+#include "../WinLibInclude/wlGDIPStartup.h"
+#include "../WinLibInclude/wlGDIPImage.h"
+#include "../WinLibInclude/wlPrivate.h"
+#include "../GameLibInclude/glException.h"
 
 wlGDIPWindow::wlGDIPWindow() {
 	mGraphics = 0;

@@ -1,6 +1,8 @@
 
-#include "../WinLib.h"
-#include "../Include/GameLibPrivate.h"
+#include "../WinLibInclude/wlProcessHelper.h"
+#include "../WinLibInclude/wlProcessEnumCallback.h"
+#include "../WinLibInclude/wlModuleEnumCallback.h"
+#include "../WinLibInclude/wlPrivate.h"
 
 void wlProcessHelper::enumProcess(wlProcessEnumCallback * callback) {
 	HANDLE snapshotHandle = 0;

@@ -1,6 +1,9 @@
 
-#include "../GameLib.h"
-#include "../Include/GameLibPrivate.h"
+#include "../GameLibInclude/glCmdLine.h"
+#include "../GameLibInclude/glException.h"
+#include "../GameLibInclude/glPrivate.h"
+#include "../GameLibInclude/glArray.h"
+#include "../GameLibInclude/glString.h"
 
 namespace {
 	static bool gInitFlag = false;

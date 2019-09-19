@@ -1,6 +1,7 @@
 
-#include "../GameLib.h"
-#include "../Include/GameLibPrivate.h"
+#include "../GameLibInclude/glEvent.h"
+#include "../GameLibInclude/glException.h"
+#include "../GameLibInclude/glPrivate.h"
 
 glEvent::glEvent() {
 	mEventHandle = 0;

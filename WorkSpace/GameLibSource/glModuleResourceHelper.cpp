@@ -1,6 +1,7 @@
 
-#include "../GameLib.h"
-#include "../Include/GameLibPrivate.h"
+#include "../GameLibInclude/glModuleResourceHelper.h"
+#include "../GameLibInclude/glPrivate.h"
+#include "../GameLibInclude/glException.h"
 
 bool glModuleResourceHelper::getResourceW(
 	const int resourceID,

@@ -1,5 +1,5 @@
 
-#include "../GameLib.h"
+#include "../GameLibInclude/glSingleAppInstanceChecker.h"
 
 glSingleAppInstanceChecker::glSingleAppInstanceChecker() {
 

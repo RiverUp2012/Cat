@@ -1,5 +1,5 @@
 
-#include "../Include/GameLibPrivate.h"
+#include "../GameLibInclude/glGlobalData.h"
 
 glWindow gWindow;
 glVideoDevice gVideoDevice;

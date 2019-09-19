@@ -1,6 +1,8 @@
 
-#include "../GameLib.h"
-#include "../Include/GameLibPrivate.h"
+#include "../GameLibInclude/glSocket.h"
+#include "../GameLibInclude/glNetDevice.h"
+#include "../GameLibInclude/glPrivate.h"
+#include "../GameLibInclude/glException.h"
 
 glSocket::glSocket() {
 	mSocket = 0;

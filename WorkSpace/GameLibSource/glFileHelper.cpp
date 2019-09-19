@@ -1,6 +1,9 @@
 
-#include "../GameLib.h"
-#include "../Include/GameLibPrivate.h"
+#include "../GameLibInclude/glFileHelper.h"
+#include "../GameLibInclude/glPrivate.h"
+#include "../GameLibInclude/glException.h"
+#include "../GameLibInclude/glPathHelper.h"
+#include "../GameLibInclude/glFileEnumHandler.h"
 
 bool glFileHelper::deleteFileW(const wchar_t * fileName) {
 	DWORD fileAttributes = 0;

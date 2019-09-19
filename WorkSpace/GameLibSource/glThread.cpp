@@ -1,6 +1,7 @@
 
-#include "../GameLib.h"
-#include "../Include/GameLibPrivate.h"
+#include "../GameLibInclude/glThread.h"
+#include "../GameLibInclude/glPrivate.h"
+#include "../GameLibInclude/glException.h"
 
 static DWORD WINAPI globalThreadProc(LPVOID param) {
 	glThread * thread = static_cast<glThread *>(param);
@@ -8,6 +9,14 @@ static DWORD WINAPI globalThreadProc(LPVOID param) {
 		thread->onThreadRun();
 	}
 	return 0;
+}
+
+void glThread::sleepCurrentThread(const int sleepTimeOut) {
+	Sleep(sleepTimeOut);
+}
+
+unsigned long glThread::getCurrentThreadID(void) {
+	return (unsigned long)GetCurrentThreadId();
 }
 
 glThread::glThread() {
@@ -79,8 +88,4 @@ bool glThread::isAlready(void) const {
 		}
 	}
 	return false;
-}
-
-void glThread::sleep(const int sleepTimeOut) {
-	Sleep(sleepTimeOut);
 }

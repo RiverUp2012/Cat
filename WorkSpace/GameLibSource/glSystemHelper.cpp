@@ -1,6 +1,9 @@
 
-#include "../GameLib.h"
-#include "../Include/GameLibPrivate.h"
+#include "../GameLibInclude/glSystemHelper.h"
+#include "../GameLibInclude/glException.h"
+#include "../GameLibInclude/glPrivate.h"
+#include "../GameLibInclude/glStruct.h"
+#include "../GameLibInclude/glDefine.h"
 
 bool glSystemHelper::getCurrentUserNameW(glStringW & userName) {
 	wchar_t userNameTemp[520] = { 0 };

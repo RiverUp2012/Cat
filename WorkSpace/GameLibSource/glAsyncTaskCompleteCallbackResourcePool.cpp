@@ -1,5 +1,8 @@
 
-#include "../GameLib.h"
+#include "../GameLibInclude/glAsyncTaskCompleteCallbackResourcePool.h"
+#include "../GameLibInclude/glMutex.h"
+#include "../GameLibInclude/glMutexGuard.h"
+#include "../GameLibInclude/glResourcePool.h"
 
 namespace {
 	static glResourcePool<glAsyncTaskCompleteCallback *> gResourcePool;

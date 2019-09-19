@@ -1,6 +1,9 @@
 
-#include "../GameLib.h"
-#include "../Include/GameLibPrivate.h"
+#include "../GameLibInclude/glBatchSprite.h"
+#include "../GameLibInclude/glPrivate.h"
+#include "../GameLibInclude/glStruct.h"
+#include "../GameLibInclude/glVideoDevice.h"
+#include "../GameLibInclude/glGlobalData.h"
 
 #define GL_SPRITE_VERTEX_SIZE (sizeof(glSpriteVertex))
 #define GL_SPRITE_VERTEX_FVF (D3DFVF_XYZRHW | D3DFVF_DIFFUSE | D3DFVF_TEX1)

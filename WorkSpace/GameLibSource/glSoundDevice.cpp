@@ -1,6 +1,9 @@
 
-#include "../GameLib.h"
-#include "../Include/GameLibPrivate.h"
+#include "../GameLibInclude/glSoundDevice.h"
+#include "../GameLibInclude/glPrivate.h"
+#include "../GameLibInclude/glGlobalData.h"
+#include "../GameLibInclude/glException.h"
+#include "../GameLibInclude/glWindow.h"
 
 typedef HRESULT (WINAPI * glDirectSoundCreate8)(
 	LPCGUID pcGuidDevice, 

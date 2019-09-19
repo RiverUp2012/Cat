@@ -1,6 +1,7 @@
 
-#include "../GameLib.h"
-#include "../Include/GameLibPrivate.h"
+#include "../GameLibInclude/glPerformanceCounter.h"
+#include "../GameLibInclude/glException.h"
+#include "../GameLibInclude/glPrivate.h"
 
 glPerformanceCounter::glPerformanceCounter() {
 	LARGE_INTEGER frequency = { 0 };

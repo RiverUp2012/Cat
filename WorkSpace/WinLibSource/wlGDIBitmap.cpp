@@ -1,6 +1,7 @@
 
-#include "../WinLib.h"
-#include "../Include/WinLibPrivate.h"
+#include "../WinLibInclude/wlGDIBitmap.h"
+#include "../WinLibInclude/wlPrivate.h"
+#include "../GameLibInclude/glException.h"
 
 wlGDIBitmap::wlGDIBitmap() {
 	mBitmapHandle = 0;

@@ -1,6 +1,6 @@
 
-#include "../WinLib.h"
-#include "../Include/WinLibPrivate.h"
+#include "../WinLibInclude/wlModuleEnumCallbackWarpper.h"
+#include "../WinLibInclude/wlProcessHelper.h"
 
 wlModuleEnumCallbackWarpper::wlModuleEnumCallbackWarpper() {
 

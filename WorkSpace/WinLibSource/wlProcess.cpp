@@ -1,7 +1,10 @@
 
-#include "../WinLib.h"
-#include "../Include/WinLibPrivate.h"
-#include "../Include/GameLibPrivate.h"
+#include "../WinLibInclude/wlProcess.h"
+#include "../WinLibInclude/wlPrivate.h"
+#include "../WinLibInclude/wlEnum.h"
+#include "../GameLibInclude/glException.h"
+#include "../GameLibInclude/glGlobalData.h"
+#include "../GameLibInclude/glDefine.h"
 
 typedef BOOL(WINAPI * wlQueryFullProcessImageNameW)(
 	HANDLE hProcess,
@@ -14,8 +17,10 @@ typedef DWORD(WINAPI * wlGetModuleFileNameExW)(
 	LPWSTR lpFilename,
 	DWORD nSize);
 
-static wlQueryFullProcessImageNameW gQueryFullProcessImageNameW = 0;
-static wlGetModuleFileNameExW gGetModuleFileNameExW = 0;
+namespace {
+	static wlQueryFullProcessImageNameW gQueryFullProcessImageNameW = 0;
+	static wlGetModuleFileNameExW gGetModuleFileNameExW = 0;
+}
 
 wlProcess::wlProcess() {
 	mProcessHandle = 0;

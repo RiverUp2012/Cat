@@ -1,22 +1,18 @@
 
-#include "../GameLib.h"
+#include "../GameLibInclude/glNonCopyable.h"
 
-glNonCopyable::glNonCopyable()
-{
-
-}
-
-glNonCopyable::~glNonCopyable()
-{
+glNonCopyable::glNonCopyable() {
 
 }
 
-glNonCopyable::glNonCopyable(const glNonCopyable & other)
-{
+glNonCopyable::~glNonCopyable() {
 
 }
 
-glNonCopyable & glNonCopyable::operator=(const glNonCopyable & other)
-{
+glNonCopyable::glNonCopyable(const glNonCopyable & other) {
+
+}
+
+glNonCopyable & glNonCopyable::operator=(const glNonCopyable & other) {
 	return *this;
 }
