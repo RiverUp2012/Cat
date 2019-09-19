@@ -8,5 +8,8 @@
 //
 class glDesktopHelper {
 public:
+	//
+	// @brief »ñÈ¡×ÀÃæ³ß´ç
+	//
 	static bool getDesktopSize(glSize<int> & size);
 };

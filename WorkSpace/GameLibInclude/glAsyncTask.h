@@ -97,5 +97,8 @@
 //
 class glAsyncTask : public glRefCounter {
 public:
+	//
+	// @brief 处理异步任务逻辑
+	//
 	virtual void onAsyncTaskRun(void) = 0;
 };

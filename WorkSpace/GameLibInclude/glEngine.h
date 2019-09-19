@@ -13,11 +13,17 @@ class glGameState;
 //
 class glEngine : public glNonCopyable {
 public:
+	//
+	// @brief 获取引擎实例指针
+	//
 	static glEngine * get(void);
 public:
 	glEngine();
 	virtual ~glEngine();
 public:
+	//
+	// @brief 运行引擎
+	//
 	void go(
 		const wchar_t * windowTitle,
 		const int screenWidth,

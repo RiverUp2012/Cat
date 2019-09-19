@@ -6,5 +6,8 @@
 //
 class glAsyncTaskCompleteCallback {
 public:
+	//
+	// @brief 处理异步任务完成逻辑
+	//
 	virtual void onAsyncTaskComplete(void) = 0;
 };

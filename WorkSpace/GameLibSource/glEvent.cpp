@@ -47,3 +47,27 @@ void glEvent::destroy(void) {
 		mEventHandle = 0;
 	}
 }
+
+bool glEvent::setEvent(void) {
+	if (mEventHandle) {
+		if (SetEvent((HANDLE)mEventHandle)) {
+			return true;
+		}
+		else {
+			throw glWin32APIException(L"SetEvent", GetLastError());
+		}
+	}
+	return false;
+}
+
+bool glEvent::resetEvent(void) {
+	if (mEventHandle) {
+		if (ResetEvent((HANDLE)mEventHandle)) {
+			return true;
+		}
+		else {
+			throw glWin32APIException(L"ResetEvent", GetLastError());
+		}
+	}
+	return false;
+}
