@@ -1,6 +1,7 @@
+
 # 关于 Cat
 
-Cat 是我（@NekoMasutaDev）与我的兄弟（@RiverUp2012）一同协作编写的软件，这款软件的初衷在于：将自己想到的有趣的点子，都写进去。  
+Cat 是我（@NekoMasutaDev）与我的兄弟（@RiverUp2012）共同协作编写的软件，这款软件的初衷在于：将自己想到的有趣的点子，都写进去。  
 
 目前已经完成的模块有：  
 
@@ -30,4 +31,11 @@ IDE：Microsoft Visual Studio 2013
 
 NekoMasutaDev  
 NekoMasutaDev@gmail.com  
-NekoMasutadev@outlook.com  
+NekoMasutaDev@outlook.com  
+
+# 结尾  
+
+我 NekoMasutaDev 没有开挂（认真脸）。  
+
+![好恐怖哦](Doc/Image/1.png)  
+![好恐怖哦](Doc/Image/2.png)  
