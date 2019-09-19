@@ -132,6 +132,28 @@ int glStringHelper::toIntA(const char * string) {
 	return 0;
 }
 
+bool glStringHelper::containNewLineW(const wchar_t * string) {
+	const int stringLength = string ? glStringW::getLength(string) : 0;
+	if (string && stringLength > 1) {
+		if (L'\r' == string[stringLength - 2] &&
+			L'\n' == string[stringLength - 1]) {
+			return true;
+		}
+	}
+	return false;
+}
+
+bool glStringHelper::containNewLineA(const char * string) {
+	const int stringLength = string ? glStringA::getLength(string) : 0;
+	if (string && stringLength > 1) {
+		if ('\r' == string[stringLength - 2] &&
+			'\n' == string[stringLength - 1]) {
+			return true;
+		}
+	}
+	return false;
+}
+
 bool glStringHelper::formatW(const wchar_t * format, const va_list & vl, glStringW & string) {
 	int stringLength = 0;
 	if (format && vl) {

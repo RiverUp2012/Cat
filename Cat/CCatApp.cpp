@@ -24,6 +24,7 @@ BOOL CCatApp::InitInstance() {
 	glPathHelper::getAppPathW(appPath);
 	glLog::createW(appPath + L"Cat.log");
 	glLog::setOutputDebugView(true);
+	glLog::setAutoAppendNewLine(true);
 
 	// Æô¶¯ App
 

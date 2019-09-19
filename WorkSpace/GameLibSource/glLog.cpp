@@ -12,6 +12,7 @@ namespace {
 	static glMutex gMutex;
 	static glFile gFile;
 	static bool gOutputDebugView = false;
+	static bool gAutoAppendNewLine = false;
 }
 
 bool glLog::createW(const wchar_t * logFileName) {
@@ -28,28 +29,52 @@ void glLog::destroy(void) {
 	glMutexGuard mutexGuard(&gMutex);
 	gFile.close();
 	gOutputDebugView = false;
+	gAutoAppendNewLine = false;
 }
 
 void glLog::setOutputDebugView(const bool outputDebugView) {
-	glMutexGuard mutexGuard(&gMutex);
 	gOutputDebugView = outputDebugView;
+}
+
+bool glLog::getOutputDebugView(void) {
+	return gOutputDebugView;
+}
+
+void glLog::setAutoAppendNewLine(const bool autoAppendNewLine) {
+	gAutoAppendNewLine = autoAppendNewLine;
+}
+
+bool glLog::getAutoAppendNewLine(void) {
+	return gAutoAppendNewLine;
 }
 
 bool glLog::putMessageW(const wchar_t * format, ...) {
 	bool ret = false;
 	glStringW messageW;
 	glStringA messageA;
+	bool containNewLine = false;
 	glMutexGuard mutexGuard(&gMutex);
-	GL_FORMAT_W(format, messageW, ret);
-	if (ret) {
-		if (glStringHelper::w2a(messageW, messageA)) {
-			if (gOutputDebugView) {
-				OutputDebugStringW(messageW);
-			}
-			if (gFile.write(
-				messageA,
-				messageA.getLength() * messageA.getCharSize())) {
-				return true;
+	if (format) {
+		GL_FORMAT_W(format, messageW, ret);
+		if (ret) {
+			if (glStringHelper::w2a(messageW, messageA)) {
+				containNewLine = glStringHelper::containNewLineA(messageA);
+				if (gOutputDebugView) {
+					OutputDebugStringW(messageW);
+					if (gAutoAppendNewLine && !containNewLine) {
+						OutputDebugStringW(L"\r\n");
+					}
+				}
+				if (gFile.write(
+					messageA,
+					messageA.getLength() * messageA.getCharSize())) {
+					if (gAutoAppendNewLine && !containNewLine) {
+						if (!gFile.write("\r\n", 2)) {
+							return false;
+						}
+					}
+					return true;
+				}
 			}
 		}
 	}
@@ -59,16 +84,28 @@ bool glLog::putMessageW(const wchar_t * format, ...) {
 bool glLog::putMessageA(const char * format, ...) {
 	bool ret = false;
 	glStringA messageA;
+	bool containNewLine = false;
 	glMutexGuard mutexGuard(&gMutex);
-	GL_FORMAT_A(format, messageA, ret);
-	if (ret) {
-		if (gOutputDebugView) {
-			OutputDebugStringA(messageA);
-		}
-		if (gFile.write(
-			messageA,
-			messageA.getLength() * messageA.getCharSize())) {
-			return true;
+	if (format) {
+		GL_FORMAT_A(format, messageA, ret);
+		if (ret) {
+			containNewLine = glStringHelper::containNewLineA(messageA);
+			if (gOutputDebugView) {
+				OutputDebugStringA(messageA);
+				if (gAutoAppendNewLine && !containNewLine) {
+					OutputDebugStringW(L"\r\n");
+				}
+			}
+			if (gFile.write(
+				messageA,
+				messageA.getLength() * messageA.getCharSize())) {
+				if (gAutoAppendNewLine && !containNewLine) {
+					if (!gFile.write("\r\n", 2)) {
+						return false;
+					}
+				}
+				return true;
+			}
 		}
 	}
 	return false;
