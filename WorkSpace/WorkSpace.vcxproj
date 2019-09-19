@@ -43,6 +43,7 @@
     <ClInclude Include="GameLibInclude\glMutexGuard.h" />
     <ClInclude Include="GameLibInclude\glNetDevice.h" />
     <ClInclude Include="GameLibInclude\glNonCopyable.h" />
+    <ClInclude Include="GameLibInclude\glPage.h" />
     <ClInclude Include="GameLibInclude\glPaintObject.h" />
     <ClInclude Include="GameLibInclude\glPathHelper.h" />
     <ClInclude Include="GameLibInclude\glPerformanceCounter.h" />

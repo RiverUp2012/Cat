@@ -242,6 +242,9 @@
     <ClInclude Include="GameLibInclude\glMemoryHelper.h">
       <Filter>GameLibInclude</Filter>
     </ClInclude>
+    <ClInclude Include="GameLibInclude\glPage.h">
+      <Filter>GameLibInclude</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinLibSource\wlGDIPStartup.cpp">
