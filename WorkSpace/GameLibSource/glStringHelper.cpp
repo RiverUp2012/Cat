@@ -132,7 +132,7 @@ int glStringHelper::toIntA(const char * string) {
 	return 0;
 }
 
-bool glStringHelper::containNewLineW(const wchar_t * string) {
+bool glStringHelper::endWithNewLineW(const wchar_t * string) {
 	const int stringLength = string ? glStringW::getLength(string) : 0;
 	if (string && stringLength > 1) {
 		if (L'\r' == string[stringLength - 2] &&
@@ -143,7 +143,7 @@ bool glStringHelper::containNewLineW(const wchar_t * string) {
 	return false;
 }
 
-bool glStringHelper::containNewLineA(const char * string) {
+bool glStringHelper::endWithNewLineA(const char * string) {
 	const int stringLength = string ? glStringA::getLength(string) : 0;
 	if (string && stringLength > 1) {
 		if ('\r' == string[stringLength - 2] &&

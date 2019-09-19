@@ -19,6 +19,6 @@ public:
 	static bool formatA(const char * format, const va_list & vl, glStringA & string);
 	static int toIntW(const wchar_t * string);
 	static int toIntA(const char * string);
-	static bool containNewLineW(const wchar_t * string);
-	static bool containNewLineA(const char * string);
+	static bool endWithNewLineW(const wchar_t * string);
+	static bool endWithNewLineA(const char * string);
 };
