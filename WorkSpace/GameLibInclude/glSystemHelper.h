@@ -6,6 +6,27 @@
 struct glMemoryInfo;
 
 //
+// @brief 操作系统版本枚举体
+//
+enum
+{
+	GL_OSVER_FIRST,
+	GL_OSVER_WIN2K,
+	GL_OSVER_WINXP,
+	GL_OSVER_WINXP_SP1,
+	GL_OSVER_WINXP_SP2,
+	GL_OSVER_WINXP_SP3,
+	GL_OSVER_WINVISTA,
+	GL_OSVER_WINVISTA_SP1,
+	GL_OSVER_WINVISTA_SP2,
+	GL_OSVER_WIN7,
+	GL_OSVER_WIN7_SP1,
+	GL_OSVER_WIN8,
+	GL_OSVER_WIN81,
+	GL_OSVER_WIN10,
+};
+
+//
 // @brief 系统助手类
 //
 class glSystemHelper {
@@ -30,4 +51,8 @@ public:
 	// @brief 获取内存信息
 	//
 	static bool getMemoryInfo(glMemoryInfo & memoryInfo);
+	//
+	// @brief 获取操作系统版本
+	//
+	static bool getOSVersion(int & osVer);
 };
