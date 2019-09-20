@@ -2,6 +2,7 @@
 #include "../GameLibInclude/glWaveReader.h"
 #include "../GameLibInclude/glPrivate.h"
 #include "../GameLibInclude/glTemplate.h"
+#include "../GameLibInclude/glModuleResourceHelper.h"
 
 struct glWaveChunkHeader {
 	unsigned char mSig[4];
@@ -65,13 +66,47 @@ bool glWaveReader::createFromFileW(const wchar_t * fileName) {
 	return ret;
 }
 
-bool glWaveReader::createFromMemory(const void * buffer, const int bufferSize) {
+bool glWaveReader::createFromMemory(const void * buffer, const int bufferSize, const bool autoDelete) {
 	bool ret = false;
 	glWaveChunkHeader chkHdr = { 0 };
 	WAVEFORMATEX wavFmt = { 0 };
+	int filePointer = 0;
 	destroy();
-	if (buffer && bufferSize > 0) {
-		// todo
+	if (buffer && bufferSize) {
+		mMemWavFile.open(buffer, bufferSize, autoDelete);
+		if (glReadMemFile(mMemWavFile, chkHdr) &&
+			0 == memcmp("RIFF", chkHdr.mSig, 4) &&
+			glReadMemFile(mMemWavFile, chkHdr.mSig) &&
+			0 == memcmp("WAVE", chkHdr.mSig, 4)) {
+			if (glReadMemFile(mMemWavFile, chkHdr) &&
+				0 == memcmp("fmt ", chkHdr.mSig, 4) &&
+				chkHdr.mSize <= sizeof(wavFmt) &&
+				mMemWavFile.read(&wavFmt, chkHdr.mSize)) {
+				mChannels = wavFmt.nChannels;
+				mBitsPerSample = wavFmt.wBitsPerSample;
+				mSampleRate = wavFmt.nSamplesPerSec;
+				while (true) {
+					if (glReadMemFile(mMemWavFile, chkHdr)) {
+						if (0 == memcmp("data", chkHdr.mSig, 4)) {
+							if (mMemWavFile.getPointer(filePointer)) {
+								mPCMDataOffset = filePointer;
+								mPCMDataSize = chkHdr.mSize;
+								ret = true;
+							}
+							break;
+						}
+						else {
+							if (!mMemWavFile.seekOffset(chkHdr.mSize)) {
+								break;
+							}
+						}
+					}
+					else {
+						break;
+					}
+				}
+			}
+		}
 	}
 	if (!ret) {
 		destroy();
@@ -79,8 +114,19 @@ bool glWaveReader::createFromMemory(const void * buffer, const int bufferSize) {
 	return ret;
 }
 
+bool glWaveReader::createFromResourceW(const int resourceID, const wchar_t * resourceType) {
+	glModuleResourceHelper::glResourceInfo resInfo;
+	if (resourceType) {
+		if (glModuleResourceHelper::getResourceW(resourceID, resourceType, resInfo)) {
+			return createFromMemory(resInfo.mData, resInfo.mSize, false);
+		}
+	}
+	return false;
+}
+
 void glWaveReader::destroy(void) {
 	mWaveFile.close();
+	mMemWavFile.close();
 	mChannels = 0;
 	mBitsPerSample = 0;
 	mSampleRate = 0;
@@ -105,10 +151,19 @@ unsigned int glWaveReader::getPCMDataSize(void) const {
 }
 
 bool glWaveReader::readAllPCMData(void * buffer) {
-	if (mWaveFile.isAlready() && buffer && mPCMDataSize > 0) {
-		if (mWaveFile.seekTo(mPCMDataOffset)) {
-			if (mWaveFile.read(buffer, mPCMDataSize)) {
-				return true;
+	if (buffer && mPCMDataSize > 0) {
+		if (mWaveFile.isAlready()) {
+			if (mWaveFile.seekTo(mPCMDataOffset)) {
+				if (mWaveFile.read(buffer, mPCMDataSize)) {
+					return true;
+				}
+			}
+		}
+		else if (mMemWavFile.isAlready()) {
+			if (mMemWavFile.seekTo(static_cast<int>(mPCMDataOffset))) {
+				if (mMemWavFile.read(buffer, mPCMDataSize)) {
+					return true;
+				}
 			}
 		}
 	}

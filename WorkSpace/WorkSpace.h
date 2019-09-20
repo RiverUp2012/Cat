@@ -23,6 +23,7 @@
 #include "GameLibInclude/glInputHandler.h"
 #include "GameLibInclude/glList.h"
 #include "GameLibInclude/glLog.h"
+#include "GameLibInclude/glMemFile.h"
 #include "GameLibInclude/glMemoryHelper.h"
 #include "GameLibInclude/glModule.h"
 #include "GameLibInclude/glModuleResourceHelper.h"

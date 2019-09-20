@@ -2,6 +2,7 @@
 #pragma once
 
 class glFile;
+class glMemFile;
 class glGameState;
 
 //
@@ -13,10 +14,26 @@ bool glReadFile(glFile & file, _U & value) {
 }
 
 //
+// @brief 从内存文件读取数据
+//
+template <typename _U>
+bool glReadMemFile(glMemFile & file, _U & value) {
+	return file.read(&value, sizeof(_U));
+}
+
+//
 // @brief 将数据写入文件
 //
 template <typename _U>
 bool glWriteFile(glFile & file, const _U & value) {
+	return file.write(&value, sizeof(_U));
+}
+
+//
+// @brief 将数据写入内存文件
+//
+template <typename _U>
+bool glWriteMemFile(glMemFile & file, const _U & value) {
 	return file.write(&value, sizeof(_U));
 }
 
