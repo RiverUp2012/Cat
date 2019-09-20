@@ -3,7 +3,7 @@
 
 class CMFCDialogTemplate : public CDialogEx {
 public:
-	CMFCDialogTemplate(CWnd * parent);
+	CMFCDialogTemplate(CWnd * parent = 0);
 	virtual ~CMFCDialogTemplate();
 public:
 	DECLARE_MESSAGE_MAP()

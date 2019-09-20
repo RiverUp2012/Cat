@@ -38,7 +38,7 @@ bool glFont::createW(
 	IDirect3DDevice9 * d3dDev9 = gVideoDevice.getIDirect3DDevice9();
 	if (!gD3DXCreateFontW) {
 		gD3DXCreateFontW = (glD3DXCreateFontW)
-			gModuleD3DX9.getProcAddressA("D3DXCreateFontW");
+			gModule_D3DX9.getProcAddressA("D3DXCreateFontW");
 	}
 	if (d3dDev9 && gD3DXCreateFontW && fontName) {
 		if (SUCCEEDED(gD3DXCreateFontW(

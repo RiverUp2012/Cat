@@ -21,8 +21,8 @@ CMFCDialogTemplate::~CMFCDialogTemplate() {
 
 BOOL CMFCDialogTemplate::OnInitDialog() {
 	CDialogEx::OnInitDialog();
-	SetIcon(m_hIcon, TRUE);
-	SetIcon(m_hIcon, FALSE);
+	SetIcon(mIconHandle, TRUE);
+	SetIcon(mIconHandle, FALSE);
 	return TRUE;
 }
 

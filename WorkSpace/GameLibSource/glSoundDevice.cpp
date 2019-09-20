@@ -20,11 +20,11 @@ namespace {
 glSoundDevice::glSoundDevice() {
 	if (!gDirectSoundCreate8) {
 		gDirectSoundCreate8 = (glDirectSoundCreate8)
-			gModuleDSound.getProcAddressA("DirectSoundCreate8");
+			gModule_DSound.getProcAddressA("DirectSoundCreate8");
 	}
 	if (!gGetDesktopWindow) {
 		gGetDesktopWindow = (glGetDesktopWindow)
-			gModuleUser32.getProcAddressA("GetDesktopWindow");
+			gModule_User32.getProcAddressA("GetDesktopWindow");
 	}
 	mDS8 = 0;
 	mDSBuf = 0;

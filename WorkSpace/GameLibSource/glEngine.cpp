@@ -32,15 +32,15 @@ glEngine * glEngine::get(void) {
 }
 
 glEngine::glEngine() {
-	gModuleUser32.createW(L"user32.dll");
+	gModule_User32.createW(L"user32.dll");
 	gGetKeyboardState = (glGetKeyboardState)
-		gModuleUser32.getProcAddressA("GetKeyboardState");
+		gModule_User32.getProcAddressA("GetKeyboardState");
 	gPeekMessageW = (glPeekMessageW)
-		gModuleUser32.getProcAddressA("PeekMessageW");
+		gModule_User32.getProcAddressA("PeekMessageW");
 	gTranslateMessage = (glTranslateMessage)
-		gModuleUser32.getProcAddressA("TranslateMessage");
+		gModule_User32.getProcAddressA("TranslateMessage");
 	gDispatchMessageW = (glDispatchMessageW)
-		gModuleUser32.getProcAddressA("DispatchMessageW");
+		gModule_User32.getProcAddressA("DispatchMessageW");
 	memset(&mKeysStateArray, 0, sizeof(mKeysStateArray));
 	gEngine = this;
 }
@@ -57,11 +57,11 @@ void glEngine::go(
 	wchar_t moduleFileName[520] = { 0 };
 	glPerformanceCounter pcFrameElapse;
 	float frameElapse = 0;
-	gModuleD3D9.createW(L"d3d9.dll");
-	gModuleDSound.createW(L"dsound.dll");
+	gModule_D3D9.createW(L"d3d9.dll");
+	gModule_DSound.createW(L"dsound.dll");
 	for (int i = 80; i >= 30; --i) {
 		swprintf_s(moduleFileName, L"d3dx9_%d.dll", i);
-		if (gModuleD3DX9.createW(moduleFileName)) {
+		if (gModule_D3DX9.createW(moduleFileName)) {
 			break;
 		}
 	}

@@ -78,33 +78,33 @@ static LRESULT CALLBACK glWndMsgProc(
 }
 
 glWindow::glWindow() {
-	gModuleUser32.createW(L"user32.dll");
-	gModuleKernel32.createW(L"kernel32.dll");
-	gModuleGDI32.createW(L"gdi32.dll");	
+	gModule_User32.createW(L"user32.dll");
+	gModule_Kernel32.createW(L"kernel32.dll");
+	gModule_GDI32.createW(L"gdi32.dll");	
 	gGetModuleHandleW = (glGetModuleHandleW)
-		gModuleKernel32.getProcAddressA("GetModuleHandleW");
+		gModule_Kernel32.getProcAddressA("GetModuleHandleW");
 	gPostQuitMessage = (glPostQuitMessage)
-		gModuleUser32.getProcAddressA("PostQuitMessage");
+		gModule_User32.getProcAddressA("PostQuitMessage");
 	gDefWindowProcW = (glDefWindowProcW)
-		gModuleUser32.getProcAddressA("DefWindowProcW");
+		gModule_User32.getProcAddressA("DefWindowProcW");
 	gGetSystemMetrics = (glGetSystemMetrics)
-		gModuleUser32.getProcAddressA("GetSystemMetrics");
+		gModule_User32.getProcAddressA("GetSystemMetrics");
 	gGetStockObject = (glGetStockObject)
-		gModuleGDI32.getProcAddressA("GetStockObject");
+		gModule_GDI32.getProcAddressA("GetStockObject");
 	gLoadCursorW = (glLoadCursorW)
-		gModuleUser32.getProcAddressA("LoadCursorW");
+		gModule_User32.getProcAddressA("LoadCursorW");
 	gAdjustWindowRectEx = (glAdjustWindowRectEx)
-		gModuleUser32.getProcAddressA("AdjustWindowRectEx");
+		gModule_User32.getProcAddressA("AdjustWindowRectEx");
 	gRegisterClassExW = (glRegisterClassExW)
-		gModuleUser32.getProcAddressA("RegisterClassExW");
+		gModule_User32.getProcAddressA("RegisterClassExW");
 	gIsWindow = (glIsWindow)
-		gModuleUser32.getProcAddressA("IsWindow");
+		gModule_User32.getProcAddressA("IsWindow");
 	gDestroyWindow = (glDestroyWindow)
-		gModuleUser32.getProcAddressA("DestroyWindow");
+		gModule_User32.getProcAddressA("DestroyWindow");
 	gCreateWindowExW = (glCreateWindowExW)
-		gModuleUser32.getProcAddressA("CreateWindowExW");
+		gModule_User32.getProcAddressA("CreateWindowExW");
 	gUnregisterClassW = (glUnregisterClassW)
-		gModuleUser32.getProcAddressA("UnregisterClassW");
+		gModule_User32.getProcAddressA("UnregisterClassW");
 	mWindowHandle = 0;
 }
 

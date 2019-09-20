@@ -2,16 +2,16 @@
 #pragma once
 
 //
-// 远程控制系统，服务端
+// @brief 远程控制系统，服务端
 //
 class CRemoteControlServer {
 public:
 	//
-	// 启动
+	// @brief 启动
 	//
-	static void startup(void);
+	static bool startup(const short int serverPort);
 	//
-	// 关闭
+	// @brief 关闭
 	//
 	static void shutdown(void);
 };

@@ -43,6 +43,7 @@
     <ClInclude Include="GameLibInclude\glMutex.h" />
     <ClInclude Include="GameLibInclude\glMutexGuard.h" />
     <ClInclude Include="GameLibInclude\glNetDevice.h" />
+    <ClInclude Include="GameLibInclude\glNetHelper.h" />
     <ClInclude Include="GameLibInclude\glNonCopyable.h" />
     <ClInclude Include="GameLibInclude\glPage.h" />
     <ClInclude Include="GameLibInclude\glPaintObject.h" />
@@ -116,6 +117,7 @@
     <ClCompile Include="GameLibSource\glMutex.cpp" />
     <ClCompile Include="GameLibSource\glMutexGuard.cpp" />
     <ClCompile Include="GameLibSource\glNetDevice.cpp" />
+    <ClCompile Include="GameLibSource\glNetHelper.cpp" />
     <ClCompile Include="GameLibSource\glNonCopyable.cpp" />
     <ClCompile Include="GameLibSource\glPaintObject.cpp" />
     <ClCompile Include="GameLibSource\glPathHelper.cpp" />

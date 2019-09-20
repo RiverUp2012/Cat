@@ -3,6 +3,11 @@
 	Cat History
 ----------------------------------------------------------------------------
 
+* 2019-09-20
+
+	* 移除 CMemoryReader 与 CMemoryWriter 类，由 glMemFile 代替
+	* 新增 CProcessCleanupSettingDlg 对话框类，用于设置进程清理
+
 * 2019-09-19
 
 	* 新增 CMFCDialogTemplate 类，用作以后快速新建 MFC 对话框类

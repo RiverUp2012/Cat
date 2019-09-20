@@ -81,10 +81,10 @@ bool wlProcess::getImageFileNameW(glStringW & imageFileName) {
 	wchar_t imageFileNameTemp[520] = { 0 };
 	DWORD imageFileNameSize = _countof(imageFileNameTemp);
 	if (mProcessHandle) {
-		if (!gModuleKernel32.isAlready()) {
-			if (gModuleKernel32.createW(L"kernel32.dll")) {
+		if (!gModule_Kernel32.isAlready()) {
+			if (gModule_Kernel32.createW(L"kernel32.dll")) {
 				gQueryFullProcessImageNameW = (wlQueryFullProcessImageNameW)
-					gModuleKernel32.getProcAddressA("QueryFullProcessImageNameW");
+					gModule_Kernel32.getProcAddressA("QueryFullProcessImageNameW");
 			}
 		}
 		if (gQueryFullProcessImageNameW) {
@@ -100,10 +100,10 @@ bool wlProcess::getImageFileNameW(glStringW & imageFileName) {
 				throw glWin32APIException(L"QueryFullProcessImageNameW", GetLastError());
 			}
 		}
-		if (!gModulePsapi.isAlready()) {
-			if (gModulePsapi.createW(L"psapi.dll")) {
+		if (!gModule_Psapi.isAlready()) {
+			if (gModule_Psapi.createW(L"psapi.dll")) {
 				gGetModuleFileNameExW = (wlGetModuleFileNameExW)
-					gModulePsapi.getProcAddressA("GetModuleFileNameExW");
+					gModule_Psapi.getProcAddressA("GetModuleFileNameExW");
 			}
 		}
 		if (gGetModuleFileNameExW) {

@@ -61,7 +61,7 @@ bool glTexture::createFromFileW(
 	IDirect3DDevice9 * d3dDev9 = gVideoDevice.getIDirect3DDevice9();
 	if (!gD3DXCreateTextureFromFileExW) {
 		gD3DXCreateTextureFromFileExW = (glD3DXCreateTextureFromFileExW)
-			gModuleD3DX9.getProcAddressA("D3DXCreateTextureFromFileExW");
+			gModule_D3DX9.getProcAddressA("D3DXCreateTextureFromFileExW");
 	}
 	if (d3dDev9 && fileName && gD3DXCreateTextureFromFileExW) {
 		comRet = gD3DXCreateTextureFromFileExW(
@@ -122,7 +122,7 @@ bool glTexture::createFromMemory(
 	IDirect3DDevice9 * d3dDev9 = gVideoDevice.getIDirect3DDevice9();
 	if (!gD3DXCreateTextureFromFileInMemoryEx) {
 		gD3DXCreateTextureFromFileInMemoryEx = (glD3DXCreateTextureFromFileInMemoryEx)
-			gModuleD3DX9.getProcAddressA("D3DXCreateTextureFromFileInMemoryEx");
+			gModule_D3DX9.getProcAddressA("D3DXCreateTextureFromFileInMemoryEx");
 	}
 	if (d3dDev9 && buffer && bufferSize > 0 && gD3DXCreateTextureFromFileInMemoryEx) {
 		comRet = gD3DXCreateTextureFromFileInMemoryEx(

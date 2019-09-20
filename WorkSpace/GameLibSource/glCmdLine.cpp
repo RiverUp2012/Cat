@@ -4,19 +4,31 @@
 #include "../GameLibInclude/glPrivate.h"
 #include "../GameLibInclude/glArray.h"
 #include "../GameLibInclude/glString.h"
+#include "../GameLibInclude/glGlobalData.h"
+
+typedef LPWSTR * (WINAPI *glCommandLineToArgvW)(
+	LPCWSTR lpCmdLine,
+	int* pNumArgs);
 
 namespace {
 	static bool gInitFlag = false;
 	static glArray<glStringW> gParamArray;
+	static glCommandLineToArgvW gCommandLineToArgvW = 0;
 
 	static void glInitCmdLine(void) {
 		wchar_t * cmdLine = 0;
 		wchar_t ** paramArray = 0;
 		int paramCount = 0;
-		if (!gInitFlag) {
+		if (!gModule_Shell32.isAlready()) {
+			if (gModule_Shell32.createW(L"shell32.dll")) {
+				gCommandLineToArgvW = (glCommandLineToArgvW)
+					gModule_Shell32.getProcAddressA("CommandLineToArgvW");
+			}
+		}
+		if (!gInitFlag && gCommandLineToArgvW) {
 			cmdLine = GetCommandLineW();
 			if (cmdLine) {
-				paramArray = CommandLineToArgvW(cmdLine, &paramCount);
+				paramArray = gCommandLineToArgvW(cmdLine, &paramCount);
 				if (paramArray && gParamArray.resize(paramCount)) {
 					for (int i = 0; i < paramCount; ++i) {
 						gParamArray.setAt(i, paramArray[i]);

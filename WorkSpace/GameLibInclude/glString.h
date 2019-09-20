@@ -91,6 +91,9 @@ public:
 	int getCapacity(void) const {
 		return mCapacity;
 	}
+	int getBufferSize(void) const {
+		return getCharSize() * getCapacity();
+	}
 	bool setAt(const int index, const _U charToSet) {
 		if (mString && index >= 0 && index < mCapacity) {
 			mString[index] = charToSet;

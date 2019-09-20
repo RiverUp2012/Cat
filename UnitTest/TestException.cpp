@@ -8,7 +8,6 @@ GL_TEST_CASE(TestException) {
 		process.createByProcessID(0);
 	}
 	catch (const glException & exception) {
-		OutputDebugStringW(exception.getMessage());
-		OutputDebugStringW(L"\r\n");
+		glLog::putMessageW(exception.getMessage());
 	}
 }

@@ -24,7 +24,7 @@ bool glVideoDevice::create(
 	IDirect3D9 * d3d9 = 0;
 	D3DPRESENT_PARAMETERS d3dpp = { 0 };
 	if (!mD3DDev9 && window.isAlready()) {
-		direct3DCreate9 = (glDirect3DCreate9)gModuleD3D9.getProcAddressA("Direct3DCreate9");
+		direct3DCreate9 = (glDirect3DCreate9)gModule_D3D9.getProcAddressA("Direct3DCreate9");
 		if (direct3DCreate9) {
 			d3d9 = direct3DCreate9(D3D_SDK_VERSION);
 			if (d3d9) {

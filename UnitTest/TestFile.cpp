@@ -10,8 +10,7 @@ GL_TEST_CASE(TestWriteFile) {
 		file.close();
 	}
 	catch (const glException & exception) {
-		OutputDebugStringW(exception.getMessage());
-		OutputDebugStringW(L"\r\n");
+		glLog::putMessageW(exception.getMessage());
 	}
 }
 
@@ -25,8 +24,7 @@ GL_TEST_CASE(TestReadFile) {
 		file.close();
 	}
 	catch (const glException & exception) {
-		OutputDebugStringW(exception.getMessage());
-		OutputDebugStringW(L"\r\n");
+		glLog::putMessageW(exception.getMessage());
 	}
 }
 
@@ -42,7 +40,6 @@ GL_TEST_CASE(TestReadWriteFile) {
 		file.close();
 	}
 	catch (const glException & exception) {
-		OutputDebugStringW(exception.getMessage());
-		OutputDebugStringW(L"\r\n");
+		glLog::putMessageW(exception.getMessage());
 	}
 }

@@ -1,11 +1,12 @@
 
 #pragma once
 
-//#define WIN32_LEAN_AND_MEAN
+#define WIN32_LEAN_AND_MEAN
 #define INITGUID
+#define _WINSOCK_DEPRECATED_NO_WARNINGS
 
 #include <Windows.h>
-//#include <WinSock2.h>
+#include <WinSock2.h>
 #include <MMSystem.h>
 #include <TlHelp32.h>
 #include <stdio.h>

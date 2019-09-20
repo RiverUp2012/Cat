@@ -29,6 +29,7 @@
 #include "GameLibInclude/glModuleResourceHelper.h"
 #include "GameLibInclude/glMutex.h"
 #include "GameLibInclude/glMutexGuard.h"
+#include "GameLibInclude/glNetHelper.h"
 #include "GameLibInclude/glNonCopyable.h"
 #include "GameLibInclude/glPaintObject.h"
 #include "GameLibInclude/glPathHelper.h"

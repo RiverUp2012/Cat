@@ -20,26 +20,37 @@ namespace {
 	public:
 		void onThreadRun(void) override {
 			while (true) {
-				wlProcessEnumCallbackWarpper pecw;
-				pecw.enumProcess();
-				for (auto iter = pecw.getProcessInfoList().begin(); iter.isValid(); iter.moveNext()) {
-					wlProcess process;
-					if (process.createByProcessID(
-						iter.getData().mProcessID,
-						WL_PROCESS_FEATURE_QUERY_INFO | WL_PROCESS_FEATURE_QUERY_INFO)) {
-						glStringW imageFileName;
-						if (process.getImageFileNameW(imageFileName)) {
-							glStringW fileName;
-							if (glPathHelper::getFileNameWithExtW(imageFileName, fileName)) {
-								if (processCanKillW(imageFileName)) {
-									process.terminate();
+				glMutexGuard mutexGuard(&gProcessExeFileNameArrayLock);
+				if (gProcessExeFileNameArray.size() > 0) {
+					wlProcessEnumCallbackWarpper pecw;
+					pecw.enumProcess();
+					for (auto iter = pecw.getProcessInfoList().begin(); iter.isValid(); iter.moveNext()) {
+						wlProcess process;
+						try {
+							if (process.createByProcessID(
+								iter.getData().mProcessID,
+								WL_PROCESS_FEATURE_QUERY_INFO | WL_PROCESS_FEATURE_QUERY_INFO)) {
+								glStringW imageFileName;
+								if (process.getImageFileNameW(imageFileName)) {
+									glStringW fileName;
+									if (glPathHelper::getFileNameWithExtW(imageFileName, fileName)) {
+										if (processCanKillW(imageFileName)) {
+											process.terminate();
+										}
+									}
 								}
+								process.destroy();
 							}
 						}
-						process.destroy();
+						catch (const glException & exception) {
+							exception;
+						}
 					}
+					Sleep(gCleanupTimeInterval);
 				}
-				Sleep(gCleanupTimeInterval);
+				else {
+					Sleep(1);
+				}
 			}
 		}
 	private:

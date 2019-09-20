@@ -2,7 +2,7 @@
 #pragma once
 
 #include "../WorkSpace/WorkSpace.h"
-#include <Windows.h>
+#include <string.h>
 
 #if defined WIN64 || defined _WIN64
 #	if defined DEBUG || defined _DEBUG

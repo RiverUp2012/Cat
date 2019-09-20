@@ -2,22 +2,20 @@
 #pragma once
 
 //
-// 远程控制系统，客户端
+// @brief 远程控制系统，客户端
 //
 class CRemoteControlClient {
 public:
 	//
-	// 启动
+	// @brief 启动
 	//
-	static void startup(void);
+	static void startupW(const wchar_t * serverIPv4, const short int serverPort);
 	//
-	// 关闭
+	// @brief 关闭
 	//
 	static void shutdown(void);
 	//
-	// 请求用户名
+	// @brief 请求用户名
 	//
-	static bool requestUserNameW(
-		wchar_t * userName,
-		const int userNameSize);
+	static bool requestUserNameW(glStringW & userName);
 };

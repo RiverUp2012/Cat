@@ -2,13 +2,12 @@
 #include "stdafx.h"
 #include "CRemoteControlClient.h"
 #include "RemoteControlCommon.h"
-#include "../Common/CMemoryReader.h"
 
 namespace {
-
+	static glSocket gClientSocket;
 }
 
-void CRemoteControlClient::startup(void) {
+void CRemoteControlClient::startupW(const wchar_t * serverIPv4, const short int serverPort) {
 
 }
 
@@ -16,9 +15,7 @@ void CRemoteControlClient::shutdown(void) {
 
 }
 
-bool CRemoteControlClient::requestUserNameW(
-	wchar_t * userName,
-	const int userNameSize) {
+bool CRemoteControlClient::requestUserNameW(glStringW & userName) {
 	bool ret = false;
 	return ret;
 }

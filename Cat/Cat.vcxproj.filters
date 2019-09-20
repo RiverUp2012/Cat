@@ -42,9 +42,6 @@
     <ClInclude Include="CCatApp.h">
       <Filter>Include</Filter>
     </ClInclude>
-    <ClInclude Include="Common\CMemoryReader.h">
-      <Filter>Common</Filter>
-    </ClInclude>
     <ClInclude Include="RemoteControl\CRemoteControlClient.h">
       <Filter>RemoteControl</Filter>
     </ClInclude>
@@ -53,9 +50,6 @@
     </ClInclude>
     <ClInclude Include="RemoteControl\RemoteControlCommon.h">
       <Filter>RemoteControl</Filter>
-    </ClInclude>
-    <ClInclude Include="Common\CMemoryWriter.h">
-      <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="ProcessCleanup\CProcessCleanup.h">
       <Filter>ProcessCleanup</Filter>
@@ -84,6 +78,9 @@
     <ClInclude Include="CMainDlg.h">
       <Filter>Include</Filter>
     </ClInclude>
+    <ClInclude Include="CProcessCleanupSettingDlg.h">
+      <Filter>Include</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -95,9 +92,6 @@
     <ClCompile Include="CMainDlg.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="Common\CMemoryReader.cpp">
-      <Filter>Common</Filter>
-    </ClCompile>
     <ClCompile Include="RemoteControl\CRemoteControlClient.cpp">
       <Filter>RemoteControl</Filter>
     </ClCompile>
@@ -106,9 +100,6 @@
     </ClCompile>
     <ClCompile Include="RemoteControl\RemoteControlCommon.cpp">
       <Filter>RemoteControl</Filter>
-    </ClCompile>
-    <ClCompile Include="Common\CMemoryWriter.cpp">
-      <Filter>Common</Filter>
     </ClCompile>
     <ClCompile Include="ProcessCleanup\CProcessCleanup.cpp">
       <Filter>ProcessCleanup</Filter>
@@ -130,6 +121,9 @@
     </ClCompile>
     <ClCompile Include="Bio4MemCheat\CBio4MemCheatHDV16.cpp">
       <Filter>Bio4MemCheat</Filter>
+    </ClCompile>
+    <ClCompile Include="CProcessCleanupSettingDlg.cpp">
+      <Filter>Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

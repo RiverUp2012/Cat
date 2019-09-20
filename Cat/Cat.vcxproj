@@ -103,9 +103,8 @@
     <ClInclude Include="CBio4MemCheatDlg.h" />
     <ClInclude Include="CCatApp.h" />
     <ClInclude Include="CMainDlg.h" />
-    <ClInclude Include="Common\CMemoryReader.h" />
-    <ClInclude Include="Common\CMemoryWriter.h" />
     <ClInclude Include="Common\CMFCHelper.h" />
+    <ClInclude Include="CProcessCleanupSettingDlg.h" />
     <ClInclude Include="ProcessCleanup\CProcessCleanup.h" />
     <ClInclude Include="ProcessCleanup\CProcessCleanupConfigFile.h" />
     <ClInclude Include="RemoteControl\CRemoteControlClient.h" />
@@ -122,9 +121,8 @@
     <ClCompile Include="CBio4MemCheatDlg.cpp" />
     <ClCompile Include="CCatApp.cpp" />
     <ClCompile Include="CMainDlg.cpp" />
-    <ClCompile Include="Common\CMemoryReader.cpp" />
-    <ClCompile Include="Common\CMemoryWriter.cpp" />
     <ClCompile Include="Common\CMFCHelper.cpp" />
+    <ClCompile Include="CProcessCleanupSettingDlg.cpp" />
     <ClCompile Include="ProcessCleanup\CProcessCleanup.cpp" />
     <ClCompile Include="ProcessCleanup\CProcessCleanupConfigFile.cpp" />
     <ClCompile Include="RemoteControl\CRemoteControlClient.cpp" />
