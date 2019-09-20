@@ -110,3 +110,43 @@ bool glSocket::recvData(void * buffer, const int bytesToRecv, int * bytesRecved)
 	}
 	return false;
 }
+
+bool glSocket::sendAllData(const void * buffer, const int bytesToSend) {
+	char * bufferTemp = (char *)buffer;
+	int bytesSended = 0;
+	if (mSocket && bufferTemp && bytesToSend > 0) {
+		while (true) {
+			int ret = send((SOCKET)mSocket, &(bufferTemp[bytesSended]), bytesToSend - bytesSended, 0);
+			if (SOCKET_ERROR != ret) {
+				bytesSended += ret;
+				if (bytesSended >= bytesToSend) {
+					return true;
+				}
+			}
+			else {
+				throw glWin32APIException(L"send", WSAGetLastError());
+			}
+		}
+	}
+	return false;
+}
+
+bool glSocket::recvAllData(void * buffer, const int bytesToRecv) {
+	char * bufferTemp = (char *)buffer;
+	int bytesRecved = 0;
+	if (mSocket && bufferTemp && bytesToRecv > 0) {
+		while (true) {
+			int ret = recv((SOCKET)mSocket, &(bufferTemp[bytesRecved]), bytesToRecv - bytesRecved, 0);
+			if (SOCKET_ERROR != ret) {
+				bytesRecved += ret;
+				if (bytesRecved >= bytesToRecv) {
+					return true;
+				}
+			}
+			else {
+				throw glWin32APIException(L"send", WSAGetLastError());
+			}
+		}
+	}
+	return false;
+}
