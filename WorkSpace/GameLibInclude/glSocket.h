@@ -17,6 +17,7 @@ public:
 	void destroy(void);
 	bool isAlready(void) const;
 	bool connectToServerA(const char * ipV4, const short int port);
+	bool connectToServerW(const wchar_t * ipV4, const short int port);
 	bool sendData(const void * buffer, const int bytesToSend, int * bytesSended);
 	bool recvData(void * buffer, const int bytesToRecv, int * bytesRecved);
 	bool sendAllData(const void * buffer, const int bytesToSend);

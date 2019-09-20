@@ -29,6 +29,9 @@
     <ClCompile Include="TestNet.cpp">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="TestLog.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CompileConfig.h">

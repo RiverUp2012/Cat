@@ -83,6 +83,7 @@
     <ClCompile Include="TestException.cpp" />
     <ClCompile Include="TestFile.cpp" />
     <ClCompile Include="TestFileEnum.cpp" />
+    <ClCompile Include="TestLog.cpp" />
     <ClCompile Include="TestNet.cpp" />
   </ItemGroup>
   <ItemGroup>

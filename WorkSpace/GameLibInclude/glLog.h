@@ -15,3 +15,16 @@ public:
 	static bool putMessageW(const wchar_t * format, ...);
 	static bool putMessageA(const char * format, ...);
 };
+
+class glLogFunc {
+public:
+	glLogFunc(const char * funcName, const int lineNo);
+	~glLogFunc();
+private:
+	const char * mFuncName;
+	int mLineNo;
+	unsigned int mTimeBegin;
+};
+
+#define GL_LOG_FUNC \
+	glLogFunc logFunc(__FUNCTION__, __LINE__);

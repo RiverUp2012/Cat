@@ -15,6 +15,13 @@ public:
 	virtual ~glPage() {
 	}
 public:
+	void create(const int totalItem, const int itemPerPage) {
+		mItemArray.clear();
+		mTotalPage = 0;
+		mCurrentPage = 0;
+		mCurrentItem = 0;
+		mItemPerPage = itemPerPage;
+	}
 private:
 	void reset(void) {
 		mTotalPage = 0;

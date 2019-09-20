@@ -9,7 +9,7 @@ public:
 	//
 	// @brief Æô¶¯
 	//
-	static void startupW(const wchar_t * serverIPv4, const short int serverPort);
+	static bool startupW(const wchar_t * serverIPv4, const short int serverPort);
 	//
 	// @brief ¹Ø±Õ
 	//

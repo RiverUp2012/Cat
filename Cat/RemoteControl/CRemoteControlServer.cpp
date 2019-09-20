@@ -65,22 +65,41 @@ namespace {
 		}
 	private:
 		bool handleRequestUserName(void) const {
+			bool ret = false;
 			glStringW userName;
 			glMemFile memFile;
 			SPack pack;
+			//
+			// 填充包头
+			//
 			makePackHeader(pack, PROTOCOL_RESPONSE_USER_NAME);
 			if (glSystemHelper::getCurrentUserNameW(userName)) {
-				pack.mPackSize = userName.getBufferSize();
-				pack.mData = malloc(pack.mPackSize);
-				memFile.open(pack.mData, pack.mPackSize, true);
-				memFile.write(userName.getBuffer(), userName.getBufferSize());
-				if (gServerSocket.sendAllData(&pack, sizeof(SPackHeader))) {
-					if (gServerSocket.sendAllData(pack.mData, pack.mPackSize)) {
-						return true;
+				//
+				// 为包体分配内存
+				//
+				pack.mPackSize = calcMemStringSizeW(userName);
+				pack.mData = new unsigned char[pack.mPackSize];
+				if (pack.mData) {
+					memFile.open(pack.mData, pack.mPackSize, true);
+					//
+					// 填充包体
+					//
+					if (writeMemFileStringW(memFile, userName)) {
+						//
+						// 发送包头
+						//
+						if (gServerSocket.sendAllData(&pack, sizeof(SPackHeader))) {
+							//
+							// 发送包体
+							//
+							if (gServerSocket.sendAllData(pack.mData, pack.mPackSize)) {
+								ret = true;
+							}
+						}
 					}
 				}
 			}
-			return false;
+			return ret;
 		}
 	};
 
@@ -88,6 +107,7 @@ namespace {
 }
 
 bool CRemoteControlServer::startup(const short int serverPort) {
+	GL_LOG_FUNC;
 	glStringA localIpV4;
 	shutdown();
 	glMutexGuard mutexGuard(&gMutex);
@@ -103,6 +123,7 @@ bool CRemoteControlServer::startup(const short int serverPort) {
 }
 
 void CRemoteControlServer::shutdown(void) {
+	GL_LOG_FUNC;
 	glMutexGuard mutexGuard(&gMutex);
 	gQuitFlag = true;
 	gServerThread.wait(1000);

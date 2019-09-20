@@ -4,6 +4,8 @@
 #include "../GameLibInclude/glPrivate.h"
 #include "../GameLibInclude/glException.h"
 #include "../GameLibInclude/glGlobalData.h"
+#include "../GameLibInclude/glString.h"
+#include "../GameLibInclude/glStringHelper.h"
 
 typedef int (WSAAPI * glWSAGetLastError)(
 	void);
@@ -175,6 +177,18 @@ bool glSocket::connectToServerA(const char * ipV4, const short int port) {
 		}
 		else {
 			throw glWin32APIException(L"connect", gWSAGetLastError());
+		}
+	}
+	return false;
+}
+
+bool glSocket::connectToServerW(const wchar_t * ipV4, const short int port) {
+	glStringA ipV4A;
+	if (ipV4) {
+		if (glStringHelper::w2a(ipV4, ipV4A, false)) {
+			if (connectToServerA(ipV4A, port)) {
+				return true;
+			}
 		}
 	}
 	return false;

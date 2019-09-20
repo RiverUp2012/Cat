@@ -70,3 +70,21 @@ extern bool isPackValid(const SPackHeader & packHeader);
 // @brief 填充数据包包头
 //
 extern void makePackHeader(SPackHeader & packHeader, const int protocol);
+
+//
+// @brief 写字符串到内存文件
+// @desc 该函数先将字符串长度写入内存，再将字符串内容写入内存，不包括结束字符
+//
+extern bool writeMemFileStringW(glMemFile & memFile, const glStringW & string);
+
+//
+// @brief 从内存文件读取字符串
+// @desc 该函数先从内存读取字符串长度，再从内存读取字符串，最后在字符串末尾追加结束字符
+//
+extern bool readMemFileStringW(glMemFile & memFile, glStringW & string);
+
+//
+// @brief 计算指定字符串写入到内存后需要多少字节空间
+// @desc 字符串写入到内存后，内存中应包含字符串长度以及字符串内容，不包含结束字符
+//
+extern int calcMemStringSizeW(const glStringW & string);

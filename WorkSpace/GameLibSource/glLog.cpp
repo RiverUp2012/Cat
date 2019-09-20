@@ -7,6 +7,8 @@
 #include "../GameLibInclude/glStringHelper.h"
 #include "../GameLibInclude/glDefine.h"
 #include "../GameLibInclude/glPrivate.h"
+#include "../GameLibInclude/glThread.h"
+#include "../GameLibInclude/glTimeHelper.h"
 
 namespace {
 	static glMutex gMutex;
@@ -109,4 +111,27 @@ bool glLog::putMessageA(const char * format, ...) {
 		}
 	}
 	return false;
+}
+
+glLogFunc::glLogFunc(const char * funcName, const int lineNo) {
+	mFuncName = funcName;
+	mLineNo = lineNo;
+	mTimeBegin = 0;
+	glTimeHelper::getTimeElapseFromSystemStartup(mTimeBegin);
+	glLog::putMessageA(
+		"------ %s() [line : %d thread : %d] Begin ------ \r\n",
+		mFuncName,
+		mLineNo,
+		glThread::getCurrentThreadID());
+}
+
+glLogFunc::~glLogFunc() {
+	unsigned int timeNow = 0;
+	glTimeHelper::getTimeElapseFromSystemStartup(timeNow);
+	glLog::putMessageA(
+		"------ %s() [line : %d thread : %d elapse : %d] End ------ \r\n",
+		mFuncName,
+		mLineNo,
+		glThread::getCurrentThreadID(),
+		timeNow - mTimeBegin);
 }

@@ -31,3 +31,42 @@ void makePackHeader(SPackHeader & packHeader, const int protocol) {
 		throw glException(L"Invalid Protocol");
 	}
 }
+
+bool writeMemFileStringW(glMemFile & memFile, const glStringW & string) {
+	const int stringLength = string.getLength();
+	if (glWriteMemFile(memFile, stringLength)) {
+		if (stringLength > 0) {
+			if (memFile.write(string.getString(), string.getCharSize() * stringLength)) {
+				return true;
+			}
+		}
+		else {
+			return true;
+		}
+	}
+	return false;
+}
+
+bool readMemFileStringW(glMemFile & memFile, glStringW & string) {
+	int stringLength = 0;
+	if (glReadMemFile(memFile, stringLength)) {
+		string.clear();
+		if (stringLength > 0) {
+			if (string.resize(stringLength + 1)) {
+				if (memFile.read(string.getBuffer(), string.getCharSize() * stringLength)) {
+					string.setAt(stringLength, L'\0');
+					return true;
+				}
+			}
+		}
+		else {
+			return true;
+		}
+	}
+	return false;
+}
+
+int calcMemStringSizeW(const glStringW & string) {
+	const int stringLength = string.getLength();
+	return sizeof(stringLength) + (string.getCharSize() * stringLength);
+}
