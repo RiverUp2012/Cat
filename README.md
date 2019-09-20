@@ -1,7 +1,7 @@
 
 # 关于 Cat
 
-Cat 是我（@NekoMasutaDev）与我的兄弟（@RiverUp2012）共同协作编写的软件，这款软件的初衷在于：将自己想到的有趣的点子，都写进去。  
+Cat 是我（[@NekoMasutaDev](https://github.com/NekoMasutaDev "NekoMasutaDev")）与我的兄弟（[@RiverUp2012](https://github.com/RiverUp2012 "RiverUp2012")）共同协作编写的软件，这款软件的初衷在于：将自己想到的有趣的点子，都写进去。  
 
 目前已经完成的模块有：  
 
