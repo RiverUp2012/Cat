@@ -2,6 +2,7 @@
 #include "../GameLibInclude/glUnitTest.h"
 #include "../GameLibInclude/glPrivate.h"
 #include "../GameLibInclude/glString.h"
+#include "../GameLibInclude/glLog.h"
 
 namespace {
 	struct glUnitTestInfo {
@@ -35,13 +36,12 @@ void glUnitTest::runAllTestCase(void) {
 	glUnitTestInfo * testInfo = gTestProcList;
 	while (testInfo) {
 		glUnitTestInfo * nextTestInfo = testInfo->mNext;
-		OutputDebugStringW(L"------ Run Test Case : ");
-		OutputDebugStringW(testInfo->mCaseName);
-		OutputDebugStringW(L" ------\r\n");
+		glLog::putMessageW(L"------ Run Test Case : [%s] ------\r\n", testInfo->mCaseName);
 		if (testInfo->mTestProc) {
 			testInfo->mTestProc();
 		}
 		delete testInfo;
 		testInfo = nextTestInfo;
 	}
+	gTestProcList = 0;
 }

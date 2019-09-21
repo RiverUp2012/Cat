@@ -34,8 +34,8 @@ bool glFont::createW(
 	const int fontWidth,
 	const int fontHeight) {
 	ID3DXFont * d3dxFont = 0;
-	destroy();
 	IDirect3DDevice9 * d3dDev9 = gVideoDevice.getIDirect3DDevice9();
+	destroy();
 	if (!gD3DXCreateFontW) {
 		gD3DXCreateFontW = (glD3DXCreateFontW)
 			gModule_D3DX9.getProcAddressA("D3DXCreateFontW");

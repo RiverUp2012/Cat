@@ -1,23 +1,38 @@
 
 #include "../GameLibInclude/glMutex.h"
 #include "../GameLibInclude/glPrivate.h"
+#include "../GameLibInclude/glException.h"
 
 glMutex::glMutex() {
 	mCriticalSection = new CRITICAL_SECTION();
-	memset(mCriticalSection, 0, sizeof(CRITICAL_SECTION));
-	InitializeCriticalSection((CRITICAL_SECTION *)mCriticalSection);
+	if (mCriticalSection) {
+		memset(mCriticalSection, 0, sizeof(CRITICAL_SECTION));
+		InitializeCriticalSection((CRITICAL_SECTION *)mCriticalSection);
+	}
+	else {
+		throw glException(L"bad new");
+	}
 }
 
 glMutex::~glMutex() {
-	DeleteCriticalSection((CRITICAL_SECTION *)mCriticalSection);
-	delete mCriticalSection;
-	mCriticalSection = 0;
+	if (mCriticalSection) {
+		DeleteCriticalSection((CRITICAL_SECTION *)mCriticalSection);
+		delete mCriticalSection;
+		mCriticalSection = 0;
+	}
+	else {
+		throw glException(L"YOU !! RPWT ??");
+	}
 }
 
 void glMutex::lock(void) {
-	EnterCriticalSection((CRITICAL_SECTION *)mCriticalSection);
+	if (mCriticalSection) {
+		EnterCriticalSection((CRITICAL_SECTION *)mCriticalSection);
+	}
 }
 
 void glMutex::unlock(void) {
-	LeaveCriticalSection((CRITICAL_SECTION *)mCriticalSection);
+	if (mCriticalSection) {
+		LeaveCriticalSection((CRITICAL_SECTION *)mCriticalSection);
+	}
 }

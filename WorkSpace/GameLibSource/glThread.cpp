@@ -3,12 +3,14 @@
 #include "../GameLibInclude/glPrivate.h"
 #include "../GameLibInclude/glException.h"
 
-static DWORD WINAPI globalThreadProc(LPVOID param) {
-	glThread * thread = static_cast<glThread *>(param);
-	if (thread) {
-		thread->onThreadRun();
+namespace {
+	static DWORD WINAPI globalThreadProc(LPVOID param) {
+		glThread * thread = static_cast<glThread *>(param);
+		if (thread) {
+			thread->onThreadRun();
+		}
+		return 0;
 	}
-	return 0;
 }
 
 void glThread::sleepCurrentThread(const int sleepTimeOut) {
@@ -61,7 +63,9 @@ bool glThread::create(const bool runNow) {
 void glThread::destroy(const int waitTimeout) {
 	if (mThreadHandle) {
 		WaitForSingleObject((HANDLE)mThreadHandle, waitTimeout);
-		CloseHandle((HANDLE)mThreadHandle);
+		if (!CloseHandle((HANDLE)mThreadHandle)) {
+			throw glWin32APIException(L"CloseHandle", GetLastError());
+		}
 		mThreadHandle = 0;
 	}
 	mThreadID = 0;

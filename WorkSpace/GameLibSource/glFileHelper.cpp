@@ -42,8 +42,7 @@ void glFileHelper::enumFileW(
 		pathForFindWithFileExt = pathForFind + fileExt;
 		findHandle = FindFirstFileW(pathForFindWithFileExt, &wfd);
 		if (INVALID_HANDLE_VALUE != findHandle) {
-			do
-			{
+			do {
 				isDirectory = false;
 				if (wfd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) {
 					if (L'.' == wfd.cFileName[0]) {

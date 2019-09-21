@@ -23,8 +23,10 @@ glSoundDevice::glSoundDevice() {
 			gModule_DSound.getProcAddressA("DirectSoundCreate8");
 	}
 	if (!gGetDesktopWindow) {
-		gGetDesktopWindow = (glGetDesktopWindow)
-			gModule_User32.getProcAddressA("GetDesktopWindow");
+		if (!gGetDesktopWindow) {
+			gGetDesktopWindow = (glGetDesktopWindow)
+				gModule_User32.getProcAddressA("GetDesktopWindow");
+		}
 	}
 	mDS8 = 0;
 	mDSBuf = 0;

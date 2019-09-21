@@ -53,8 +53,8 @@ bool glSound::create(
 	DSBUFFERDESC dsBufDesc = { 0 };
 	WAVEFORMATEX wavFmt = { 0 };
 	IDirectSoundBuffer * dsBuf = 0;
-	destroy();
 	IDirectSound * ds8 = gSoundDevice.getIDirectSound8();
+	destroy();
 	if (ds8 && channels && bitsPerSample && sampleRate && bufferSize) {
 		wavFmt.wFormatTag = WAVE_FORMAT_PCM;
 		wavFmt.nChannels = channels;

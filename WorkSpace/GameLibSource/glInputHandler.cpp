@@ -1,23 +1,19 @@
 
 #include "../GameLibInclude/glInputHandler.h"
 
-glInputHandler::glInputHandler()
-{
+glInputHandler::glInputHandler() {
 	mHandleInputEvent = true;
 }
 
-glInputHandler::~glInputHandler()
-{
+glInputHandler::~glInputHandler() {
 
 }
 
-void glInputHandler::setHandleInputEvent(const bool handleInputEvent)
-{
+void glInputHandler::setHandleInputEvent(const bool handleInputEvent) {
 	mHandleInputEvent = handleInputEvent;
 }
 
-bool glInputHandler::getHandleInputEvent(void) const
-{
+bool glInputHandler::getHandleInputEvent(void) const {
 	return mHandleInputEvent;
 }
 

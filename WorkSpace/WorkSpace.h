@@ -1,4 +1,14 @@
 
+//---------------------------------------------------------------------------------
+// @file WorkSpace.h
+// @brief 通用代码库汇总头文件
+// @desc
+// @date 2019-09-21
+// @author NekoMasutaDev
+// @e-mail NekoMasutaDev@gmail.com
+// @e-mail NekoMasutaDev@outlook.com
+//---------------------------------------------------------------------------------
+
 #pragma once
 
 #include "GameLibInclude/glArray.h"

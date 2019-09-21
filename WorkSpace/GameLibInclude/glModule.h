@@ -17,6 +17,7 @@ public:
 	bool isAlready(void) const;
 	void * getProcAddressW(const wchar_t * procName);
 	void * getProcAddressA(const char * procName);
+	const void * getModuleHandle(void) const;
 private:
 	void * mModuleHandle;
 };

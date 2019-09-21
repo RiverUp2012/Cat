@@ -23,34 +23,34 @@ bool glVideoDevice::create(
 	glDirect3DCreate9 direct3DCreate9 = 0;
 	IDirect3D9 * d3d9 = 0;
 	D3DPRESENT_PARAMETERS d3dpp = { 0 };
-	if (!mD3DDev9 && window.isAlready()) {
+	if (!direct3DCreate9) {
 		direct3DCreate9 = (glDirect3DCreate9)gModule_D3D9.getProcAddressA("Direct3DCreate9");
-		if (direct3DCreate9) {
-			d3d9 = direct3DCreate9(D3D_SDK_VERSION);
-			if (d3d9) {
-				d3dpp.BackBufferCount = 1;
-				d3dpp.BackBufferFormat = D3DFMT_X8R8G8B8;
-				d3dpp.BackBufferWidth = screenWidth;
-				d3dpp.BackBufferHeight = screenHeight;
-				d3dpp.hDeviceWindow = (HWND)window.getHandle();
-				d3dpp.PresentationInterval = D3DPRESENT_INTERVAL_ONE;
-				d3dpp.SwapEffect = D3DSWAPEFFECT_DISCARD;
-				d3dpp.Windowed = TRUE;
-				if (SUCCEEDED(d3d9->CreateDevice(
-					D3DADAPTER_DEFAULT,
-					D3DDEVTYPE_HAL,
-					d3dpp.hDeviceWindow,
-					D3DCREATE_HARDWARE_VERTEXPROCESSING,
-					&d3dpp,
-					&mD3DDev9))) {
-					setupDefaultRenderStatus();
-					gBatchSprite.create();
-					gBatchPrimitive.create();
-					ret = true;
-				}
-				d3d9->Release();
-				d3d9 = 0;
+	}
+	if (!mD3DDev9 && window.isAlready() && direct3DCreate9) {
+		d3d9 = direct3DCreate9(D3D_SDK_VERSION);
+		if (d3d9) {
+			d3dpp.BackBufferCount = 1;
+			d3dpp.BackBufferFormat = D3DFMT_X8R8G8B8;
+			d3dpp.BackBufferWidth = screenWidth;
+			d3dpp.BackBufferHeight = screenHeight;
+			d3dpp.hDeviceWindow = (HWND)window.getHandle();
+			d3dpp.PresentationInterval = D3DPRESENT_INTERVAL_ONE;
+			d3dpp.SwapEffect = D3DSWAPEFFECT_DISCARD;
+			d3dpp.Windowed = TRUE;
+			if (SUCCEEDED(d3d9->CreateDevice(
+				D3DADAPTER_DEFAULT,
+				D3DDEVTYPE_HAL,
+				d3dpp.hDeviceWindow,
+				D3DCREATE_HARDWARE_VERTEXPROCESSING,
+				&d3dpp,
+				&mD3DDev9))) {
+				setupDefaultRenderStatus();
+				gBatchSprite.create();
+				gBatchPrimitive.create();
+				ret = true;
 			}
+			d3d9->Release();
+			d3d9 = 0;
 		}
 	}
 	return ret;

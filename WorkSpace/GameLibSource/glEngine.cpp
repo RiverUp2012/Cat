@@ -33,15 +33,27 @@ glEngine * glEngine::get(void) {
 }
 
 glEngine::glEngine() {
-	gModule_User32.createW(L"user32.dll");
-	gGetKeyboardState = (glGetKeyboardState)
-		gModule_User32.getProcAddressA("GetKeyboardState");
-	gPeekMessageW = (glPeekMessageW)
-		gModule_User32.getProcAddressA("PeekMessageW");
-	gTranslateMessage = (glTranslateMessage)
-		gModule_User32.getProcAddressA("TranslateMessage");
-	gDispatchMessageW = (glDispatchMessageW)
-		gModule_User32.getProcAddressA("DispatchMessageW");
+	if (!gModule_User32.isAlready()) {
+		gModule_User32.createW(L"user32.dll");
+	}
+	if (gModule_User32.isAlready()) {
+		if (!gGetKeyboardState) {
+			gGetKeyboardState = (glGetKeyboardState)
+				gModule_User32.getProcAddressA("GetKeyboardState");
+		}
+		if (!gPeekMessageW) {
+			gPeekMessageW = (glPeekMessageW)
+				gModule_User32.getProcAddressA("PeekMessageW");
+		}
+		if (!gTranslateMessage) {
+			gTranslateMessage = (glTranslateMessage)
+				gModule_User32.getProcAddressA("TranslateMessage");
+		}
+		if (!gDispatchMessageW) {
+			gDispatchMessageW = (glDispatchMessageW)
+				gModule_User32.getProcAddressA("DispatchMessageW");
+		}
+	}
 	memset(&mKeysStateArray, 0, sizeof(mKeysStateArray));
 	gEngine = this;
 }
@@ -103,13 +115,13 @@ void glEngine::go(
 					pcFrameElapse.tick();
 				}
 			}
+			onDestroy();
 		}
-		popAllGameState();
-		onDestroy();
-		gSoundDevice.destroy();
-		gVideoDevice.destroy();
-		gWindow.destroy();
 	}
+	popAllGameState();
+	gSoundDevice.destroy();
+	gVideoDevice.destroy();
+	gWindow.destroy();
 }
 
 void glEngine::pushGameState(glGameState * gameState) {

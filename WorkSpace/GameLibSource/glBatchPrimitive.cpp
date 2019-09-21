@@ -133,53 +133,39 @@ bool glBatchPrimitive::paintTriangle(
 	const glPoint<float> & pt2,
 	const glPoint<float> & pt3,
 	const unsigned int color,
-	const bool solid)
-{
-	if (solid)
-	{
-		if (mVertexBuffer.isAlready())
-		{
+	const bool solid) {
+	if (solid) {
+		if (mVertexBuffer.isAlready()) {
 			if (glPrimitiveTypeTriangle != mPrimitiveType ||
-				mPrimitiveCount * 3 >= GL_MAX_PRIMITIVE_VERTEX)
-			{
+				mPrimitiveCount * 3 >= GL_MAX_PRIMITIVE_VERTEX) {
 				flush();
-
 				mPrimitiveType = glPrimitiveTypeTriangle;
 				mPrimitiveCount = 0;
 			}
-
 			lockVertexBuffer();
-			if (mVertexList)
-			{
+			if (mVertexList) {
 				glPrimitiveVertex * vertexList = &mVertexList[mPrimitiveCount * 3];
 				++mPrimitiveCount;
-
 				vertexList[0].x = pt1.mX;
 				vertexList[0].y = pt1.mY;
 				vertexList[0].diffuse = color;
-
 				vertexList[1].x = pt2.mX;
 				vertexList[1].y = pt2.mY;
 				vertexList[1].diffuse = color;
-
 				vertexList[2].x = pt3.mX;
 				vertexList[2].y = pt3.mY;
 				vertexList[2].diffuse = color;
-
 				return true;
 			}
 		}
 	}
-	else
-	{
+	else {
 		if (paintLine(pt1, pt2, color) &&
 			paintLine(pt2, pt3, color) &&
-			paintLine(pt3, pt1, color))
-		{
+			paintLine(pt3, pt1, color)) {
 			return true;
 		}
 	}
-
 	return false;
 }
 

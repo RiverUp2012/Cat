@@ -61,3 +61,7 @@ void * glModule::getProcAddressA(const char * procName) {
 	}
 	return procAddress;
 }
+
+const void * glModule::getModuleHandle(void) const {
+	return (const void *)mModuleHandle;
+}

@@ -20,7 +20,10 @@ namespace {
 		wchar_t ** paramArray = 0;
 		int paramCount = 0;
 		if (!gModule_Shell32.isAlready()) {
-			if (gModule_Shell32.createW(L"shell32.dll")) {
+			gModule_Shell32.createW(L"shell32.dll");
+		}
+		if (gModule_Shell32.isAlready()) {
+			if (!gCommandLineToArgvW) {
 				gCommandLineToArgvW = (glCommandLineToArgvW)
 					gModule_Shell32.getProcAddressA("CommandLineToArgvW");
 			}

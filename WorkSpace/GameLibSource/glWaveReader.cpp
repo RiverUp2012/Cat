@@ -4,10 +4,12 @@
 #include "../GameLibInclude/glTemplate.h"
 #include "../GameLibInclude/glModuleResourceHelper.h"
 
-struct glWaveChunkHeader {
-	unsigned char mSig[4];
-	unsigned int mSize;
-};
+namespace {
+	struct glWaveChunkHeader {
+		unsigned char mSig[4];
+		unsigned int mSize;
+	};
+}
 
 glWaveReader::glWaveReader() {
 	mChannels = 0;
