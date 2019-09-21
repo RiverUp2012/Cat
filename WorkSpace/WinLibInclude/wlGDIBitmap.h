@@ -11,7 +11,7 @@ public:
 	wlGDIBitmap();
 	virtual ~wlGDIBitmap();
 public:
-	bool createEmpty(const int width, const int height, const int bitCount);
+	bool createEmpty(const int width, const int height, const short int bitCount);
 	bool createFromFileW(const wchar_t * fileName);
 	void destroy(void);
 	const void * getHBITMAP(void) const;

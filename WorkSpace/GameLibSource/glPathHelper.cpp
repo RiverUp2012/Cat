@@ -11,7 +11,7 @@ bool glPathHelper::getFileNameWithExtW(const wchar_t * path, glStringW & fileNam
 			if (L'\\' == path[i]) {
 				if (fileNameWithExt.resize(i + 1)) {
 					glStringW::copy(fileNameWithExt.getBuffer(), path, i);
-					fileNameWithExt.setAt(i, L'\0');
+					fileNameWithExt.setAt(i, fileNameWithExt.getNullChar());
 					return true;
 				}
 				break;
@@ -29,12 +29,12 @@ bool glPathHelper::getDriveW(const wchar_t * path, glStringW & drive) {
 			if (L':' == path[1]) {
 				if (2 == pathLength) {
 					glStringW::copy(drive.getBuffer(), path, 2);
-					drive.setAt(2, L'\0');
+					drive.setAt(2, drive.getNullChar());
 					return true;
 				}
 				else if (L'\\' == path[2] || L'/' == path[2]) {
 					glStringW::copy(drive.getBuffer(), path, 3);
-					drive.setAt(3, L'\0');
+					drive.setAt(3, drive.getNullChar());
 					return true;
 				}
 			}
@@ -48,7 +48,7 @@ bool glPathHelper::getAppPathW(glStringW & appPath) {
 	if (GetModuleFileNameW(0, appPathTemp, _countof(appPathTemp))) {
 		for (int i = glStringW::getLength(appPathTemp) - 1; i >= 0; --i) {
 			if (L'\\' == appPathTemp[i]) {
-				appPathTemp[i + 1] = L'\0';
+				appPathTemp[i + 1] = glStringW::getNullChar();
 				appPath = appPathTemp;
 				return true;
 			}
@@ -74,7 +74,7 @@ void glPathHelper::createPathW(const wchar_t * path) {
 		for (int i = 0; i < pathLength; ++i) {
 			pathTemp.setAt(i, path[i]);
 			if (L'\\' == path[i] || L'/' == path[i]) {
-				pathTemp.setAt(i + 1, L'\0');
+				pathTemp.setAt(i + 1, pathTemp.getNullChar());
 				if (0 == CreateDirectoryW(pathTemp, 0)) {
 					const DWORD lastError = GetLastError();
 					if (ERROR_ALREADY_EXISTS != lastError) {

@@ -25,7 +25,7 @@ void glGameState::onLeave(void) {
 
 }
 
-void glGameState::onUpdate(const float frameElapse) {
+void glGameState::onUpdate(const float) {
 
 }
 

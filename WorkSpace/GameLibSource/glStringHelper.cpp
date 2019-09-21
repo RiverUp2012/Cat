@@ -113,23 +113,17 @@ bool glStringHelper::formatA(glStringA & string, const char * format, ...) {
 }
 
 int glStringHelper::toIntW(const wchar_t * string) {
-	if (string) {
-		return _wtoi(string);
-	}
-	else {
+	if (!string) {
 		throw glException(L"invalid param");
 	}
-	return 0;
+	return _wtoi(string);
 }
 
 int glStringHelper::toIntA(const char * string) {
-	if (string) {
-		return atoi(string);
-	}
-	else {
+	if (!string) {
 		throw glException(L"invalid param");
 	}
-	return 0;
+	return atoi(string);
 }
 
 bool glStringHelper::endWithNewLineW(const wchar_t * string) {
@@ -160,7 +154,7 @@ bool glStringHelper::formatW(const wchar_t * format, const va_list & vl, glStrin
 		stringLength = _vscwprintf(format, vl);
 		if (stringLength > 0 && string.resize(stringLength + 1)) {
 			vswprintf_s(string.getBuffer(), string.getCapacity(), format, vl);
-			string.setAt(stringLength, L'\0');
+			string.setAt(stringLength, string.getNullChar());
 			return true;
 		}
 	}
@@ -173,7 +167,7 @@ bool glStringHelper::formatA(const char * format, const va_list & vl, glStringA 
 		stringLength = _vscprintf(format, vl);
 		if (stringLength > 0 && string.resize(stringLength + 1)) {
 			vsprintf_s(string.getBuffer(), string.getCapacity(), format, vl);
-			string.setAt(stringLength, '\0');
+			string.setAt(stringLength, string.getNullChar());
 			return true;
 		}
 	}

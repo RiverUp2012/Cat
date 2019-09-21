@@ -65,3 +65,8 @@ if (_Format) \
 	_Ret = glStringHelper::a2w(_StringT, _StringW); \
 }
 #endif
+
+//
+// @brief ÓÃÓÚ±ÜÃâ C4100 ±àÒëÆ÷¾¯¸æ
+//
+#define GL_UN

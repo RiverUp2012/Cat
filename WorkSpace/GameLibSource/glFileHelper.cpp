@@ -14,7 +14,6 @@ bool glFileHelper::deleteFileW(const wchar_t * fileName) {
 				fileAttributes &= ~FILE_ATTRIBUTE_READONLY;
 				if (!SetFileAttributesW(fileName, fileAttributes)) {
 					throw glWin32APIException(L"SetFileAttributesW", GetLastError());
-					return false;
 				}
 			}
 			if (DeleteFileW(fileName)) {

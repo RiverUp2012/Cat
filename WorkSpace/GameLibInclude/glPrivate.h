@@ -13,7 +13,6 @@
 #include <memory.h>
 #include <string.h>
 #include <wchar.h>
-#include <assert.h>
 
 #include "../DependLib/D3D9/d3d9.h"
 #include "../DependLib/D3D9/d3dx9.h"

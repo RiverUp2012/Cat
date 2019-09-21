@@ -37,6 +37,6 @@ bool glPaintObject::getVisible(void) const {
 	return mVisible;
 }
 
-void glPaintObject::onPaint(const glPoint<float> & parentPos) {
+void glPaintObject::onPaint(const glPoint<float> &) {
 
 }

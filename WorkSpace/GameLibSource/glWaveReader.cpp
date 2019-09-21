@@ -38,7 +38,7 @@ bool glWaveReader::createFromFileW(const wchar_t * fileName) {
 				mChannels = wavFmt.nChannels;
 				mBitsPerSample = wavFmt.wBitsPerSample;
 				mSampleRate = wavFmt.nSamplesPerSec;
-				while (true) {
+				for (;;) {
 					if (glReadFile(mWaveFile, chkHdr)) {
 						if (0 == memcmp("data", chkHdr.mSig, 4)) {
 							if (mWaveFile.getPointer(mPCMDataOffset)) {
@@ -85,7 +85,7 @@ bool glWaveReader::createFromMemory(const void * buffer, const int bufferSize, c
 				mChannels = wavFmt.nChannels;
 				mBitsPerSample = wavFmt.wBitsPerSample;
 				mSampleRate = wavFmt.nSamplesPerSec;
-				while (true) {
+				for (;;) {
 					if (glReadMemFile(mMemWavFile, chkHdr)) {
 						if (0 == memcmp("data", chkHdr.mSig, 4)) {
 							if (mMemWavFile.getPointer(filePointer)) {

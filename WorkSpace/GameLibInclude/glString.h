@@ -1,8 +1,8 @@
 
 #pragma once
 
+#include "glException.h"
 #include <malloc.h>
-#include <assert.h>
 
 //
 // @brief ×Ö·û´®Ä£°åÀà
@@ -75,6 +75,9 @@ public:
 				mCapacity = capacity;
 				return true;
 			}
+			else {
+				throw glException(L"bad malloc()");
+			}
 		}
 		return false;
 	}
@@ -102,11 +105,15 @@ public:
 		return false;
 	}
 	const _U & getAt(const int index) const {
-		assert(mString && index >= 0 && index < mCapacity);
+		if (!mString || index < 0 || index >= mCapacity) {
+			throw glException(L"index out of range");
+		}
 		return mString[index];
 	}
 	_U & getAtRef(const int index) {
-		assert(mString && index >= 0 && index < mCapacity);
+		if (!mString || index < 0 || index >= mCapacity) {
+			throw glException(L"index out of range");
+		}
 		return mString[index];
 	}
 	bool sub(const int offset, const int length, glString & subString) const {
@@ -189,7 +196,7 @@ public:
 		int thisStringLength = getLength();
 		_U * newString = 0;
 		if (thisStringLength + stringLength > 0) {
-			newString = new _U[thisStringLength + stringLength + 1];
+			newString = (_U *)malloc(getCharSize() * (thisStringLength + stringLength + 1));
 			if (newString) {
 				if (getString()) {
 					copy(newString, getString(), thisStringLength);
@@ -203,6 +210,9 @@ public:
 				mString = newString;
 				mCapacity = thisStringLength + stringLength + 1;
 			}
+			else {
+				throw glException(L"bad malloc()");
+			}
 		}
 		return *this;
 	}
@@ -211,7 +221,7 @@ public:
 		int thisStringLength = getLength();
 		_U * newString = 0;
 		if (thisStringLength + stringLength > 0) {
-			newString = new _U[thisStringLength + stringLength + 1];
+			newString = (_U *)malloc(getCharSize() * (thisStringLength + stringLength + 1));
 			if (newString) {
 				if (getString()) {
 					copy(newString, getString(), thisStringLength);
@@ -224,6 +234,9 @@ public:
 				clear();
 				mString = newString;
 				mCapacity = thisStringLength + stringLength + 1;
+			}
+			else {
+				throw glException(L"bad malloc()");
 			}
 		}
 		return *this;

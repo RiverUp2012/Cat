@@ -34,7 +34,11 @@ bool glMemFile::isAlready(void) const {
 }
 
 bool glMemFile::isEndOfFile(bool & endOfFile) {
-	return mFilePointer >= mBufferSize;
+	if (mBuffer) {
+		endOfFile = mFilePointer >= mBufferSize ? true : false;
+		return true;
+	}
+	return false;
 }
 
 bool glMemFile::seekToBegin(void) {

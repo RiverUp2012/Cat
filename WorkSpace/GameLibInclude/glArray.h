@@ -1,7 +1,7 @@
 
 #pragma once
 
-#include <assert.h>
+#include "glException.h"
 #include <malloc.h>
 #include <new.h>
 
@@ -71,6 +71,9 @@ public:
 				mCapacity = capacity;
 				return true;
 			}
+			else {
+				throw glException(L"bad malloc()");
+			}
 		}
 		return false;
 	}
@@ -86,7 +89,7 @@ public:
 	bool add(const _U & data) {
 		const int newCapacity = mCapacity + defaultGrowUnits;
 		_U * newArray = 0;
-		if (!mArray || mItems >= mCapacity) {
+		if ((!mArray || mItems >= mCapacity) && newCapacity > 0) {
 			newArray = (_U *)realloc(mArray, sizeof(_U)* newCapacity);
 			if (newArray) {
 				for (int i = mItems; i < newCapacity; ++i) {
@@ -94,6 +97,9 @@ public:
 				}
 				mArray = newArray;
 				mCapacity = newCapacity;
+			}
+			else {
+				throw glException(L"bad realloc()");
 			}
 		}
 		if (mArray && mItems < mCapacity) {
@@ -113,11 +119,15 @@ public:
 		return mItems;
 	}
 	const _U & getAt(const int index) const {
-		assert(mArray && index >= 0 && index < mCapacity);
+		if (!mArray || index < 0 || index >= mCapacity) {
+			throw glException(L"index out of range");
+		}
 		return mArray[index];
 	}
 	_U & getAtRef(const int index) {
-		assert(mArray && index >= 0 && index < mCapacity);
+		if (!mArray || index < 0 || index >= mCapacity) {
+			throw glException(L"index out of range");
+		}
 		return mArray[index];
 	}
 	bool setAt(const int index, const _U & data) {
@@ -126,6 +136,15 @@ public:
 			return true;
 		}
 		return false;
+	}
+	void setGrowUnits(const int growUnits) {
+		mGrowUnits = growUnits;
+		if(mGrowUnits < 0) {
+			mGrowUnits = 0;
+		}
+	}
+	int getGrowUnits(void) const {
+		return mGrowUnits;
 	}
 private:
 	_U * mArray;

@@ -21,15 +21,15 @@ bool glInputHandler::getHandleInputEvent(void) const
 	return mHandleInputEvent;
 }
 
-bool glInputHandler::onMouseMove(const int mouseX, const int mouseY) {
+bool glInputHandler::onMouseMove(const int, const int) {
 	return true;
 }
 
-bool glInputHandler::onKeyUp(const int keyCode) {
+bool glInputHandler::onKeyUp(const int) {
 	return true;
 }
 
-bool glInputHandler::onKeyDown(const int keyCode) {
+bool glInputHandler::onKeyDown(const int) {
 	return true;
 }
 

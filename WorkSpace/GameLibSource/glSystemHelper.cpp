@@ -40,7 +40,7 @@ namespace {
 	// glIsWinVerOrGreater(6, 0, 0) // 当前操作系统是 Win7，版本号大于等于 6.0，返回真
 	// glIsWinVerOrGreater(6, 1, 0) // 当前操作系统是 Win7，版本号大于等于 6.1，返回真
 	//
-	static int glIsWinVerOrGreater(
+	static bool glIsWinVerOrGreater(
 		const short int verMajor,
 		const short int verMinor,
 		const short int servicePackMajor,
@@ -81,67 +81,52 @@ namespace {
 bool glSystemHelper::getCurrentUserNameW(glStringW & userName) {
 	wchar_t userNameTemp[520] = { 0 };
 	DWORD userNameTempSize = GL_DIM(userNameTemp);
-	if (GetUserNameW(userNameTemp, &userNameTempSize)) {
-		userName = userNameTemp;
-		return true;
-	}
-	else {
+	if (!GetUserNameW(userNameTemp, &userNameTempSize)) {
 		throw glWin32APIException(L"GetUserNameW", GetLastError());
 	}
-	return false;
+	userName = userNameTemp;
+	return true;
 }
 
 bool glSystemHelper::getSystemDirectoryW(glStringW & systemDir) {
 	wchar_t systemDirTemp[520] = { 0 };
-	if (GetSystemDirectoryW(systemDirTemp, GL_DIM(systemDirTemp))) {
-		systemDir = systemDirTemp;
-		return true;
-	}
-	else {
+	if (!GetSystemDirectoryW(systemDirTemp, GL_DIM(systemDirTemp))) {
 		throw glWin32APIException(L"GetSystemDirectoryW", GetLastError());
 	}
-	return false;
+	systemDir = systemDirTemp;
+	return true;
 }
 
 bool glSystemHelper::getWindowDirectoryW(glStringW & windowDir) {
 	wchar_t windowDirTemp[520] = { 0 };
-	if (GetWindowsDirectoryW(windowDirTemp, GL_DIM(windowDirTemp))) {
-		windowDir = windowDirTemp;
-		return true;
-	}
-	else {
+	if (!GetWindowsDirectoryW(windowDirTemp, GL_DIM(windowDirTemp))) {
 		throw glWin32APIException(L"GetWindowsDirectoryW", GetLastError());
 	}
-	return false;
+	windowDir = windowDirTemp;
+	return true;
 }
 
 bool glSystemHelper::getComputerNameW(glStringW & computerName) {
 	wchar_t computerNameTemp[520] = { 0 };
 	DWORD computerNameTempSize = GL_DIM(computerNameTemp);
-	if (GetComputerNameW(computerNameTemp, &computerNameTempSize)) {
-		computerName = computerNameTemp;
-		return true;
-	}
-	else {
+	if (!GetComputerNameW(computerNameTemp, &computerNameTempSize)) {
 		throw glWin32APIException(L"GetComputerNameW", GetLastError());
 	}
-	return false;
+	computerName = computerNameTemp;
+	return true;
 }
 
 bool glSystemHelper::getMemoryInfo(glMemoryInfo & memoryInfo) {
 	MEMORYSTATUSEX memStatusEx = { 0 };
 	memStatusEx.dwLength = sizeof(memStatusEx);
-	if (GlobalMemoryStatusEx(&memStatusEx)) {
-		memoryInfo.mPhysTotal = memStatusEx.ullTotalPhys;
-		memoryInfo.mPhysAvail = memStatusEx.ullAvailPhys;
-		memoryInfo.mVirtualTotal = memStatusEx.ullTotalVirtual;
-		memoryInfo.mVirtualAvail = memStatusEx.ullAvailVirtual;
-		return true;
-	}
-	else {
+	if (!GlobalMemoryStatusEx(&memStatusEx)) {
 		throw glWin32APIException(L"GlobalMemoryStatusEx", GetLastError());
 	}
-	return false;
+	memoryInfo.mPhysTotal = memStatusEx.ullTotalPhys;
+	memoryInfo.mPhysAvail = memStatusEx.ullAvailPhys;
+	memoryInfo.mVirtualTotal = memStatusEx.ullTotalVirtual;
+	memoryInfo.mVirtualAvail = memStatusEx.ullAvailVirtual;
+	return true;
 }
 
 bool glSystemHelper::getOSVersion(int & osVer) {
@@ -157,7 +142,7 @@ bool glSystemHelper::getOSVersion(int & osVer) {
 	break; \
 	}
 
-	do {
+	for (;;) {
 		WINVERORGREATER(0x0A00, 0, GL_OSVER_WIN10);
 		WINVERORGREATER(_WIN32_WINNT_WINBLUE, 0, GL_OSVER_WIN81);
 		WINVERORGREATER(_WIN32_WINNT_WIN8, 0, GL_OSVER_WIN8);
@@ -170,7 +155,8 @@ bool glSystemHelper::getOSVersion(int & osVer) {
 		WINVERORGREATER(_WIN32_WINNT_WINXP, 1, GL_OSVER_WINXP_SP1);
 		WINVERORGREATER(_WIN32_WINNT_WINXP, 0, GL_OSVER_WINXP);
 		WINVERORGREATER(_WIN32_WINNT_WIN2K, 0, GL_OSVER_WIN2K);
-	} while (0);
+		break;
+	}
 
 	if (!ret) {
 		if (!gModule_Kernel32.isAlready()) {
@@ -218,6 +204,9 @@ bool glSystemHelper::getOSVersion(int & osVer) {
 					osVer = GL_OSVER_WIN2K;
 				}
 				ret = true;
+			}
+			else {
+				throw glWin32APIException(L"GetVersionExW", GetLastError());
 			}
 		}
 	}

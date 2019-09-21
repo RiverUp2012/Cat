@@ -22,6 +22,6 @@ bool glTimer::unregisterTimer(void) {
 	return glTimerSystem::unregisterTimer(this);
 }
 
-void glTimer::onTimer(const int timerID) {
+void glTimer::onTimer(const int) {
 
 }

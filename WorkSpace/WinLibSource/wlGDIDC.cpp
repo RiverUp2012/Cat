@@ -16,25 +16,19 @@ wlGDIDC::~wlGDIDC() {
 bool wlGDIDC::createFromHDC(const void * dcHandle) {
 	destroy();
 	mDCHandle = (void *)CreateCompatibleDC((HDC)dcHandle);
-	if (mDCHandle) {
-		return true;
-	}
-	else {
+	if (!mDCHandle) {
 		throw glWin32APIException(L"CreateCompatibleDC", GetLastError());
 	}
-	return false;
+	return true;
 }
 
 bool wlGDIDC::createFromDC(const wlGDIDC & dc) {
 	destroy();
 	mDCHandle = (void *)CreateCompatibleDC((HDC)dc.getHDC());
-	if (mDCHandle) {
-		return true;
-	}
-	else {
+	if (!mDCHandle) {
 		throw glWin32APIException(L"CreateCompatibleDC", GetLastError());
 	}
-	return false;
+	return true;
 }
 
 bool wlGDIDC::createFromHWND(const void * wndHandle) {

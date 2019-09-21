@@ -57,7 +57,6 @@ bool glFile::openW(
 				}
 				else {
 					throw glWin32APIException(L"CreateFileW", lastError);
-					return false;
 				}
 			}
 			else if (forRead) {
@@ -77,7 +76,6 @@ bool glFile::openW(
 				}
 				else {
 					throw glWin32APIException(L"CreateFileW", lastError);
-					return false;
 				}
 			}
 			mFileHandle = (void *)CreateFileW(

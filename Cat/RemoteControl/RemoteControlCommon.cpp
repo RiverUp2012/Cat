@@ -54,7 +54,7 @@ bool readMemFileStringW(glMemFile & memFile, glStringW & string) {
 		if (stringLength > 0) {
 			if (string.resize(stringLength + 1)) {
 				if (memFile.read(string.getBuffer(), string.getCharSize() * stringLength)) {
-					string.setAt(stringLength, L'\0');
+					string.setAt(stringLength, string.getNullChar());
 					return true;
 				}
 			}

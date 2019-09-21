@@ -24,9 +24,17 @@ public:
 	bool recvAllData(void * buffer, const int bytesToRecv);
 	bool acceptClientConnect(glSocket & clientSock);
 private:
+#if defined WIN64 || defined _WIN64
+	void bindClientSocket(const __int64 socket);
+#else
 	void bindClientSocket(const int socket);
+#endif
 private:
+#if defined WIN64 || defined _WIN64
+	__int64 mSocket;
+#else
 	int mSocket;
+#endif
 	bool mClientSocket;
 	bool mServerSocket;
 };

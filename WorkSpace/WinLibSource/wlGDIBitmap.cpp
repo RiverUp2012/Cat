@@ -11,7 +11,7 @@ wlGDIBitmap::~wlGDIBitmap() {
 	destroy();
 }
 
-bool wlGDIBitmap::createEmpty(const int width, const int height, const int bitCount) {
+bool wlGDIBitmap::createEmpty(const int width, const int height, const short int bitCount) {
 	BITMAPINFO bmpInfo = { 0 };
 	destroy();
 	bmpInfo.bmiHeader.biSize = sizeof(bmpInfo.bmiHeader);
@@ -21,13 +21,10 @@ bool wlGDIBitmap::createEmpty(const int width, const int height, const int bitCo
 	bmpInfo.bmiHeader.biWidth = width;
 	bmpInfo.bmiHeader.biHeight = height;
 	mBitmapHandle = (void *)CreateDIBSection(0, &bmpInfo, DIB_RGB_COLORS, 0, 0, 0);
-	if (mBitmapHandle) {
-		return true;
-	}
-	else {
+	if (!mBitmapHandle) {
 		throw glWin32APIException(L"CreateDIBSection", GetLastError());
 	}
-	return false;
+	return true;
 }
 
 bool wlGDIBitmap::createFromFileW(const wchar_t * fileName) {
@@ -40,12 +37,10 @@ bool wlGDIBitmap::createFromFileW(const wchar_t * fileName) {
 			0,
 			0,
 			LR_LOADFROMFILE | LR_CREATEDIBSECTION);
-		if (mBitmapHandle) {
-			return true;
-		}
-		else {
+		if (!mBitmapHandle) {
 			throw glWin32APIException(L"LoadImageW", GetLastError());
 		}
+		return true;
 	}
 	return false;
 }

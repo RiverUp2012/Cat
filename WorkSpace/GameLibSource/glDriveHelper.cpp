@@ -8,8 +8,8 @@ void glDriveHelper::getDriveNameListW(glArray<glStringW> & driveNameArray) {
 	if (driveNameArray.resize(sizeof(drives)* 8)) {
 		driveName[1] = L':';
 		driveName[2] = L'\\';
-		driveName[3] = L'\0';
-		for (unsigned int i = 0; i < sizeof(drives)* 8; ++i) {
+		driveName[3] = glStringW::getNullChar();
+		for (unsigned short i = 0; i < sizeof(drives) * 8; ++i) {
 			if (drives & (1 << i)) {
 				driveName[0] = L'A' + i;
 				driveNameArray.setAt(i, driveName);

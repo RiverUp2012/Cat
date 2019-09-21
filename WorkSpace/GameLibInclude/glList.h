@@ -1,7 +1,7 @@
 
 #pragma once
 
-#include <assert.h>
+#include "glException.h"
 
 //
 // @brief Á´±íÄ£°åÀà
@@ -46,9 +46,15 @@ public:
 			return mNode ? true : false;
 		}
 		const _U & getData(void) const {
+			if (!mNode) {
+				throw glException(L"bad iterator");
+			}
 			return mNode->mData;
 		}
 		_U & getDataRef(void) {
+			if (!mNode) {
+				throw glException(L"bad iterator");
+			}
 			return mNode->mData;
 		}
 		void moveNext(void) {
@@ -95,7 +101,7 @@ public:
 		mHead = 0;
 		mTail = 0;
 	}
-	bool pushBack(const _U & data) {
+	void pushBack(const _U & data) {
 		glNode * newNode = new glNode(data);
 		if (newNode) {
 			if (!mNodeCount) {
@@ -107,11 +113,12 @@ public:
 				mTail = newNode;
 			}
 			++mNodeCount;
-			return true;
 		}
-		return false;
+		else {
+			throw glException(L"bad new");
+		}
 	}
-	bool pushFront(const _U & data) {
+	void pushFront(const _U & data) {
 		glNode * newNode = new glNode(data);
 		if (newNode) {
 			if (!mNodeCount) {
@@ -123,9 +130,10 @@ public:
 				mHead = newNode;
 			}
 			++mNodeCount;
-			return true;
 		}
-		return false;
+		else {
+			throw glException(L"bad new");
+		}
 	}
 	bool popBack(void) {
 		glNode * delNode = mTail;
@@ -171,7 +179,11 @@ public:
 		return glIterator(mTail);
 	}
 	bool insertBefore(glIterator & pos, const _U & data) {
-		assert(contain(data));
+#if defined DEBUG || defined _DEBUG
+		if (!contain(data)) {
+			throw glException(L"bad iterator");
+		}
+#endif
 		glNode * node = pos.mNode;
 		if (node) {
 			glNode * newNode = new glNode(data);
@@ -189,11 +201,18 @@ public:
 				++mNodeCount;
 				return true;
 			}
+			else {
+				throw glException(L"bad new");
+			}
 		}
 		return false;
 	}
 	bool insertAfter(glIterator & pos, const _U & data)	{
-		assert(contain(data));
+#if defined DEBUG || defined _DEBUG
+		if (!contain(data)) {
+			throw glException(L"bad iterator");
+		}
+#endif
 		glNode * node = pos.mNode;
 		if (node) {
 			glNode * newNode = new glNode(data);
@@ -211,11 +230,18 @@ public:
 				++mNodeCount;
 				return true;
 			}
+			else {
+				throw glException(L"bad new");
+			}
 		}
 		return false;
 	}
 	bool remove(glIterator & pos) {
-		assert(contain(pos));
+#if defined DEBUG || defined _DEBUG
+		if (!contain(pos)) {
+			throw glException(L"bad iterator");
+		}
+#endif
 		glNode * delNode = pos.mNode;
 		if (delNode) {
 			glNode * prevNode = delNode->mPrev;
@@ -260,7 +286,11 @@ public:
 		return glIterator();
 	}
 	bool remove(const _U & data) {
-		assert(contain(data));
+#if defined DEBUG || defined _DEBUG
+		if (!contain(data)) {
+			throw glException(L"bad iterator");
+		}
+#endif
 		glIterator iter = find(data);
 		if (iter.isValid()) {
 			return remove(iter);

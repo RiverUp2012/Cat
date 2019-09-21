@@ -15,7 +15,7 @@ namespace {
 void glUnitTest::pushUnitTestProcW(const wchar_t * caseName, glUnitTestProc testProc) {
 	if (testProc) {
 		glUnitTestInfo * testInfo = new glUnitTestInfo();
-		testInfo->mCaseName[0] = L'\0';
+		testInfo->mCaseName[0] = glStringW::getNullChar();
 		if (caseName) {
 			glStringW::copy(testInfo->mCaseName, caseName, 0);
 		}

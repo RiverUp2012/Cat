@@ -5,7 +5,7 @@
 #include "../GameLibInclude/glPrivate.h"
 
 glException::glException() {
-	mMessage[0] = L'\0';
+	mMessage[0] = glStringW::getNullChar();
 }
 
 glException::glException(const wchar_t * message) {
@@ -14,11 +14,11 @@ glException::glException(const wchar_t * message) {
 	if (message && messageLength > 0) {
 		if (messageLength >= messageDim) {
 			glStringW::copy(mMessage, message, messageDim - 1);
-			mMessage[messageDim - 1] = L'\0';
+			mMessage[messageDim - 1] = glStringW::getNullChar();
 		}
 	}
 	else {
-		mMessage[0] = L'\0';
+		mMessage[0] = glStringW::getNullChar();
 	}
 }
 

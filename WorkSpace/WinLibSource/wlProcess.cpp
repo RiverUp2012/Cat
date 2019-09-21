@@ -163,18 +163,16 @@ bool wlProcess::setPrivilegeW(const wchar_t * privilegeName, const bool enableOr
 	bool ret = false;
 	HANDLE tokenHandle = 0;
 	TOKEN_PRIVILEGES tokenPrivileges = { 0 };
-	glStringW seDebugNameW;
-	if (mProcessHandle) {
+	if (mProcessHandle && privilegeName) {
 		if (OpenProcessToken(
 			(HANDLE)mProcessHandle,
 			TOKEN_ADJUST_PRIVILEGES,
 			&tokenHandle)) {
 			tokenPrivileges.PrivilegeCount = 1;
-			GL_T2W(SE_DEBUG_NAME, seDebugNameW, ret);
 			if (ret) {
 				if (LookupPrivilegeValueW(
 					0,
-					seDebugNameW,
+					privilegeName,
 					&tokenPrivileges.Privileges[0].Luid)) {
 					tokenPrivileges.Privileges[0].Attributes = enableOrDisable ? SE_PRIVILEGE_ENABLED : SE_PRIVILEGE_REMOVED;
 					if (AdjustTokenPrivileges(

@@ -5,6 +5,7 @@
 #include "../GameLibInclude/glPrivate.h"
 #include "../GameLibInclude/glDefine.h"
 #include "../GameLibInclude/glPerformanceCounter.h"
+#include "../GameLibInclude/glException.h"
 
 typedef BOOL(WINAPI * glGetKeyboardState)(
 	PBYTE lpKeyState);
@@ -215,7 +216,9 @@ bool glEngine::paintRectangle(
 }
 
 bool glEngine::isKeyDown(const int keyCode) const {
-	assert(keyCode >= 0 && keyCode <= GL_DIM(mKeysStateArray));
+	if (keyCode < 0 || keyCode >= GL_DIM(mKeysStateArray)) {
+		throw glException(L"index out of range");
+	}
 	return mKeysStateArray[keyCode] & 0x80 ? true : false;
 }
 

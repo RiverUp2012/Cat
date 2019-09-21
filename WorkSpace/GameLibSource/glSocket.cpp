@@ -139,10 +139,6 @@ bool glSocket::createForServerA(const char * ipV4, const short int port) {
 			else {
 				throw glWin32APIException(L"bind", gWSAGetLastError());
 			}
-			if (0 != gclosesocket((SOCKET)mSocket)) {
-				throw glWin32APIException(L"closesocket", gWSAGetLastError());
-			}
-			mSocket = 0;
 		}
 	}
 	return false;
@@ -232,7 +228,7 @@ bool glSocket::sendAllData(const void * buffer, const int bytesToSend) {
 	char * bufferTemp = (char *)buffer;
 	int bytesSended = 0;
 	if (mSocket && bufferTemp && bytesToSend > 0 && gWSAGetLastError && gsend) {
-		while (true) {
+		for (;;) {
 			int ret = gsend((SOCKET)mSocket, &(bufferTemp[bytesSended]), bytesToSend - bytesSended, 0);
 			if (SOCKET_ERROR != ret) {
 				bytesSended += ret;
@@ -252,7 +248,7 @@ bool glSocket::recvAllData(void * buffer, const int bytesToRecv) {
 	char * bufferTemp = (char *)buffer;
 	int bytesRecved = 0;
 	if (mSocket && bufferTemp && bytesToRecv > 0 && gWSAGetLastError && grecv) {
-		while (true) {
+		for (;;) {
 			int ret = grecv((SOCKET)mSocket, &(bufferTemp[bytesRecved]), bytesToRecv - bytesRecved, 0);
 			if (SOCKET_ERROR != ret) {
 				bytesRecved += ret;
@@ -282,7 +278,11 @@ bool glSocket::acceptClientConnect(glSocket & clientSock) {
 	return false;
 }
 
+#if defined WIN64 || defined _WIN64
+void glSocket::bindClientSocket(const __int64 socket) {
+#else
 void glSocket::bindClientSocket(const int socket) {
+#endif
 	destroy();
 	if (socket) {
 		mSocket = socket;
