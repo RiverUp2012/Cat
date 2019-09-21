@@ -81,6 +81,12 @@
     <ClInclude Include="CProcessCleanupSettingDlg.h">
       <Filter>Include</Filter>
     </ClInclude>
+    <ClInclude Include="CRemoteControlServerDlg.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="CRemoteControlClientDlg.h">
+      <Filter>Include</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -123,6 +129,12 @@
       <Filter>Bio4MemCheat</Filter>
     </ClCompile>
     <ClCompile Include="CProcessCleanupSettingDlg.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="CRemoteControlServerDlg.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="CRemoteControlClientDlg.cpp">
       <Filter>Source</Filter>
     </ClCompile>
   </ItemGroup>

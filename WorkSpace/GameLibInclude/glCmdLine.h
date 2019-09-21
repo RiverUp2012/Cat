@@ -15,7 +15,7 @@ public:
 	//
 	// @brief 判断指定参数是否存在，并返回对应的索引号
 	//
-	static bool isParamExistW(const wchar_t * param, int * index);
+	static bool isParamExistW(const wchar_t * param, int * index = 0);
 	//
 	// @brief 判断是否存在 switchName 参数，并返回下一个参数
 	// @desc

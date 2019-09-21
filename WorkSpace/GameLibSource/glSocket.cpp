@@ -43,6 +43,12 @@ typedef SOCKET (WSAAPI * glaccept)(
 	SOCKET s,
 	struct sockaddr FAR * addr,
 	int FAR * addrlen);
+typedef int (WSAAPI * glselect)(
+	int nfds,
+	fd_set FAR * readfds,
+	fd_set FAR * writefds,
+	fd_set FAR * exceptfds,
+	const struct timeval FAR * timeout);
 
 namespace {
 	static glWSAGetLastError gWSAGetLastError = 0;
@@ -55,6 +61,7 @@ namespace {
 	static glrecv grecv = 0;
 	static glsend gsend = 0;
 	static glaccept gaccept = 0;
+	static glselect gselect = 0;
 }
 
 glSocket::glSocket() {
@@ -96,6 +103,9 @@ glSocket::glSocket() {
 		if (!gaccept) {
 			gaccept = (glaccept)gModule_ws2_32.getProcAddressA("accept");
 		}
+		if (!gselect) {
+			gselect = (glselect)gModule_ws2_32.getProcAddressA("select");
+		}
 	}
 }
 
@@ -112,7 +122,7 @@ bool glSocket::createForClient(void) {
 			return true;
 		}
 		else {
-			throw glWin32APIException(L"socket", gWSAGetLastError());
+			throw glSocketAPIException(L"socket", mSocket, gWSAGetLastError());
 		}
 	}
 	return false;
@@ -133,11 +143,11 @@ bool glSocket::createForServerA(const char * ipV4, const short int port) {
 					return true;
 				}
 				else {
-					throw glWin32APIException(L"listen", gWSAGetLastError());
+					throw glSocketAPIException(L"listen", mSocket, gWSAGetLastError());
 				}
 			}
 			else {
-				throw glWin32APIException(L"bind", gWSAGetLastError());
+				throw glSocketAPIException(L"bind", mSocket, gWSAGetLastError());
 			}
 		}
 	}
@@ -145,15 +155,22 @@ bool glSocket::createForServerA(const char * ipV4, const short int port) {
 }
 
 void glSocket::destroy(void) {
+	int wsaLastError = 0;
 	if (mSocket && gWSAGetLastError && gshutdown && gclosesocket) {
+		// shutdown() 函数的错误并非都是恶性的，举个例子：对于一个没有进行过任何连接的 socket
+		// 执行 shutdown 操作，会返回 WSAENOTCONN 错误，这并不意味着错误，仅仅是想告诉你没有连接
+		// 过的 socket 就不要 shutdown 了
 		if (0 != gshutdown((SOCKET)mSocket, SB_BOTH)) {
-			throw glWin32APIException(L"shutdown", gWSAGetLastError());
+			wsaLastError = gWSAGetLastError();
+			if (WSAENOTCONN != wsaLastError) {
+				throw glSocketAPIException(L"shutdown", mSocket, wsaLastError);
+			}
 		}
 		if (0 != gclosesocket((SOCKET)mSocket)) {
-			throw glWin32APIException(L"closesocket", gWSAGetLastError());
+			throw glSocketAPIException(L"closesocket", mSocket, gWSAGetLastError());
 		}
-		mSocket = 0;
 	}
+	mSocket = 0;
 	mClientSocket = false;
 	mServerSocket = false;
 }
@@ -172,7 +189,7 @@ bool glSocket::connectToServerA(const char * ipV4, const short int port) {
 			return true;
 		}
 		else {
-			throw glWin32APIException(L"connect", gWSAGetLastError());
+			throw glSocketAPIException(L"connect", mSocket, gWSAGetLastError());
 		}
 	}
 	return false;
@@ -199,7 +216,7 @@ bool glSocket::sendData(const void * buffer, const int bytesToSend, int * bytesS
 				*bytesSended = ret;
 			}
 			else {
-				throw glWin32APIException(L"send", gWSAGetLastError());
+				throw glSocketAPIException(L"send", mSocket, gWSAGetLastError());
 			}
 			return true;
 		}
@@ -218,7 +235,7 @@ bool glSocket::recvData(void * buffer, const int bytesToRecv, int * bytesRecved)
 			return true;
 		}
 		else {
-			throw glWin32APIException(L"recv", gWSAGetLastError());
+			throw glSocketAPIException(L"recv", mSocket, gWSAGetLastError());
 		}
 	}
 	return false;
@@ -237,7 +254,7 @@ bool glSocket::sendAllData(const void * buffer, const int bytesToSend) {
 				}
 			}
 			else {
-				throw glWin32APIException(L"send", gWSAGetLastError());
+				throw glSocketAPIException(L"send", mSocket, gWSAGetLastError());
 			}
 		}
 	}
@@ -257,7 +274,7 @@ bool glSocket::recvAllData(void * buffer, const int bytesToRecv) {
 				}
 			}
 			else {
-				throw glWin32APIException(L"send", gWSAGetLastError());
+				throw glSocketAPIException(L"recv", mSocket, gWSAGetLastError());
 			}
 		}
 	}
@@ -272,6 +289,23 @@ bool glSocket::acceptClientConnect(glSocket & clientSock) {
 		clientWinSock = gaccept((SOCKET)mSocket, (sockaddr *)&sockAddr, &sockAddrSize);
 		if (INVALID_SOCKET != clientWinSock) {
 			clientSock.bindClientSocket(clientWinSock);
+			return true;
+		}
+	}
+	return false;
+}
+
+bool glSocket::canReadNow(void) {
+	int selectRet = 0;
+	fd_set readSet = { 0 };
+	timeval timeOut = { 0 };
+	if (mSocket && gselect) {
+		FD_SET((SOCKET)mSocket, &readSet);
+		selectRet = gselect((SOCKET)mSocket, &readSet, 0, 0, &timeOut);
+		if (SOCKET_ERROR == selectRet) {
+			throw glSocketAPIException(L"select", mSocket, gWSAGetLastError());
+		}
+		else if (1 == selectRet) {
 			return true;
 		}
 	}

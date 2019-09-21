@@ -4,6 +4,8 @@
 #include "CMainDlg.h"
 #include "CBio4MemCheatDlg.h"
 #include "CProcessCleanupSettingDlg.h"
+#include "CRemoteControlServerDlg.h"
+#include "CRemoteControlClientDlg.h"
 
 #ifdef _DEBUG
 #	define new DEBUG_NEW
@@ -15,9 +17,9 @@ BOOL CCatApp::InitInstance() {
 
 	// 防止多重实例启动
 
-	if (checkSingleAppInstanceW(L"CatInstanceName")) {
-		return TRUE;
-	}
+	//if (checkSingleAppInstanceW(L"CatInstanceName")) {
+	//return TRUE;
+	//}
 
 	// 启动日志
 
@@ -33,11 +35,20 @@ BOOL CCatApp::InitInstance() {
 
 	// 启动主对话框
 
-	//CMainDlg dlg;
-	//CBio4MemCheatDlg dlg;
-	CProcessCleanupSettingDlg dlg;
-	m_pMainWnd = &dlg;
-	dlg.DoModal();
+	CMainDlg mainDlg;
+	CBio4MemCheatDlg bio4MemCheatDlg;
+	CProcessCleanupSettingDlg processCleanupSettingDlg;	
+	CRemoteControlClientDlg remoteControlClientDlg;
+	CRemoteControlServerDlg remoteControlServerDlg;
+
+	if (GetAsyncKeyState(VK_LSHIFT) & 0x8000) {
+		m_pMainWnd = &remoteControlServerDlg;
+		remoteControlServerDlg.DoModal();
+	}
+	else {
+		m_pMainWnd = &remoteControlClientDlg;
+		remoteControlClientDlg.DoModal();
+	}
 
 	// 关闭日志
 

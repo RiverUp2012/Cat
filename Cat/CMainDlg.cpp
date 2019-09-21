@@ -17,16 +17,17 @@ BEGIN_MESSAGE_MAP(CMainDlg, CDialogEx)
 	ON_WM_DEVICECHANGE()
 END_MESSAGE_MAP()
 
-CMainDlg::CMainDlg(CWnd* pParent) : CDialogEx(IDD_DLG_MAIN, pParent) {
-	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
+CMainDlg::CMainDlg(CWnd* parent) :
+	CDialogEx(IDD_DLG_MAIN, parent) {
+	mIconHandle = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 }
 
 BOOL CMainDlg::OnInitDialog() {
 	glStringW appPath;
 
 	CDialogEx::OnInitDialog();
-	SetIcon(m_hIcon, TRUE);
-	SetIcon(m_hIcon, FALSE);
+	SetIcon(mIconHandle, TRUE);
+	SetIcon(mIconHandle, FALSE);
 
 	// ªÊ÷∆√®√®±≥æ∞
 

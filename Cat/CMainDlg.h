@@ -21,6 +21,6 @@ private:
 	//
 	void adjustWindowPosToDesktopBottomRight(void);
 private:
-	HICON m_hIcon;
+	HICON mIconHandle;
 	wlGDIPImage mImgBK; // ±³¾°Í¼Ïñ
 };

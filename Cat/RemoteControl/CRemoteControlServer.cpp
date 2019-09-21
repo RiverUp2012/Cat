@@ -12,47 +12,57 @@ namespace {
 	class ServerThread : public glThread {
 	public:
 		void onThreadRun(void) override {
-			glMutexGuard mutexGuard(&gMutex);
 			while (!gQuitFlag) {
+				glMutexGuard mutexGuard(&gMutex);
 				if (!gClientSocket.isAlready()) {
-					if (!gServerSocket.acceptClientConnect(gClientSocket)) {
-						glLog::putMessageA("gServerSocket.acceptClientConnect() failed");
-						break;
-					}
-				}
-				else {
-					SPack pack;
-					bool done = false;
-					if (gClientSocket.recvAllData(&pack, sizeof(SPackHeader))) {
-						if (isPackValid(pack)) {
-							if (pack.mPackSize > 0) {
-								pack.mData = malloc(pack.mPackSize);
-								if (pack.mData) {
-									if (gClientSocket.recvAllData(pack.mData, pack.mPackSize)) {
-										done = true;
-									}
-								}
-								else {
-									break;
-								}
-							}
-							else {
-								done = false;
-							}
-							if (done) {
-								handlePack(pack);
-							}
-							if (pack.mData) {
-								free(pack.mData);
-								pack.mData = 0;
-							}
-						}
-						else {
-							glLog::putMessageA("invalid pack header");
+					if (gServerSocket.canReadNow()) {
+						if (!gServerSocket.acceptClientConnect(gClientSocket)) {
+							glLog::putMessageA("gServerSocket.acceptClientConnect() failed");
+							break;
 						}
 					}
 					else {
-						break;
+						glThread::sleepCurrentThread(1);
+					}
+				}
+				else {
+					if (gClientSocket.canReadNow()) {
+						SPack pack;
+						bool done = false;
+						if (gClientSocket.recvAllData(&pack, sizeof(SPackHeader))) {
+							if (isPackValid(pack)) {
+								if (pack.mPackSize > 0) {
+									pack.mData = malloc(pack.mPackSize);
+									if (pack.mData) {
+										if (gClientSocket.recvAllData(pack.mData, pack.mPackSize)) {
+											done = true;
+										}
+									}
+									else {
+										break;
+									}
+								}
+								else {
+									done = true;
+								}
+								if (done) {
+									handlePack(pack);
+								}
+								if (pack.mData) {
+									free(pack.mData);
+									pack.mData = 0;
+								}
+							}
+							else {
+								glLog::putMessageA("invalid pack header");
+							}
+						}
+						else {
+							break;
+						}
+					}
+					else {
+						glThread::sleepCurrentThread(1);
 					}
 				}
 			}
@@ -88,11 +98,11 @@ namespace {
 						//
 						// 发送包头
 						//
-						if (gServerSocket.sendAllData(&pack, sizeof(SPackHeader))) {
+						if (gClientSocket.sendAllData(&pack, sizeof(SPackHeader))) {
 							//
 							// 发送包体
 							//
-							if (gServerSocket.sendAllData(pack.mData, pack.mPackSize)) {
+							if (gClientSocket.sendAllData(pack.mData, pack.mPackSize)) {
 								ret = true;
 							}
 						}
@@ -106,14 +116,14 @@ namespace {
 	static ServerThread gServerThread;
 }
 
-bool CRemoteControlServer::startup(const short int serverPort) {
+bool CRemoteControlServer::startup(void) {
 	GL_LOG_FUNC;
 	glStringA localIpV4;
 	shutdown();
+	gQuitFlag = false;
 	glMutexGuard mutexGuard(&gMutex);
 	if (glNetHelper::getLocalMachineIPv4A(localIpV4)) {
-		if (gServerSocket.createForServerA(localIpV4, serverPort)) {
-			gQuitFlag = false;
+		if (gServerSocket.createForServerA(localIpV4, REMOTE_CONTROL_PORT)) {
 			if (gServerThread.create(true)) {
 				return true;
 			}
@@ -124,10 +134,15 @@ bool CRemoteControlServer::startup(const short int serverPort) {
 
 void CRemoteControlServer::shutdown(void) {
 	GL_LOG_FUNC;
-	glMutexGuard mutexGuard(&gMutex);
 	gQuitFlag = true;
-	gServerThread.wait(1000);
-	gServerThread.destroy();
-	gClientSocket.destroy();
-	gServerSocket.destroy();
+	glMutexGuard mutexGuard(&gMutex);
+	try {
+		gServerThread.wait(1000);
+		gServerThread.destroy();
+		gClientSocket.destroy();
+		gServerSocket.destroy();
+	}
+	catch (const glException & exception) {
+		glLog::putMessageW(L"exception : %s", exception.getMessage());
+	}
 }

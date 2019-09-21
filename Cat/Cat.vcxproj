@@ -103,6 +103,8 @@
     <ClInclude Include="CBio4MemCheatDlg.h" />
     <ClInclude Include="CCatApp.h" />
     <ClInclude Include="CMainDlg.h" />
+    <ClInclude Include="CRemoteControlClientDlg.h" />
+    <ClInclude Include="CRemoteControlServerDlg.h" />
     <ClInclude Include="Common\CMFCHelper.h" />
     <ClInclude Include="CProcessCleanupSettingDlg.h" />
     <ClInclude Include="ProcessCleanup\CProcessCleanup.h" />
@@ -121,6 +123,8 @@
     <ClCompile Include="CBio4MemCheatDlg.cpp" />
     <ClCompile Include="CCatApp.cpp" />
     <ClCompile Include="CMainDlg.cpp" />
+    <ClCompile Include="CRemoteControlClientDlg.cpp" />
+    <ClCompile Include="CRemoteControlServerDlg.cpp" />
     <ClCompile Include="Common\CMFCHelper.cpp" />
     <ClCompile Include="CProcessCleanupSettingDlg.cpp" />
     <ClCompile Include="ProcessCleanup\CProcessCleanup.cpp" />

@@ -47,10 +47,6 @@ glWin32APIException::~glWin32APIException() {
 
 }
 
-unsigned int glWin32APIException::getWin32LastError(void) const {
-	return mWin32LastError;
-}
-
 glCOMAPIException::glCOMAPIException() {
 	mComRet = 0;
 }
@@ -68,6 +64,40 @@ glCOMAPIException::~glCOMAPIException() {
 
 }
 
-long glCOMAPIException::getComRet(void) const {
-	return mComRet;
+glSocketAPIException::glSocketAPIException() {
+
+}
+
+#if defined WIN64 || defined _WIN64
+glSocketAPIException::glSocketAPIException(
+	const wchar_t * socketAPIName,
+	const __int64 socket,
+	const int wsaLastError) {
+	swprintf_s(
+		mMessage,
+		L"Call Socket API %s() Failed, SOCKET : %lld, WSAGetLastError() : %d",
+		(socketAPIName ? socketAPIName : L""),
+		socket,
+		wsaLastError);
+	mSocket = socket;
+	mWSALastError = wsaLastError;
+}
+#else
+glSocketAPIException::glSocketAPIException(
+	const wchar_t * socketAPIName,
+	const int socket,
+	const int wsaLastError) {
+	swprintf_s(
+		mMessage,
+		L"Call Socket API %s() Failed, SOCKET : %d, WSAGetLastError() : %d",
+		(socketAPIName ? socketAPIName : L""),
+		socket,
+		wsaLastError);
+	mSocket = socket;
+	mWSALastError = wsaLastError;
+}
+#endif
+
+glSocketAPIException::~glSocketAPIException() {
+
 }

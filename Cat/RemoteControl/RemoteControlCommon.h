@@ -6,6 +6,11 @@
 //
 
 //
+// @brief 端口号
+//
+#define REMOTE_CONTROL_PORT (10086)
+
+//
 // @brief 协议枚举体
 // @desc
 //
@@ -40,22 +45,32 @@ enum {
 // 附带包体，而服务端向客户端响应用户名请求时，包体包含用户名字符串，以此类推。
 //
 struct SPackHeader {
+	inline SPackHeader() {
+		memset(mSig, 0, sizeof(mSig));
+		mVerMajor = 0;
+		mVerMinor = 0;
+		mPackSize = 0;
+		mProtocol = 0;
+	}
 	// 包签名
 	unsigned char mSig[4];
 	// 包版本号
-	unsigned short int mVerMajor = 0;
+	unsigned short int mVerMajor;
 	// 包版本号
-	unsigned short int mVerMinor = 0;
+	unsigned short int mVerMinor;
 	// 包体数据大小，不包含包头
-	unsigned short int mPackSize = 0;
+	unsigned short int mPackSize;
 	// 协议类型
-	unsigned short int mProtocol = PROTOCOL_FIRST;
+	unsigned short int mProtocol;
 };
 
 //
 // @brief 网络数据包
 //
 struct SPack : public SPackHeader {
+	inline SPack() {
+		mData = 0;
+	}
 	// 包体数据
 	// 根据不同的协议类型，包体数据所包含的内容各异
 	void * mData;

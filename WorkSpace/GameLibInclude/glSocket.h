@@ -23,6 +23,7 @@ public:
 	bool sendAllData(const void * buffer, const int bytesToSend);
 	bool recvAllData(void * buffer, const int bytesToRecv);
 	bool acceptClientConnect(glSocket & clientSock);
+	bool canReadNow(void);
 private:
 #if defined WIN64 || defined _WIN64
 	void bindClientSocket(const __int64 socket);

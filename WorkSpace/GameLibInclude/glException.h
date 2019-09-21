@@ -23,8 +23,6 @@ public:
 	glWin32APIException();
 	glWin32APIException(const wchar_t * win32APIName, const unsigned int win32LastError);
 	virtual ~glWin32APIException();
-public:
-	unsigned int getWin32LastError(void) const;
 protected:
 	unsigned int mWin32LastError;
 };
@@ -37,8 +35,33 @@ public:
 	glCOMAPIException();
 	glCOMAPIException(const wchar_t * comAPIName, const long comRet);
 	virtual ~glCOMAPIException();
-public:
-	long getComRet(void) const;
 protected:
 	long mComRet;
+};
+
+//
+// @brief SOCKET API “Ï≥£¿‡
+//
+class glSocketAPIException : public glException {
+public:
+	glSocketAPIException();
+#if defined WIN64 || defined _WIN64
+	glSocketAPIException(
+		const wchar_t * socketAPIName,
+		const __int64 socket,
+		const int wsaLastError);
+#else
+	glSocketAPIException(
+		const wchar_t * socketAPIName,
+		const int socket,
+		const int wsaLastError);
+#endif
+	virtual ~glSocketAPIException();
+protected:
+#if defined WIN64 || defined _WIN64
+	__int64 mSocket;
+#else
+	int mSocket;
+#endif
+	int mWSALastError;
 };

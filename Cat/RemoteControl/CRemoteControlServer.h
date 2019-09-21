@@ -9,7 +9,7 @@ public:
 	//
 	// @brief Æô¶¯
 	//
-	static bool startup(const short int serverPort);
+	static bool startup(void);
 	//
 	// @brief ¹Ø±Õ
 	//
