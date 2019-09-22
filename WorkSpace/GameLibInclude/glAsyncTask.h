@@ -6,8 +6,10 @@
 //
 // @brief 异步任务接口类
 // @desc
-// 所有需要放置于后台的处理操作，都可以继承自该类后，通过 glAsyncTaskQueue
+//
+// 所有需要放置于后台的处理操作，都可以继承自 glAsyncTask 类后，通过 glAsyncTaskQueue
 // 类进行调度，配合 glAsyncTaskCompleteCallback 接口以获取异步任务完成信息
+//
 // 在最佳实践中，不建议直接保存 glAsyncTaskCompleteCallback 接口实例，而是将
 // glAsyncTaskCompleteCallback 接口实例存放于 glAsyncTaskCompleteCallbackResourcePool
 // 之中，有需要的时候，再从 glAsyncTaskCompleteCallbackResourcePool 取出来使用
@@ -86,11 +88,11 @@
 // 这东西为什么要写得这么复杂呢？是因为在我个人过往的项目当中，曾经遇到这么一个问题：
 //
 // task 对象持有 callback 对象指针，在 task 完成之前，callback 对象就已经被 delete 掉了，
-// 随后 task 调用之前拿到的 callback 对象（此时已经被销毁掉）进行调用的时候，程序就 crash 掉了。
+// 随后 task 调用 callback 对象（此时已经被销毁掉）时，程序就 crash 掉了。
 //
-// 所以，在这个版本中，我引入了一个中间人 resource pool，callback 是放置在 resource pool
+// 所以，在这个版本中，我引入了一个 resource pool，callback 是放置在 resource pool
 // 里面的，并且有一个独一无二的 id 指向 resource pool 中的这个 callback，task 手持 callback
-// 的 id，并且在任何时候，都可以通过这个 callback id 向 resource pool 查询对应的 callback。
+// 的 id，并且在任何时候，都可以通过这个 id 向 resource pool 查询对应的 callback。
 //
 // 由于 callback 对象自身在销毁的时候，会将自己从 resource pool 中移除掉，这样一来，task 再通过 id
 // 从 resource pool 中查询 callback 的时候，就会查询失败，避免了程序 crash 的情况出现。

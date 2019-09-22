@@ -251,6 +251,9 @@
     <ClInclude Include="GameLibInclude\glNetHelper.h">
       <Filter>GameLibInclude</Filter>
     </ClInclude>
+    <ClInclude Include="GameLibInclude\glConsole.h">
+      <Filter>GameLibInclude</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinLibSource\wlGDIPStartup.cpp">
@@ -425,6 +428,9 @@
       <Filter>GameLibSource</Filter>
     </ClCompile>
     <ClCompile Include="GameLibSource\glNetHelper.cpp">
+      <Filter>GameLibSource</Filter>
+    </ClCompile>
+    <ClCompile Include="GameLibSource\glConsole.cpp">
       <Filter>GameLibSource</Filter>
     </ClCompile>
   </ItemGroup>

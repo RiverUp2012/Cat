@@ -17,6 +17,7 @@
 #include "GameLibInclude/glAsyncTaskCompleteCallbackResourcePool.h"
 #include "GameLibInclude/glAsyncTaskQueue.h"
 #include "GameLibInclude/glCmdLine.h"
+#include "GameLibInclude/glConsole.h"
 #include "GameLibInclude/glDefine.h"
 #include "GameLibInclude/glDesktopHelper.h"
 #include "GameLibInclude/glDriveHelper.h"

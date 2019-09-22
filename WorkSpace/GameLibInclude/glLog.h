@@ -12,6 +12,8 @@ public:
 	static bool getOutputDebugView(void);
 	static void setAutoAppendNewLine(const bool autoAppendNewLine);
 	static bool getAutoAppendNewLine(void);
+	static void setOutputConsole(const bool outputConsole);
+	static bool getOutputConsole(void);
 	static bool putMessageW(const wchar_t * format, ...);
 	static bool putMessageA(const char * format, ...);
 };

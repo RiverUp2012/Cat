@@ -14,6 +14,7 @@ namespace {
 	static glMutex gMutex;
 	static glFile gFile;
 	static bool gOutputDebugView = false;
+	static bool gOutputConsole = false;
 	static bool gAutoAppendNewLine = false;
 }
 
@@ -50,6 +51,14 @@ bool glLog::getAutoAppendNewLine(void) {
 	return gAutoAppendNewLine;
 }
 
+void glLog::setOutputConsole(const bool outputConsole) {
+	gOutputConsole = outputConsole;
+}
+
+bool glLog::getOutputConsole(void) {
+	return gOutputConsole;
+}
+
 bool glLog::putMessageW(const wchar_t * format, ...) {
 	bool ret = false;
 	glStringW messageW;
@@ -65,6 +74,12 @@ bool glLog::putMessageW(const wchar_t * format, ...) {
 					OutputDebugStringW(messageW);
 					if (gAutoAppendNewLine && !endWithNewLine) {
 						OutputDebugStringW(L"\r\n");
+					}
+				}
+				if (gOutputConsole) {
+					wprintf_s(messageW);
+					if (gAutoAppendNewLine && !endWithNewLine) {
+						wprintf_s(L"\r\n");
 					}
 				}
 				if (gFile.write(
@@ -96,6 +111,12 @@ bool glLog::putMessageA(const char * format, ...) {
 				OutputDebugStringA(messageA);
 				if (gAutoAppendNewLine && !endWithNewLine) {
 					OutputDebugStringW(L"\r\n");
+				}
+			}
+			if (gOutputConsole) {
+				printf_s(messageA);
+				if (gAutoAppendNewLine && !endWithNewLine) {
+					printf_s("\r\n");
 				}
 			}
 			if (gFile.write(

@@ -27,6 +27,7 @@
     <ClInclude Include="GameLibInclude\glBatchPrimitive.h" />
     <ClInclude Include="GameLibInclude\glBatchSprite.h" />
     <ClInclude Include="GameLibInclude\glCmdLine.h" />
+    <ClInclude Include="GameLibInclude\glConsole.h" />
     <ClInclude Include="GameLibInclude\glDefine.h" />
     <ClInclude Include="GameLibInclude\glDesktopHelper.h" />
     <ClInclude Include="GameLibInclude\glDriveHelper.h" />
@@ -104,6 +105,7 @@
     <ClCompile Include="GameLibSource\glBatchPrimitive.cpp" />
     <ClCompile Include="GameLibSource\glBatchSprite.cpp" />
     <ClCompile Include="GameLibSource\glCmdLine.cpp" />
+    <ClCompile Include="GameLibSource\glConsole.cpp" />
     <ClCompile Include="GameLibSource\glDesktopHelper.cpp" />
     <ClCompile Include="GameLibSource\glDriveHelper.cpp" />
     <ClCompile Include="GameLibSource\glEngine.cpp" />

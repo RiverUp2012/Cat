@@ -42,12 +42,12 @@ BOOL CCatApp::InitInstance() {
 	CRemoteControlServerDlg remoteControlServerDlg;
 
 	if (GetAsyncKeyState(VK_LSHIFT) & 0x8000) {
-		m_pMainWnd = &remoteControlServerDlg;
-		remoteControlServerDlg.DoModal();
+		m_pMainWnd = &bio4MemCheatDlg;
+		bio4MemCheatDlg.DoModal();
 	}
 	else {
-		m_pMainWnd = &remoteControlClientDlg;
-		remoteControlClientDlg.DoModal();
+		m_pMainWnd = &bio4MemCheatDlg;
+		bio4MemCheatDlg.DoModal();
 	}
 
 	// πÿ±’»’÷æ

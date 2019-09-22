@@ -7,10 +7,19 @@
 
 //
 // @brief 数组模板类
+// @desc
+//
+// glArray 类支持自增长，当用户使用 add() 方法放入数据到数组对象时，若数组容量不足，
+// 则自动根据预设的自增长容量数值来增加数组容量，glArray 类在内部通过 items 来记录
+// 用户通过 add() 方法放入了多少数据，该值会在 resize() 方法以及 clear() 方法被
+// 调用时归零
 //
 template <typename _U>
 class glArray {
 public:
+	//
+	// @brief 默认自增长容量
+	//
 	static const int defaultGrowUnits = 16;
 public:
 	glArray() {
